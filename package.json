@@ -1,0 +1,9 @@
+{
+  "name": "fitdeal",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Fit Deal (fitdeal.shop): find any outfit from a screenshot and buy it for less.",
+  "scripts": {
+    "dev": "node dev-server.js"
+  }
+}
