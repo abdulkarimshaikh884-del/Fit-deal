@@ -1,0 +1,31 @@
+<main class="page page-saved">
+  <div class="page-head">
+    <h1>Saved</h1>
+    <p>Products you saved. They're kept only on this device, no account needed.</p>
+  </div>
+
+  <div class="saved-layout">
+    <section class="saved-main" aria-labelledby="savedTitle">
+      <div class="sec-head-row">
+        <h2 class="section-title" id="savedTitle">Items <span class="count" id="savedCount">0</span></h2>
+        <button type="button" class="link-btn" id="savedClear" hidden>Remove all</button>
+      </div>
+      <div class="list" id="savedItems"></div>
+      <section class="empty-state empty-inline" id="savedEmpty" hidden>
+        <span class="empty-ico"><svg aria-hidden="true"><use href="#i-heart"/></svg></span>
+        <h2>Nothing saved yet</h2>
+        <p>Tap the heart on any product in your results to keep it here.</p>
+        <a href="/#upload" class="btn btn-primary btn-sm"><svg aria-hidden="true"><use href="#i-camera-line"/></svg>Find a look</a>
+      </section>
+    </section>
+
+    <section class="saved-side" aria-labelledby="recentTitle" id="recentBox" hidden>
+      <div class="sec-head-row">
+        <h2 class="section-title" id="recentTitle">Recent searches</h2>
+        <button type="button" class="link-btn" id="recentClear">Clear</button>
+      </div>
+      <ul class="recent-list" id="recentList"></ul>
+    </section>
+  </div>
+  <p class="fine saved-fine"><svg aria-hidden="true"><use href="#i-info"/></svg>Prices shown are from when you saved each item. Tap “Buy” to see today's price at the store.</p>
+</main>

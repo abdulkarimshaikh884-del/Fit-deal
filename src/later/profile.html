@@ -1,0 +1,57 @@
+<main class="page page-profile">
+  <div class="profile-layout">
+    <div class="profile-col">
+      <section class="card profile-card">
+        <span class="avatar avatar-lg">G</span>
+        <p class="profile-name">Guest</p>
+        <p class="profile-sub">Sign in to keep your saved items and alerts on every device.</p>
+        <div class="auth-btns">
+          <button type="button" class="btn btn-ghost btn-block" data-soon="Google sign-in"><svg aria-hidden="true"><use href="#i-google"/></svg>Continue with Google</button>
+          <button type="button" class="btn btn-ghost btn-block" data-soon="Phone sign-in"><svg aria-hidden="true"><use href="#i-phone"/></svg>Continue with phone</button>
+        </div>
+      </section>
+
+      <div class="stats">
+        <a href="/saved/" class="stat"><b id="stSaved">0</b><span>Saved</span></a>
+        <a href="/alerts/" class="stat"><b id="stAlerts">0</b><span>Alerts</span></a>
+        <a href="/try-on/" class="stat"><b id="stTry">0</b><span>Try-ons</span></a>
+      </div>
+
+      <nav class="card menu" aria-label="More">
+        <a href="/saved/"><span class="menu-ico"><svg aria-hidden="true"><use href="#i-heart"/></svg></span>Saved items<svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+        <a href="/alerts/"><span class="menu-ico"><svg aria-hidden="true"><use href="#i-bell"/></svg></span>Price alerts<svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+        <a href="/try-on/"><span class="menu-ico"><svg aria-hidden="true"><use href="#i-shirt"/></svg></span>AI Try-On<svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+        <a href="/how-it-works/"><span class="menu-ico"><svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg></span>How it works<svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+        <a href="/about/"><span class="menu-ico"><svg aria-hidden="true"><use href="#i-info"/></svg></span>About Fit Deal<svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+        <a href="/contact/"><span class="menu-ico"><svg aria-hidden="true"><use href="#i-chat"/></svg></span>Contact us<svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+        <a href="/privacy/"><span class="menu-ico"><svg aria-hidden="true"><use href="#i-shield"/></svg></span>Privacy policy<svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+        <a href="/terms/"><span class="menu-ico"><svg aria-hidden="true"><use href="#i-doc"/></svg></span>Terms &amp; affiliate disclosure<svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+      </nav>
+    </div>
+
+    <section class="card size-card" aria-labelledby="sizeTitle">
+      <div class="size-head">
+        <p class="section-title" id="sizeTitle"><svg aria-hidden="true"><use href="#i-ruler"/></svg>Your size profile</p>
+        <span class="size-result" id="sizeResult" hidden>Recommended <b id="sizeLetter">M</b></span>
+      </div>
+      <p class="size-intro">Tell us once, and we'll suggest your size on every product.</p>
+      <form class="size-form" id="sizeForm" novalidate>
+        <label class="field"><span>Height</span><span class="input-unit"><input type="number" inputmode="decimal" name="height" min="120" max="220" placeholder="165"><i>cm</i></span></label>
+        <label class="field"><span>Weight</span><span class="input-unit"><input type="number" inputmode="decimal" name="weight" min="30" max="200" placeholder="58"><i>kg</i></span></label>
+        <label class="field"><span>Chest / Bust</span><span class="input-unit"><input type="number" inputmode="decimal" name="chest" min="24" max="60" placeholder="34"><i>in</i></span></label>
+        <label class="field"><span>Waist</span><span class="input-unit"><input type="number" inputmode="decimal" name="waist" min="20" max="56" placeholder="28"><i>in</i></span></label>
+        <label class="field"><span>Hip</span><span class="input-unit"><input type="number" inputmode="decimal" name="hip" min="26" max="60" placeholder="37"><i>in</i></span></label>
+        <div class="field field-full">
+          <span>Preferred fit</span>
+          <div class="seg seg-wide" id="fitSeg" role="group" aria-label="Preferred fit">
+            <button type="button" data-fit="slim" aria-pressed="false">Slim</button>
+            <button type="button" data-fit="regular" aria-pressed="true">Regular</button>
+            <button type="button" data-fit="loose" aria-pressed="false">Loose</button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block field-full">Save size profile</button>
+      </form>
+      <p class="fine"><svg aria-hidden="true"><use href="#i-info"/></svg>Based on a standard size chart. Saved only on this device.</p>
+    </section>
+  </div>
+</main>

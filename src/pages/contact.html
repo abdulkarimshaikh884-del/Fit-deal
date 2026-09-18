@@ -1,0 +1,58 @@
+<main class="page page-info page-contact">
+  <section class="info-hero">
+    <span class="pill pill-purple"><svg aria-hidden="true"><use href="#i-chat"/></svg>Contact</span>
+    <h1>We'd love to <span class="grad">hear from you</span></h1>
+    <p>Questions, a wrong result, a store we should add, or a data request? We reply within 2 working days.</p>
+  </section>
+
+  <div class="contact-layout">
+    <div class="contact-cards">
+      <a class="card c-card" href="mailto:support@fitdeal.shop">
+        <span class="c-ico c-purple"><svg aria-hidden="true"><use href="#i-mail"/></svg></span>
+        <span class="c-text"><b>Help &amp; support</b><small>support@fitdeal.shop</small></span>
+        <svg class="c-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+      </a>
+      <a class="card c-card" href="mailto:hello@fitdeal.shop">
+        <span class="c-ico c-pink"><svg aria-hidden="true"><use href="#i-store"/></svg></span>
+        <span class="c-text"><b>Business &amp; partnerships</b><small>hello@fitdeal.shop</small></span>
+        <svg class="c-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+      </a>
+      <a class="card c-card" href="mailto:privacy@fitdeal.shop">
+        <span class="c-ico c-green"><svg aria-hidden="true"><use href="#i-shield"/></svg></span>
+        <span class="c-text"><b>Privacy, data &amp; takedowns</b><small>privacy@fitdeal.shop</small></span>
+        <svg class="c-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+      </a>
+      <a class="card c-card" href="/faq/">
+        <span class="c-ico c-blue"><svg aria-hidden="true"><use href="#i-info"/></svg></span>
+        <span class="c-text"><b>Common questions</b><small>Quick answers in our FAQ</small></span>
+        <svg class="c-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+      </a>
+    </div>
+
+    <form class="card contact-form" id="contactForm" novalidate>
+      <p class="section-title">Send a message</p>
+      <label class="field"><span>Your name</span><input type="text" name="name" autocomplete="name" maxlength="80" required></label>
+      <label class="field"><span>Email</span><input type="email" name="email" autocomplete="email" maxlength="120" placeholder="you@example.com" required></label>
+      <label class="field"><span>Topic</span>
+        <span class="select-wrap"><select name="topic">
+          <option>General question</option>
+          <option>Wrong or missing result</option>
+          <option>Add a store</option>
+          <option>Delete my data</option>
+          <option>Copyright or takedown</option>
+          <option>Partnership</option>
+        </select><svg aria-hidden="true"><use href="#i-chev-down"/></svg></span>
+      </label>
+      <label class="field"><span>Message</span><textarea name="message" rows="5" maxlength="4000" placeholder="Tell us what's on your mind. For a wrong result or a data request, paste the Fit Deal link." required></textarea></label>
+      <label class="hp" aria-hidden="true">Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+      <p class="form-error" id="contactError" role="alert" hidden></p>
+      <button type="submit" class="btn btn-primary btn-block" id="contactSend">Send message</button>
+      <p class="fine center">We use your email only to reply. See our <a href="/privacy/">privacy policy</a>.</p>
+    </form>
+    <section class="card contact-done" id="contactDone" hidden tabindex="-1">
+      <span class="empty-ico ok"><svg aria-hidden="true"><use href="#i-check-plain"/></svg></span>
+      <h2>Message sent</h2>
+      <p>Thanks! We'll reply to your email within 2 working days.</p>
+    </section>
+  </div>
+</main>

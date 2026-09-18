@@ -1,0 +1,27 @@
+<main class="page page-alerts">
+  <div class="page-head">
+    <h1>Price alerts</h1>
+    <p>We'll tell you when something you're watching gets cheaper.</p>
+  </div>
+
+  <div class="alerts-layout">
+    <section class="card notify-card" aria-label="How to notify you">
+      <p class="section-title">Notify me on</p>
+      <label class="switch-row">
+        <span class="sr-ico sr-wa"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg></span>
+        <span class="sr-text"><b>WhatsApp</b><small>Instant price-drop messages</small></span>
+        <input type="checkbox" class="switch" data-pref="wa" checked>
+      </label>
+      <label class="switch-row">
+        <span class="sr-ico sr-mail"><svg aria-hidden="true"><use href="#i-mail"/></svg></span>
+        <span class="sr-text"><b>Email</b><small>One summary a day</small></span>
+        <input type="checkbox" class="switch" data-pref="email">
+      </label>
+    </section>
+
+    <section class="alerts-main">
+      <p class="section-title">Watching <span class="count" id="alertCount">0</span></p>
+      <div class="list" id="alertList"></div>
+    </section>
+  </div>
+</main>

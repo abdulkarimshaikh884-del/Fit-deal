@@ -1,0 +1,81 @@
+# Render Blueprint: production (main branch) and staging (staging branch).
+# Every push deploys automatically, but only if the tests pass (they run in
+# the build step). Secrets are entered in the Render dashboard, never here.
+services:
+  - type: web
+    name: fitdeal
+    runtime: node
+    plan: starter            # free plans sleep after 15 min idle (50 s first load)
+    region: singapore        # closest Render region to India
+    branch: main
+    autoDeploy: true
+    buildCommand: npm run build && npm test
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SITE_URL
+        value: https://fitdeal.shop
+      - key: NOINDEX
+        value: "true"        # set to "false" on launch day, once real results are live
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash-lite
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: FLIPKART_AFFILIATE_ID
+        sync: false
+      - key: FLIPKART_AFFILIATE_TOKEN
+        sync: false
+      - key: AMAZON_PARTNER_TAG
+        sync: false
+      - key: AMAZON_CREATORS_CLIENT_ID
+        sync: false
+      - key: AMAZON_CREATORS_CLIENT_SECRET
+        sync: false
+      - key: SERPER_API_KEY
+        sync: false
+      - key: AFFILIATE_NETWORK_TEMPLATE
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ANALYTICS_SALT
+        generateValue: true
+      - key: ERROR_WEBHOOK_URL
+        sync: false
+
+  - type: web
+    name: fitdeal-staging
+    runtime: node
+    plan: free
+    region: singapore
+    branch: staging
+    autoDeploy: true
+    buildCommand: npm run build && npm test
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SITE_URL
+        value: https://fitdeal-staging.onrender.com
+      - key: NOINDEX
+        value: "true"
+      - key: GEMINI_MODEL
+        value: gemini-3.5-flash-lite
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SUPABASE_URL      # use a separate staging database, not production's
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: SERPER_API_KEY
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: ANALYTICS_SALT
+        generateValue: true

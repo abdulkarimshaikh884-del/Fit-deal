@@ -1,0 +1,48 @@
+<main class="page page-vote">
+  <div class="find-state" id="voteLoading">
+    <div class="vote-options"><div class="v-opt sk"><div class="sk-img"></div></div><div class="v-opt sk"><div class="sk-img"></div></div><div class="v-opt sk"><div class="sk-img"></div></div></div>
+    <p class="sr-only" role="status">Loading the vote…</p>
+  </div>
+
+  <section class="find-state empty-state" id="voteMissing" hidden>
+    <span class="empty-ico"><svg aria-hidden="true"><use href="#i-heart"/></svg></span>
+    <h1>This vote doesn't exist</h1>
+    <p>The link may be incomplete, or the vote was removed. Ask your friend to send it again.</p>
+    <a href="/" class="btn btn-primary">Find your own look</a>
+  </section>
+
+  <div class="find-state" id="voteReady" hidden>
+    <section class="vote-head">
+      <span class="avatar avatar-md" id="voteInitial" aria-hidden="true"></span>
+      <div class="vote-head-text">
+        <p class="vote-asker" id="voteAsker"></p>
+        <h1 id="voteQ">Which one should I buy?</h1>
+        <p class="vote-meta"><span id="voteLeft"></span><i aria-hidden="true">·</i><span id="voteTotal"></span></p>
+      </div>
+    </section>
+
+    <div class="vote-options" id="voteOptions" role="group" aria-label="Options"></div>
+    <p class="vote-hint" id="voteHint">Tap the one you like to vote</p>
+
+    <div class="vote-bottom">
+      <section class="card share-card">
+        <p class="section-title">Share this vote</p>
+        <div class="share-row">
+          <a class="share-btn share-wa" id="shareWa" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+          <button type="button" class="share-btn" id="shareCopy"><svg aria-hidden="true"><use href="#i-copy"/></svg>Copy link</button>
+          <button type="button" class="share-btn" id="shareMore" hidden><svg aria-hidden="true"><use href="#i-share"/></svg>More</button>
+        </div>
+      </section>
+
+      <section class="card promo">
+        <span class="promo-ico"><svg aria-hidden="true"><use href="#i-camera"/></svg></span>
+        <div class="promo-text">
+          <p class="promo-title">Saw an outfit you love?</p>
+          <p class="promo-sub">Snap it and Fit Deal finds it for less.</p>
+        </div>
+        <a href="/" class="btn btn-primary btn-sm">Find your own look</a>
+      </section>
+    </div>
+    <p class="disclose"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Prices were checked when the vote was made and may have changed. We may earn a commission if you buy through our links. <a href="/affiliate-disclosure/">Learn more</a></span></p>
+  </div>
+</main>

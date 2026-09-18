@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Fit Deal — Find any outfit from a screenshot, for less</title>
-<meta name="description" content="Upload a screenshot or paste a product link. Fit Deal finds the same or similar clothes on Amazon, Flipkart, Myntra and AJIO and shows the best price.">
-<link rel="canonical" href="https://fitdeal.shop/">
+<title>Which one should I buy? — Fit Deal</title>
+<meta name="description" content="Vote for the one you like most.">
+<meta name="robots" content="noindex">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Fit Deal">
 <meta property="og:locale" content="en_IN">
-<meta property="og:title" content="Fit Deal — Find any outfit from a screenshot, for less">
-<meta property="og:description" content="Upload a screenshot or paste a product link. Fit Deal finds the same or similar clothes on Amazon, Flipkart, Myntra and AJIO and shows the best price.">
-<meta property="og:url" content="https://fitdeal.shop/">
+<meta property="og:title" content="Which one should I buy? — Fit Deal">
+<meta property="og:description" content="Vote for the one you like most.">
+<meta property="og:url" content="https://fitdeal.shop/vote/">
 <meta property="og:image" content="https://fitdeal.shop/img/brand/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Fit Deal: see an outfit you love? We'll find it for less.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Fit Deal — Find any outfit from a screenshot, for less">
-<meta name="twitter:description" content="Upload a screenshot or paste a product link. Fit Deal finds the same or similar clothes on Amazon, Flipkart, Myntra and AJIO and shows the best price.">
+<meta name="twitter:title" content="Which one should I buy? — Fit Deal">
+<meta name="twitter:description" content="Vote for the one you like most.">
 <meta name="twitter:image" content="https://fitdeal.shop/img/brand/og.png">
 <meta name="theme-color" content="#6a4ff0">
 <meta name="color-scheme" content="light">
@@ -29,12 +29,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&text=GodOutfisBerPcSamVbLkl&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/site.css?v=c4674691d4">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Fit Deal","url":"https://fitdeal.shop/","description":"See an outfit you love? Fit Deal finds it — and finds it for less."}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Fit Deal","url":"https://fitdeal.shop/","logo":"https://fitdeal.shop/img/brand/icon-512.png","email":"support@fitdeal.shop"}</script>
 </head>
-<body data-page="home">
+<body data-page="vote">
 
 <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
   <defs>
@@ -117,205 +114,70 @@
       <span class="brand-name">Fit Deal</span><svg class="brand-spark" aria-hidden="true"><use href="#i-sparkle"/></svg>
     </a>
     <nav class="d-links" aria-label="Main">
-      <a href="/" aria-current="page">Home</a>
+      <a href="/">Home</a>
       <a href="/deals/">Deals</a>
       <a href="/saved/">Saved</a>
       <a href="/how-it-works/">How it works</a>
     </nav>
-    <a href="#upload" class="d-cta" data-action="find"><svg aria-hidden="true"><use href="#i-camera-line"/></svg>Upload Screenshot</a>
+    <a href="/#upload" class="d-cta"><svg aria-hidden="true"><use href="#i-camera-line"/></svg>Upload Screenshot</a>
   </div>
 </header>
 
-<header class="m-head">
-  <div class="m-brand">
-    <a href="/" class="brand" aria-label="Fit Deal home">
-      <span class="brand-name">Fit Deal</span><svg class="brand-spark" aria-hidden="true"><use href="#i-sparkle"/></svg>
-    </a>
-    <p class="m-tag">Same look. Smarter prices.</p>
-  </div>
+<header class="m-head m-back">
+  <a href="/" class="m-back-btn" data-back aria-label="Back"><svg aria-hidden="true"><use href="#i-back"/></svg></a>
+  <p class="m-title">Help me choose</p>
   <div class="m-icons">
-    <a href="#upload" class="m-icon" data-action="focus-link" aria-label="Search by photo or link"><svg aria-hidden="true"><use href="#i-search"/></svg></a><a href="/saved/" class="m-icon m-heart" aria-label="Saved items"><svg aria-hidden="true"><use href="#i-heart"/></svg><i class="dot" id="savedDot" hidden></i></a>
+    <a href="/#upload" class="m-icon" aria-label="Find a look"><svg aria-hidden="true"><use href="#i-search"/></svg></a>
   </div>
 </header>
 
-<main id="main" class="home">
-  <!-- Hero card (owner's mobile mockup, 18 Sep 2026) -->
-  <section class="hx" aria-labelledby="hxTitle">
-    <div class="hx-copy">
-      <p class="hx-kicker">Fashion for every you</p>
-      <h1 class="hx-title" id="hxTitle">Shop the look <span>for less</span></h1>
-      <p class="hx-sub">Find exact &amp; similar outfits from top brands at better prices.</p>
-      <a href="#looks" class="btn btn-primary hx-cta" data-action="looks">Explore Looks <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </div>
-    <div class="hx-art" aria-hidden="true">
-      <img class="hx-model" src="/img/hero-desktop.webp" alt="" width="500" height="796" fetchpriority="high">
-      <span class="hx-note hx-note-1">Good Outfits<br>Better Prices <b>♡</b></span>
-      <span class="hx-note hx-note-2">Same Vibe<br>Less Price <b>♡</b></span>
-    </div>
+<main id="main" class="page page-vote">
+  <div class="find-state" id="voteLoading">
+    <div class="vote-options"><div class="v-opt sk"><div class="sk-img"></div></div><div class="v-opt sk"><div class="sk-img"></div></div><div class="v-opt sk"><div class="sk-img"></div></div></div>
+    <p class="sr-only" role="status">Loading the vote…</p>
+  </div>
+
+  <section class="find-state empty-state" id="voteMissing" hidden>
+    <span class="empty-ico"><svg aria-hidden="true"><use href="#i-heart"/></svg></span>
+    <h1>This vote doesn't exist</h1>
+    <p>The link may be incomplete, or the vote was removed. Ask your friend to send it again.</p>
+    <a href="/" class="btn btn-primary">Find your own look</a>
   </section>
 
-  <!-- Upload a screenshot / paste a link -->
-  <section class="up" id="upload" aria-label="Find an outfit">
-    <div class="drop" id="drop">
-      <div class="drop-idle" id="dropIdle">
-        <div class="up-row">
-          <span class="up-ico"><svg aria-hidden="true"><use href="#i-camera"/></svg></span>
-          <span class="up-text">
-            <b>Upload a screenshot or photo</b>
-            <small class="m-only">Find exact &amp; similar outfits in seconds</small>
-            <small class="d-only">Drop it here or press Ctrl+V to paste</small>
-          </span>
-          <button type="button" class="btn btn-primary up-btn" id="choose">Choose Photo</button>
-          <input type="file" id="photo" accept="image/*" hidden>
-        </div>
-        <div class="up-or"><span>or</span></div>
-        <form class="up-link" data-link-form>
-          <svg class="up-link-ico" aria-hidden="true"><use href="#i-link"/></svg>
-          <input type="url" inputmode="url" placeholder="Paste product link (Amazon, Myntra, etc.)" aria-label="Product link" id="linkInput" autocomplete="off" enterkeyhint="search">
-          <button type="submit" class="up-go" aria-label="Find this product"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
-        </form>
+  <div class="find-state" id="voteReady" hidden>
+    <section class="vote-head">
+      <span class="avatar avatar-md" id="voteInitial" aria-hidden="true"></span>
+      <div class="vote-head-text">
+        <p class="vote-asker" id="voteAsker"></p>
+        <h1 id="voteQ">Which one should I buy?</h1>
+        <p class="vote-meta"><span id="voteLeft"></span><i aria-hidden="true">·</i><span id="voteTotal"></span></p>
       </div>
-      <div class="flow" id="flow" hidden></div>
-      <p class="sr-only" id="flowStatus" role="status" aria-live="polite"></p>
-    </div>
-    <p class="finder-note"><svg aria-hidden="true"><use href="#i-shield"/></svg><span>Your photo is used once to find matches and is never stored. Searching Amazon, Flipkart, Myntra &amp; AJIO. <a href="/privacy/#photos">Privacy</a></span></p>
-  </section>
+    </section>
 
-  <!-- Categories: filter the looks and deals below -->
-  <section class="cats" aria-label="Categories">
-    <div class="cat-row" role="group" aria-label="Show looks for" id="catRow">
-      <button type="button" class="cat" data-cat="women" aria-pressed="false"><img src="/img/looks/women.webp" alt="" width="40" height="40"><span>Women</span></button>
-      <button type="button" class="cat" data-cat="men" aria-pressed="false"><img src="/img/samples/shirt-m.webp" alt="" width="40" height="40"><span>Men</span></button>
-      <button type="button" class="cat" data-cat="ethnic" aria-pressed="false"><img src="/img/samples/kurti-m.webp" alt="" width="40" height="40"><span>Ethnic</span></button>
-      <button type="button" class="cat" data-cat="streetwear" aria-pressed="false"><img src="/img/looks/street-blazer.webp" alt="" width="40" height="40"><span>Streetwear</span></button>
-      <button type="button" class="cat" data-cat="dresses" aria-pressed="false"><img src="/img/samples/dress-m.webp" alt="" width="40" height="40"><span>Dresses</span></button>
-      <button type="button" class="cat" data-cat="jeans" aria-pressed="false"><img src="/img/samples/jeans-m.webp" alt="" width="40" height="40"><span>Jeans</span></button>
-      <button type="button" class="cat" data-cat="tops" aria-pressed="false"><img src="/img/samples/top-m.webp" alt="" width="40" height="40"><span>Tops</span></button>
-    </div>
-  </section>
+    <div class="vote-options" id="voteOptions" role="group" aria-label="Options"></div>
+    <p class="vote-hint" id="voteHint">Tap the one you like to vote</p>
 
-  <!-- Looks to shop: tapping one runs a real search on that photo -->
-  <section class="hsec" id="looks" aria-labelledby="looksTitle">
-    <div class="hsec-head">
-      <h2 id="looksTitle">Shop These Looks</h2>
-      <a href="#upload" class="hsec-link" data-action="find">Upload yours <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </div>
-    <p class="hsec-sub">Tap a look and we'll find every piece in it.</p>
-    <div class="sl-row" id="slRow">
-      <article class="sl" data-cats="women streetwear jeans tops">
-        <button type="button" class="sl-btn" data-look="/img/looks/street-blazer.webp" data-name="Street Blazer Look">
-          <span class="sl-img"><img src="/img/looks/street-blazer.webp" alt="Woman in a beige blazer, white top and wide-leg jeans" loading="lazy" width="492" height="783"></span>
-          <span class="sl-info">
-            <b>Street Blazer Look</b>
-            <small>Beige blazer, white top, wide jeans</small>
-            <span class="sl-pieces">
-              <img src="/img/looks/blazer.webp" alt="" width="336" height="288">
-              <img src="/img/looks/knit-top.webp" alt="" width="339" height="288">
-              <img src="/img/looks/wide-jeans.webp" alt="" width="339" height="288">
-              <span class="sl-go"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
-            </span>
-          </span>
-        </button>
-      </article>
-      <article class="sl" data-cats="men">
-        <button type="button" class="sl-btn" data-look="/img/samples/shirt-m.webp" data-name="Olive Smart Casual">
-          <span class="sl-img"><img src="/img/samples/shirt-m.webp" alt="Man in an olive green casual shirt" loading="lazy" width="297" height="348"></span>
-          <span class="sl-info">
-            <b>Olive Smart Casual</b>
-            <small>Olive shirt for work or weekends</small>
-            <span class="sl-pieces">
-              <img src="/img/samples/shirt-d.webp" alt="" width="262" height="160">
-              <span class="sl-go"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
-            </span>
-          </span>
-        </button>
-      </article>
-      <article class="sl" data-cats="women dresses">
-        <button type="button" class="sl-btn" data-look="/img/samples/dress-m.webp" data-name="Pink Floral Midi">
-          <span class="sl-img"><img src="/img/samples/dress-m.webp" alt="Woman in a pink floral midi dress" loading="lazy" width="300" height="348"></span>
-          <span class="sl-info">
-            <b>Pink Floral Midi</b>
-            <small>Easy summer dress</small>
-            <span class="sl-pieces">
-              <img src="/img/samples/dress-d.webp" alt="" width="262" height="160">
-              <span class="sl-go"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
-            </span>
-          </span>
-        </button>
-      </article>
-      <article class="sl" data-cats="women ethnic">
-        <button type="button" class="sl-btn" data-look="/img/samples/kurti-m.webp" data-name="Everyday Ethnic">
-          <span class="sl-img"><img src="/img/samples/kurti-m.webp" alt="Woman in a beige embroidered kurti" loading="lazy" width="294" height="348"></span>
-          <span class="sl-info">
-            <b>Everyday Ethnic</b>
-            <small>Beige embroidered kurti</small>
-            <span class="sl-pieces">
-              <img src="/img/samples/kurti-d.webp" alt="" width="262" height="160">
-              <span class="sl-go"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
-            </span>
-          </span>
-        </button>
-      </article>
-      <article class="sl" data-cats="women tops jeans">
-        <button type="button" class="sl-btn" data-look="/img/samples/top-m.webp" data-name="Black Tank Basics">
-          <span class="sl-img"><img src="/img/samples/top-m.webp" alt="Woman in a black sleeveless top" loading="lazy" width="294" height="348"></span>
-          <span class="sl-info">
-            <b>Black Tank Basics</b>
-            <small>Sleeveless top, goes with everything</small>
-            <span class="sl-pieces">
-              <img src="/img/samples/top-d.webp" alt="" width="262" height="160">
-              <img src="/img/samples/jeans-d.webp" alt="" width="260" height="160">
-              <span class="sl-go"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
-            </span>
-          </span>
-        </button>
-      </article>
-    </div>
-  </section>
+    <div class="vote-bottom">
+      <section class="card share-card">
+        <p class="section-title">Share this vote</p>
+        <div class="share-row">
+          <a class="share-btn share-wa" id="shareWa" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
+          <button type="button" class="share-btn" id="shareCopy"><svg aria-hidden="true"><use href="#i-copy"/></svg>Copy link</button>
+          <button type="button" class="share-btn" id="shareMore" hidden><svg aria-hidden="true"><use href="#i-share"/></svg>More</button>
+        </div>
+      </section>
 
-  <!-- Best deals: real prices from recent searches (filled by home.js; stays hidden when there are none) -->
-  <section class="hsec" id="deals" aria-labelledby="dealsTitle" hidden>
-    <div class="hsec-head">
-      <h2 id="dealsTitle">Best Deals Today <span aria-hidden="true">🔥</span></h2>
-      <a href="/deals/" class="hsec-link">See all deals <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <section class="card promo">
+        <span class="promo-ico"><svg aria-hidden="true"><use href="#i-camera"/></svg></span>
+        <div class="promo-text">
+          <p class="promo-title">Saw an outfit you love?</p>
+          <p class="promo-sub">Snap it and Fit Deal finds it for less.</p>
+        </div>
+        <a href="/" class="btn btn-primary btn-sm">Find your own look</a>
+      </section>
     </div>
-    <p class="hsec-sub">Real prices people found on Fit Deal in the last 48 hours.</p>
-    <div class="deal-row" id="dealRow"></div>
-  </section>
-
-  <!-- More real products from recent searches -->
-  <section class="hsec" id="picks" aria-labelledby="picksTitle" hidden>
-    <div class="hsec-head">
-      <h2 id="picksTitle">Looks You May Love</h2>
-      <a href="/deals/" class="hsec-link">See more <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </div>
-    <div class="pick-grid" id="pickGrid"></div>
-  </section>
-
-  <p class="cat-empty" id="catEmpty" hidden>No looks in this category yet. <button type="button" class="link-btn" id="catClear">Show all</button></p>
-
-  <!-- How it works, short -->
-  <section class="hsec how-mini" aria-labelledby="howTitle">
-    <div class="hsec-head">
-      <h2 id="howTitle">How it works</h2>
-      <a href="/how-it-works/" class="hsec-link">Learn more <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </div>
-    <ol class="how-steps">
-      <li><span class="hs-ico s-upload"><svg aria-hidden="true"><use href="#i-step-upload"/></svg></span><b>Upload</b><small>Screenshot or link</small></li>
-      <li><span class="hs-ico s-find"><svg aria-hidden="true"><use href="#i-step-find"/></svg></span><b>Find</b><small>Exact &amp; similar</small></li>
-      <li><span class="hs-ico s-try"><svg aria-hidden="true"><use href="#i-step-compare"/></svg></span><b>Compare</b><small>Store prices</small></li>
-      <li><span class="hs-ico s-buy"><svg aria-hidden="true"><use href="#i-step-buy"/></svg></span><b>Buy</b><small>Best deal first</small></li>
-    </ol>
-  </section>
-
-  <!-- Recent searches on this device -->
-  <section class="hsec" id="recent" aria-labelledby="recentTitle" hidden>
-    <div class="hsec-head">
-      <h2 id="recentTitle">Your recent searches</h2>
-      <button type="button" class="hsec-link" id="recentClear">Clear</button>
-    </div>
-    <ul class="recent-list" id="recentList"></ul>
-  </section>
+    <p class="disclose"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Prices were checked when the vote was made and may have changed. We may earn a commission if you buy through our links. <a href="/affiliate-disclosure/">Learn more</a></span></p>
+  </div>
 </main>
 
 <footer class="foot">
@@ -342,7 +204,7 @@
 </footer>
 
 <nav class="tabs" aria-label="Main">
-  <a href="/" class="tab" aria-current="page"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-home"/></svg></span><span>Home</span></a>
+  <a href="/" class="tab"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-home"/></svg></span><span>Home</span></a>
   <a href="/#upload" class="tab" data-action="find"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-search"/></svg></span><span>Find</span></a>
   <a href="/saved/" class="tab"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-heart"/></svg></span><span>Saved</span></a>
   <a href="/deals/" class="tab"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-tag"/></svg><i class="dot" id="dealsDot" hidden></i></span><span>Deals</span></a>
@@ -352,6 +214,6 @@
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
 <script src="/js/app.js?v=c4674691d4" defer></script>
-<script src="/js/home.js?v=c4674691d4" defer></script>
+<script src="/js/vote.js?v=c4674691d4" defer></script>
 </body>
 </html>

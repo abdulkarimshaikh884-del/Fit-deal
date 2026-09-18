@@ -1,0 +1,71 @@
+<main class="page page-profile">
+  <section class="me-card">
+    <span class="me-avatar" aria-hidden="true"><svg><use href="#i-sparkle"/></svg></span>
+    <div>
+      <h1>Your Fit Deal</h1>
+      <p>No sign-up needed. Everything on this page stays on this device.</p>
+    </div>
+  </section>
+
+  <div class="me-stats">
+    <a href="/saved/" class="me-stat"><b id="stSaved">0</b><span>Saved</span></a>
+    <a href="/saved/#recentTitle" class="me-stat"><b id="stSearches">0</b><span>Searches</span></a>
+    <span class="me-stat"><b id="stVotes">0</b><span>Votes made</span></span>
+  </div>
+
+  <nav class="card menu" aria-label="Your stuff">
+    <a href="/saved/"><span class="menu-ico mi-pink"><svg aria-hidden="true"><use href="#i-heart"/></svg></span><span class="menu-txt"><b>Saved items</b><small>Products you liked</small></span><svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+    <a href="/deals/"><span class="menu-ico mi-orange"><svg aria-hidden="true"><use href="#i-tag"/></svg></span><span class="menu-txt"><b>Deals</b><small>Real discounts from recent searches</small></span><svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+    <a href="/#upload"><span class="menu-ico mi-purple"><svg aria-hidden="true"><use href="#i-camera-line"/></svg></span><span class="menu-txt"><b>New search</b><small>Upload a screenshot or paste a link</small></span><svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+  </nav>
+
+  <section class="card size-card" aria-labelledby="sizeTitle">
+    <div class="size-head">
+      <h2 class="section-title" id="sizeTitle"><svg aria-hidden="true"><use href="#i-ruler"/></svg>Size helper</h2>
+      <span class="size-result" id="sizeResult" hidden>Usually <b id="sizeLetter">M</b></span>
+    </div>
+    <p class="size-intro">Enter your measurements to see your usual size on a standard Indian size chart. Brands differ, so always check the store's own size chart too.</p>
+    <form class="size-form" id="sizeForm" novalidate>
+      <div class="field field-full">
+        <span>Shopping for</span>
+        <div class="seg seg-wide" id="forSeg" role="group" aria-label="Shopping for">
+          <button type="button" data-for="women" aria-pressed="true">Women</button>
+          <button type="button" data-for="men" aria-pressed="false">Men</button>
+        </div>
+      </div>
+      <label class="field"><span id="chestLabel">Bust</span><span class="input-unit"><input type="number" inputmode="decimal" name="chest" min="24" max="60" step="0.5" placeholder="34"><i>in</i></span></label>
+      <label class="field"><span>Waist</span><span class="input-unit"><input type="number" inputmode="decimal" name="waist" min="20" max="56" step="0.5" placeholder="28"><i>in</i></span></label>
+      <div class="field field-full">
+        <span>How do you like clothes to fit?</span>
+        <div class="seg seg-wide" id="fitSeg" role="group" aria-label="Preferred fit">
+          <button type="button" data-fit="slim" aria-pressed="false">Snug</button>
+          <button type="button" data-fit="regular" aria-pressed="true">Regular</button>
+          <button type="button" data-fit="loose" aria-pressed="false">Loose</button>
+        </div>
+      </div>
+      <p class="form-error field-full" id="sizeError" role="alert" hidden></p>
+      <button type="submit" class="btn btn-primary btn-block field-full">Show my size</button>
+    </form>
+    <p class="fine"><svg aria-hidden="true"><use href="#i-info"/></svg>A general guide from common Indian size charts, not a promise for any brand. Saved only on this device.</p>
+  </section>
+
+  <nav class="card menu" aria-label="Help">
+    <a href="/how-it-works/"><span class="menu-ico mi-blue"><svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg></span><span class="menu-txt"><b>How it works</b></span><svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+    <a href="/faq/"><span class="menu-ico mi-blue"><svg aria-hidden="true"><use href="#i-info"/></svg></span><span class="menu-txt"><b>FAQ</b></span><svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+    <a href="/contact/"><span class="menu-ico mi-blue"><svg aria-hidden="true"><use href="#i-chat"/></svg></span><span class="menu-txt"><b>Contact us</b></span><svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+    <a href="/about/"><span class="menu-ico mi-blue"><svg aria-hidden="true"><use href="#i-store"/></svg></span><span class="menu-txt"><b>About Fit Deal</b></span><svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+  </nav>
+
+  <nav class="card menu" aria-label="Legal">
+    <a href="/privacy/"><span class="menu-ico mi-green"><svg aria-hidden="true"><use href="#i-shield"/></svg></span><span class="menu-txt"><b>Privacy policy</b></span><svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+    <a href="/terms/"><span class="menu-ico mi-green"><svg aria-hidden="true"><use href="#i-doc"/></svg></span><span class="menu-txt"><b>Terms of use</b></span><svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+    <a href="/affiliate-disclosure/"><span class="menu-ico mi-green"><svg aria-hidden="true"><use href="#i-scale"/></svg></span><span class="menu-txt"><b>Affiliate disclosure</b></span><svg class="menu-chev" aria-hidden="true"><use href="#i-chev"/></svg></a>
+  </nav>
+
+  <section class="card me-data" aria-labelledby="dataTitle">
+    <h2 class="section-title" id="dataTitle"><svg aria-hidden="true"><use href="#i-trash"/></svg>Your data</h2>
+    <p>Clear saved items, recent searches and your size notes from this device.</p>
+    <button type="button" class="btn btn-ghost btn-sm me-clear" id="clearData">Clear data on this device</button>
+    <p class="fine">Searches and votes on our server are deleted after 90 days. To delete one sooner, <a href="/contact/?topic=Delete%20my%20data">ask us</a>.</p>
+  </section>
+</main>

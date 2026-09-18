@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /find/
+Disallow: /vote/
+Disallow: /go/
+Disallow: /api/
+Disallow: /admin
+Allow: /
+
+Sitemap: https://fitdeal.shop/sitemap.xml

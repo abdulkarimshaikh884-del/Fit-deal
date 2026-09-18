@@ -1,0 +1,33 @@
+<main class="page page-deals">
+  <section class="deals-hero">
+    <p class="hx-kicker">Updated as people search</p>
+    <h1>Best deals <span>today</span> <span aria-hidden="true">🔥</span></h1>
+    <p>Real prices people found on Fit Deal in the last 48 hours. Each one shows when its price was checked.</p>
+  </section>
+
+  <div class="filter-row deals-filter" role="group" aria-label="Show deals for" id="dealFilter">
+    <button type="button" data-f="all" aria-pressed="true">All</button>
+    <button type="button" data-f="women" aria-pressed="false">Women</button>
+    <button type="button" data-f="men" aria-pressed="false">Men</button>
+    <button type="button" data-f="ethnic" aria-pressed="false">Ethnic</button>
+    <button type="button" data-f="dresses" aria-pressed="false">Dresses</button>
+    <button type="button" data-f="tops" aria-pressed="false">Tops</button>
+    <button type="button" data-f="jeans" aria-pressed="false">Jeans</button>
+  </div>
+
+  <div class="deal-grid" id="dealGrid" aria-live="polite">
+    <div class="dcard sk"><span class="dcard-img sk-img"></span><span class="sk-lines"><i></i><i></i></span></div>
+    <div class="dcard sk"><span class="dcard-img sk-img"></span><span class="sk-lines"><i></i><i></i></span></div>
+    <div class="dcard sk"><span class="dcard-img sk-img"></span><span class="sk-lines"><i></i><i></i></span></div>
+    <div class="dcard sk"><span class="dcard-img sk-img"></span><span class="sk-lines"><i></i><i></i></span></div>
+  </div>
+
+  <section class="empty-state empty-inline" id="dealsEmpty" hidden>
+    <span class="empty-ico"><svg aria-hidden="true"><use href="#i-tag"/></svg></span>
+    <h2 id="dealsEmptyTitle">No deals to show yet</h2>
+    <p id="dealsEmptyText">Deals appear here when searches on Fit Deal find real discounts. Search for a look and you'll see its prices across stores.</p>
+    <a href="/#upload" class="btn btn-primary btn-sm"><svg aria-hidden="true"><use href="#i-camera-line"/></svg>Find a look</a>
+  </section>
+
+  <p class="disclose"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Discounts are worked out from each store's own MRP. Prices change often; the store's page has the final price. We may earn a commission when you buy through our links. <a href="/affiliate-disclosure/">Learn more</a></span></p>
+</main>

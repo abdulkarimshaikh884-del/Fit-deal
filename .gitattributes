@@ -1,0 +1,7 @@
+# Same line endings on Windows and on Render (Linux), so the build check
+# and asset versions match everywhere.
+* text=auto eol=lf
+*.png binary
+*.webp binary
+*.jpg binary
+*.ico binary

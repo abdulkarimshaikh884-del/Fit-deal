@@ -1,0 +1,55 @@
+<main class="page page-tryon">
+  <div class="page-head">
+    <h1>AI Try-On <span class="pill pill-purple">Beta</span></h1>
+    <p>See how an outfit looks on you before you buy.</p>
+  </div>
+
+  <div class="tryon-layout">
+    <div class="tryon-steps">
+      <section class="card step-card">
+        <p class="step-label"><i>1</i>Your photo</p>
+        <div class="tryon-drop" id="tryDrop">
+          <img id="tryPhoto" alt="Your photo" hidden>
+          <div class="tryon-empty" id="tryEmpty">
+            <span class="cam"><svg aria-hidden="true"><use href="#i-camera"/></svg></span>
+            <p class="drop-title">Upload a full-length photo</p>
+            <p class="drop-sub">Stand straight, good light, plain background</p>
+          </div>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn btn-primary btn-sm" id="tryUpload"><svg aria-hidden="true"><use href="#i-image"/></svg>Upload photo</button>
+          <button type="button" class="btn btn-ghost btn-sm" id="trySample">Use sample photo</button>
+        </div>
+        <input type="file" id="tryFile" accept="image/*" hidden>
+        <p class="fine"><svg aria-hidden="true"><use href="#i-shield"/></svg>Your photo is used only for your try-on and is never shared.</p>
+      </section>
+
+      <section class="card step-card">
+        <p class="step-label"><i>2</i>Choose an outfit</p>
+        <div class="outfits" id="outfits" role="radiogroup" aria-label="Outfits"></div>
+      </section>
+
+      <button type="button" class="btn btn-primary btn-block btn-lg" id="tryGo"><svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Try it on</button>
+      <p class="fine center"><b id="tryLeft">2</b>&nbsp;free try-ons left today</p>
+    </div>
+
+    <section class="card tryon-result" id="tryResult" aria-live="polite">
+      <p class="section-title">Your try-on</p>
+      <div class="result-empty" id="resultEmpty">
+        <span class="result-empty-ico"><svg aria-hidden="true"><use href="#i-shirt"/></svg></span>
+        <p>Your result will appear here.</p>
+      </div>
+      <div class="result-body" id="resultBody" hidden>
+        <div class="compare">
+          <figure><img id="resBefore" alt="Your photo"><figcaption>Your photo</figcaption></figure>
+          <span class="compare-arrow" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
+          <figure><img id="resAfter" alt="Try-on result"><figcaption>AI Try-On</figcaption></figure>
+        </div>
+        <div class="btn-row">
+          <a href="/vote/?id=demo" class="btn btn-primary btn-sm"><svg aria-hidden="true"><use href="#i-heart-fill"/></svg>Ask friends to vote</a>
+          <a href="/find/" class="btn btn-ghost btn-sm">Shop this look</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
