@@ -1,22 +1,5 @@
-<main class="shop-home fd-home">
-  <!-- SHOP_NAV -->
-  <!-- Mobile-only search strip (on desktop, search bar sits right in the top header navbar) -->
-  <section class="m-search-strip" aria-label="Search and find deals">
-    <form class="shop-search-box" data-search-form role="search" action="/find/">
-      <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
-      <input type="text" id="shopSearchInputMobile" name="q" placeholder="Search fashion or paste store link..." aria-label="Search clothes or paste product link" autocomplete="off">
-      <div class="search-actions">
-        <button type="button" class="search-cam-btn" id="mobileSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
-          <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
-        </button>
-        <button type="submit" class="search-go-btn" aria-label="Search">
-          <svg aria-hidden="true"><use href="#i-arrow"/></svg>
-        </button>
-      </div>
-    </form>
-  </section>
-
-  <!-- Interactive Visual Snap Drawer (Revealed smoothly on Camera click or link paste) -->
+<main class="shop-home fd-home" id="main">
+  <!-- Interactive Visual Snap Drawer (Modal / Dropzone for Camera and Link triggers) -->
   <section class="visual-snap-drawer" id="upload" aria-label="Visual Dupe Search" hidden>
     <div class="drop" id="drop">
       <div class="drop-idle" id="dropIdle">
@@ -48,342 +31,856 @@
     <p class="snap-privacy"><svg aria-hidden="true"><use href="#i-shield"/></svg><span>Your photo is processed in RAM only and never saved to any database. <a href="/privacy/#photos">Privacy Policy</a></span></p>
   </section>
 
-  <!-- 1. Category Story Circles Strip (Flipkart & Myntra Style) -->
-  <section class="cat-strip-section" id="categories" aria-label="Fashion Categories">
-    <div class="cat-strip-scroll" id="catRow">
-      <a class="cat-circle-card" href="#homeDeals">
-        <span class="cat-circle-avatar cat-all-avatar">🔥</span>
-        <span class="cat-circle-name">Discover</span>
+  <!-- 4. HERO SECTION -->
+  <section class="fd-hero-section" aria-label="Fashion comparison hero">
+    <div class="fd-hero-container">
+      <div class="fd-hero-left">
+        <p class="fd-hero-kicker">COMPARE. SHOP. SAVE.</p>
+        <h1 class="fd-hero-headline">Find the look.<br><span class="fd-purple-accent">Pay less.</span></h1>
+        <p class="fd-hero-subtitle">Compare fashion across Amazon, Flipkart, Myntra &amp; AJIO — same style, better prices.</p>
+        <div class="fd-hero-cta-group">
+          <button type="button" class="fd-hero-btn fd-btn-purple" id="heroUploadBtn">
+            <svg aria-hidden="true"><use href="#i-upload-cloud"/></svg>
+            <span>Upload Screenshot</span>
+          </button>
+          <button type="button" class="fd-hero-btn fd-btn-outline" id="heroLinkBtn">
+            <svg aria-hidden="true"><use href="#i-link"/></svg>
+            <span>Paste Product Link</span>
+          </button>
+        </div>
+        <div class="fd-hero-trust-strip">
+          <div class="fd-hero-trust-item">
+            <span class="fd-hero-trust-icon"><svg aria-hidden="true"><use href="#i-check-plain"/></svg></span>
+            <span>Compare prices across top stores</span>
+          </div>
+          <div class="fd-hero-trust-item">
+            <span class="fd-hero-trust-icon"><svg aria-hidden="true"><use href="#i-check-plain"/></svg></span>
+            <span>100% genuine retailers</span>
+          </div>
+          <div class="fd-hero-trust-item">
+            <span class="fd-hero-trust-icon"><svg aria-hidden="true"><use href="#i-check-plain"/></svg></span>
+            <span>Similar styles when exact match isn't available</span>
+          </div>
+          <div class="fd-hero-trust-item">
+            <span class="fd-hero-trust-icon"><svg aria-hidden="true"><use href="#i-check-plain"/></svg></span>
+            <span>Save time, shop smarter</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fd-hero-right">
+        <div class="fd-showcase-card">
+          <div class="fd-showcase-img-wrap">
+            <img src="/img/products/hero-dress.jpg" alt="SASSAFRAS Floral Print Maxi Dress" fetchpriority="high">
+          </div>
+          <div class="fd-showcase-content">
+            <div class="fd-showcase-header">
+              <div>
+                <p class="fd-showcase-brand">SASSAFRAS</p>
+                <h3 class="fd-showcase-title">Floral Print Maxi Dress</h3>
+              </div>
+              <span class="fd-save-pill">Save ₹700</span>
+            </div>
+            <p class="fd-showcase-main-price">₹1,299</p>
+
+            <div class="fd-retailer-rows">
+              <div class="fd-retailer-row fd-best-row">
+                <span class="fd-store-col">
+                  <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-myntra"/></svg>
+                  <span class="fd-store-name">Myntra</span>
+                </span>
+                <span class="fd-price-col">₹1,299</span>
+                <span class="fd-badge-col"><span class="fd-best-badge">Best Price</span></span>
+              </div>
+              <div class="fd-retailer-row">
+                <span class="fd-store-col">
+                  <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-flipkart"/></svg>
+                  <span class="fd-store-name">Flipkart</span>
+                </span>
+                <span class="fd-price-col">₹1,499</span>
+                <span class="fd-badge-col"></span>
+              </div>
+              <div class="fd-retailer-row">
+                <span class="fd-store-col">
+                  <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-amazon"/></svg>
+                  <span class="fd-store-name">Amazon</span>
+                </span>
+                <span class="fd-price-col">₹1,799</span>
+                <span class="fd-badge-col"></span>
+              </div>
+              <div class="fd-retailer-row">
+                <span class="fd-store-col">
+                  <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-ajio"/></svg>
+                  <span class="fd-store-name">AJIO</span>
+                </span>
+                <span class="fd-price-col">₹1,999</span>
+                <span class="fd-badge-col"></span>
+              </div>
+            </div>
+
+            <div class="fd-showcase-actions">
+              <a href="/find/?q=SASSAFRAS%20Floral%20Print%20Maxi%20Dress" class="fd-showcase-btn">
+                <span>View Product</span>
+                <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+              </a>
+              <button type="button" class="fd-showcase-heart" data-save-id="hero-dress" aria-label="Save to favorites">
+                <svg aria-hidden="true"><use href="#i-heart"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="fd-hero-handnote" aria-hidden="true">
+          <p>Same product.<br>Different prices.<br>Smarter you!</p>
+          <svg class="fd-curved-arrow" viewBox="0 0 60 70" fill="none" stroke="#7041ff" stroke-width="2.5" stroke-linecap="round">
+            <path d="M45,5 Q10,25 35,60" />
+            <path d="M22,50 L35,60 L40,46" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. SHOP BY CATEGORY -->
+  <section class="fd-section fd-cat-section" aria-labelledby="catSectionTitle">
+    <div class="fd-section-header">
+      <h2 id="catSectionTitle" class="fd-section-title">Shop by Category</h2>
+      <a href="/find/" class="fd-section-more">View all categories <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="fd-cat-grid" id="catRow">
+      <a href="/find/?q=women%20fashion" class="fd-cat-circle-item">
+        <div class="fd-cat-avatar-wrap">
+          <img src="/img/products/cat-women.jpg" alt="Women" loading="lazy">
+        </div>
+        <span class="fd-cat-label">Women</span>
       </a>
-      <a class="cat-circle-card" href="#women-edit">
-        <span class="cat-circle-avatar"><img src="/img/looks/women.webp" alt="Women"></span>
-        <span class="cat-circle-name">Women</span>
+      <a href="/find/?q=men%20fashion" class="fd-cat-circle-item">
+        <div class="fd-cat-avatar-wrap">
+          <img src="/img/products/cat-men.jpg" alt="Men" loading="lazy">
+        </div>
+        <span class="fd-cat-label">Men</span>
       </a>
-      <a class="cat-circle-card" href="#men-edit">
-        <span class="cat-circle-avatar"><img src="/img/samples/shirt-m.webp" alt="Men"></span>
-        <span class="cat-circle-name">Men</span>
+      <a href="/find/?q=ethnic%20wear" class="fd-cat-circle-item">
+        <div class="fd-cat-avatar-wrap">
+          <img src="/img/products/cat-ethnic.jpg" alt="Ethnic Wear" loading="lazy">
+        </div>
+        <span class="fd-cat-label">Ethnic Wear</span>
       </a>
-      <a class="cat-circle-card" href="/find/?q=women%20floral%20dress">
-        <span class="cat-circle-avatar"><img src="/img/samples/dress-m.webp" alt="Dresses"></span>
-        <span class="cat-circle-name">Dresses</span>
+      <a href="/find/?q=western%20wear" class="fd-cat-circle-item">
+        <div class="fd-cat-avatar-wrap">
+          <img src="/img/products/cat-western.jpg" alt="Western Wear" loading="lazy">
+        </div>
+        <span class="fd-cat-label">Western Wear</span>
       </a>
-      <a class="cat-circle-card" href="#ethnic-edit">
-        <span class="cat-circle-avatar"><img src="/img/samples/kurti-m.webp" alt="Ethnic"></span>
-        <span class="cat-circle-name">Ethnic Wear</span>
+      <a href="/find/?q=footwear%20shoes" class="fd-cat-circle-item">
+        <div class="fd-cat-avatar-wrap">
+          <img src="/img/products/cat-footwear.jpg" alt="Footwear" loading="lazy">
+        </div>
+        <span class="fd-cat-label">Footwear</span>
       </a>
-      <a class="cat-circle-card" href="/find/?q=women%20tops">
-        <span class="cat-circle-avatar"><img src="/img/samples/top-m.webp" alt="Tops & Tees"></span>
-        <span class="cat-circle-name">Tops &amp; Tees</span>
+      <a href="/find/?q=bags%20handbags" class="fd-cat-circle-item">
+        <div class="fd-cat-avatar-wrap">
+          <img src="/img/products/cat-bags.jpg" alt="Bags & Handbags" loading="lazy">
+        </div>
+        <span class="fd-cat-label">Bags &amp; Handbags</span>
       </a>
-      <a class="cat-circle-card" href="/find/?q=blue%20jeans">
-        <span class="cat-circle-avatar"><img src="/img/samples/jeans-m.webp" alt="Jeans"></span>
-        <span class="cat-circle-name">Jeans &amp; Denim</span>
+      <a href="/find/?q=watches" class="fd-cat-circle-item">
+        <div class="fd-cat-avatar-wrap">
+          <img src="/img/products/cat-watches.jpg" alt="Watches" loading="lazy">
+        </div>
+        <span class="fd-cat-label">Watches</span>
       </a>
-      <a class="cat-circle-card" href="/find/?q=streetwear">
-        <span class="cat-circle-avatar"><img src="/img/looks/street-blazer.webp" alt="Streetwear"></span>
-        <span class="cat-circle-name">Streetwear</span>
+      <a href="/find/?q=sunglasses" class="fd-cat-circle-item">
+        <div class="fd-cat-avatar-wrap">
+          <img src="/img/products/cat-sunglasses.jpg" alt="Sunglasses" loading="lazy">
+        </div>
+        <span class="fd-cat-label">Sunglasses</span>
       </a>
-      <a class="cat-circle-card" href="/find/?q=tops%20under%20499%20rupees&amp;max=499">
-        <span class="cat-circle-avatar cat-badge-avatar">₹</span>
-        <span class="cat-circle-name">Under ₹499</span>
+      <a href="/find/?q=fashion%20accessories" class="fd-cat-circle-item">
+        <div class="fd-cat-avatar-wrap">
+          <img src="/img/products/cat-accessories.jpg" alt="Accessories" loading="lazy">
+        </div>
+        <span class="fd-cat-label">Accessories</span>
+      </a>
+      <a href="/find/?q=beauty%20makeup" class="fd-cat-circle-item">
+        <div class="fd-cat-avatar-wrap">
+          <img src="/img/products/cat-beauty.jpg" alt="Beauty" loading="lazy">
+        </div>
+        <span class="fd-cat-label">Beauty</span>
+      </a>
+      <a href="/deals/" class="fd-cat-circle-item fd-mobile-only fd-deals-circle">
+        <div class="fd-cat-avatar-wrap fd-deals-avatar">
+          <span class="fd-deals-symbol">%</span>
+        </div>
+        <span class="fd-cat-label">Deals</span>
       </a>
     </div>
   </section>
 
-  <!-- 2. High-Conversion Promo Banner (Moved Up & Compact) -->
-  <section class="mega-promo-banner banner-elevated" aria-label="Featured Offers">
-    <div class="mpb-content">
-      <span class="mpb-badge">✦ YOUR NEXT GREAT FASHION FIND ✦</span>
-      <h1 class="mpb-heading">See An Outfit You Love?<br><span>Find It For Less Across Stores.</span></h1>
-      <p class="mpb-desc">Explore fashion from Amazon, Flipkart, Myntra &amp; AJIO. Discover similar styles and compare prices when available.</p>
-      <div class="mpb-ctas">
-        <a href="#homeDeals" class="btn btn-primary mpb-btn-primary">Explore Deals &amp; Styles</a>
-        <button type="button" class="btn btn-ghost mpb-btn-secondary" id="bannerSnapBtn">
-          <svg aria-hidden="true"><use href="#i-camera-line"/></svg>Snap Outfit to Find Dupe
-        </button>
+  <!-- 6. TODAY'S BEST DEALS -->
+  <section class="fd-section fd-deals-section" id="homeDeals" aria-labelledby="dealsSectionTitle">
+    <div class="fd-section-header">
+      <div>
+        <h2 id="dealsSectionTitle" class="fd-section-title">Today's Best Deals</h2>
+        <p class="fd-section-sub">Handpicked offers from top stores</p>
       </div>
-      <div class="mpb-trust-row">
-        <span><svg aria-hidden="true"><use href="#i-check-plain"/></svg> Amazon · Flipkart · Myntra · AJIO</span>
-        <span><svg aria-hidden="true"><use href="#i-check-plain"/></svg> Commission never changes ranking</span>
-        <span><svg aria-hidden="true"><use href="#i-check-plain"/></svg> Shop on official stores</span>
-      </div>
-    </div>
-    <div class="mpb-art" aria-hidden="true">
-      <img src="/img/hero-desktop.webp" alt="" class="mpb-model" width="420" height="520" fetchpriority="high">
-      <span class="mpb-sticker st1">Same vibe.<br><b>More options ♡</b></span>
-      <span class="mpb-sticker st2">Your style.<br><b>Your way ♡</b></span>
-    </div>
-  </section>
-
-  <!-- SHOP_CAMPAIGNS -->
-
-  <!-- 3. Lightning Deals of the Day (Live Multi-Store Deals) -->
-  <section class="shop-shelf" id="homeDeals" aria-labelledby="dealsTitle">
-    <div class="shelf-header">
-      <div class="shelf-title-wrap">
-        <h2 id="dealsTitle">Deals &amp; Style Discoveries</h2>
-        <span class="shelf-timer" id="homeFeedStatus" role="status">Checking available offers…</span>
-      </div>
-      <a href="#budget-edit" class="shelf-more-link">Shop by Budget <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a href="/deals/" class="fd-section-more">View all deals <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
 
-    <!-- Editorial discovery fallback; replaced by the sourced feed when available. -->
-    <div class="product-shelf-grid" id="homeLiveDeals" hidden></div>
-    <div class="product-shelf-grid" id="dealRow">
-      <!-- Product 1: Tokyo Talkies Dress -->
-      <article class="p-card" data-cat="dresses" data-audience="women">
-        <div class="p-card-top">
-          <span class="p-card-badge badge-editorial">STYLE INSPIRATION</span>
+    <div class="fd-product-grid-4" id="dealRow">
+      <!-- Deal 1: SASSAFRAS Crop Top -->
+      <article class="fd-comparison-card" data-cat="tops">
+        <div class="fd-card-image-wrap">
+          <span class="fd-badge-save">Save 45%</span>
+          <img src="/img/products/deal-crop-top.jpg" alt="SASSAFRAS Women Puff Sleeve Crop Top" loading="lazy">
+        </div>
+        <div class="fd-card-body">
+          <p class="fd-card-brand">SASSAFRAS</p>
+          <h3 class="fd-card-title">Women Puff Sleeve Crop Top</h3>
+          <div class="fd-card-rating">
+            <svg aria-hidden="true"><use href="#i-star-fill"/></svg>
+            <span class="fd-rating-val">4.3</span>
+            <span class="fd-rating-count">(1,230)</span>
+          </div>
+          <div class="fd-card-pricing">
+            <span class="fd-curr-price">₹699</span>
+            <s class="fd-orig-price">₹1,199</s>
+          </div>
 
-          <div class="p-card-img-wrap">
-            <img src="/img/samples/dress-m.webp" alt="dress style inspiration" loading="lazy">
+          <div class="fd-card-retailers">
+            <div class="fd-retailer-line fd-best-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-myntra"/></svg> Myntra</span>
+              <span class="fd-ret-price">₹689</span>
+              <span class="fd-best-badge">Best Price</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-flipkart"/></svg> Flipkart</span>
+              <span class="fd-ret-price">₹749</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-amazon"/></svg> Amazon</span>
+              <span class="fd-ret-price">₹789</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-ajio"/></svg> AJIO</span>
+              <span class="fd-ret-price">₹899</span>
+            </div>
+          </div>
+
+          <div class="fd-card-actions">
+            <a href="/find/?q=SASSAFRAS%20Women%20Puff%20Sleeve%20Crop%20Top" class="fd-btn-view-product">View Product</a>
+            <button type="button" class="fd-card-heart" data-save-id="deal-crop-top" aria-label="Save item">
+              <svg aria-hidden="true"><use href="#i-heart"/></svg>
+            </button>
           </div>
         </div>
-        <div class="p-card-details">
-          <div class="p-card-store-row"><span class="p-card-brand">Explore this style</span></div>
-          <h3 class="p-card-name">Women Pink Floral Print A-Line Midi Dress</h3>
-          <p class="editorial-card-note">Check available matches and retailer prices.</p>
-
-          <div class="p-card-actions"><a href="/find/?q=Women%20Pink%20Floral%20Print%20A-Line%20Midi%20Dress" class="btn btn-primary p-card-buy-btn">Explore this style <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-        </div>
       </article>
 
-      <!-- Product 2: Dennis Lingo Casual Shirt -->
-      <article class="p-card" data-cat="men" data-audience="men">
-        <div class="p-card-top">
-          <span class="p-card-badge badge-editorial">STYLE INSPIRATION</span>
+      <!-- Deal 2: H&M Linen Shirt -->
+      <article class="fd-comparison-card" data-cat="men">
+        <div class="fd-card-image-wrap">
+          <span class="fd-badge-save">Save 53%</span>
+          <img src="/img/products/deal-linen-shirt.jpg" alt="H&M Men Regular Fit Linen Shirt" loading="lazy">
+        </div>
+        <div class="fd-card-body">
+          <p class="fd-card-brand">H&amp;M</p>
+          <h3 class="fd-card-title">Men Regular Fit Linen Shirt</h3>
+          <div class="fd-card-rating">
+            <svg aria-hidden="true"><use href="#i-star-fill"/></svg>
+            <span class="fd-rating-val">4.5</span>
+            <span class="fd-rating-count">(2.1K)</span>
+          </div>
+          <div class="fd-card-pricing">
+            <span class="fd-curr-price">₹999</span>
+            <s class="fd-orig-price">₹1,999</s>
+          </div>
 
-          <div class="p-card-img-wrap">
-            <img src="/img/samples/shirt-m.webp" alt="shirt style inspiration" loading="lazy">
+          <div class="fd-card-retailers">
+            <div class="fd-retailer-line fd-best-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-flipkart"/></svg> Flipkart</span>
+              <span class="fd-ret-price">₹999</span>
+              <span class="fd-best-badge">Best Price</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-myntra"/></svg> Myntra</span>
+              <span class="fd-ret-price">₹1,049</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-amazon"/></svg> Amazon</span>
+              <span class="fd-ret-price">₹1,199</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-ajio"/></svg> AJIO</span>
+              <span class="fd-ret-price">₹1,299</span>
+            </div>
+          </div>
+
+          <div class="fd-card-actions">
+            <a href="/find/?q=H%26M%20Men%20Regular%20Fit%20Linen%20Shirt" class="fd-btn-view-product">View Product</a>
+            <button type="button" class="fd-card-heart" data-save-id="deal-linen-shirt" aria-label="Save item">
+              <svg aria-hidden="true"><use href="#i-heart"/></svg>
+            </button>
           </div>
         </div>
-        <div class="p-card-details">
-          <div class="p-card-store-row"><span class="p-card-brand">Explore this style</span></div>
-          <h3 class="p-card-name">Men Olive Green Solid Slim Fit Casual Shirt</h3>
-          <p class="editorial-card-note">Check available matches and retailer prices.</p>
-
-          <div class="p-card-actions"><a href="/find/?q=Men%20Olive%20Green%20Solid%20Slim%20Fit%20Casual%20Shirt" class="btn btn-primary p-card-buy-btn">Explore this style <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-        </div>
       </article>
 
-      <!-- Product 3: Tokyo Talkies Black Crop Top -->
-      <article class="p-card" data-cat="tops" data-audience="women">
-        <div class="p-card-top">
-          <span class="p-card-badge badge-editorial">STYLE INSPIRATION</span>
+      <!-- Deal 3: Levi's Jeans -->
+      <article class="fd-comparison-card" data-cat="jeans">
+        <div class="fd-card-image-wrap">
+          <span class="fd-badge-save">Save 35%</span>
+          <img src="/img/products/deal-jeans.jpg" alt="Levi's Women High Rise Straight Jeans" loading="lazy">
+        </div>
+        <div class="fd-card-body">
+          <p class="fd-card-brand">Levi's</p>
+          <h3 class="fd-card-title">Women High Rise Straight Jeans</h3>
+          <div class="fd-card-rating">
+            <svg aria-hidden="true"><use href="#i-star-fill"/></svg>
+            <span class="fd-rating-val">4.4</span>
+            <span class="fd-rating-count">(3.8K)</span>
+          </div>
+          <div class="fd-card-pricing">
+            <span class="fd-curr-price">₹1,949</span>
+            <s class="fd-orig-price">₹2,999</s>
+          </div>
 
-          <div class="p-card-img-wrap">
-            <img src="/img/samples/top-m.webp" alt="top style inspiration" loading="lazy">
+          <div class="fd-card-retailers">
+            <div class="fd-retailer-line fd-best-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-myntra"/></svg> Myntra</span>
+              <span class="fd-ret-price">₹1,949</span>
+              <span class="fd-best-badge">Best Price</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-amazon"/></svg> Amazon</span>
+              <span class="fd-ret-price">₹2,199</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-flipkart"/></svg> Flipkart</span>
+              <span class="fd-ret-price">₹2,249</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-ajio"/></svg> AJIO</span>
+              <span class="fd-ret-price">₹2,499</span>
+            </div>
+          </div>
+
+          <div class="fd-card-actions">
+            <a href="/find/?q=Levi%27s%20Women%20High%20Rise%20Straight%20Jeans" class="fd-btn-view-product">View Product</a>
+            <button type="button" class="fd-card-heart" data-save-id="deal-jeans" aria-label="Save item">
+              <svg aria-hidden="true"><use href="#i-heart"/></svg>
+            </button>
           </div>
         </div>
-        <div class="p-card-details">
-          <div class="p-card-store-row"><span class="p-card-brand">Explore this style</span></div>
-          <h3 class="p-card-name">Women Casual Solid Black Sleeveless Crop Top</h3>
-          <p class="editorial-card-note">Check available matches and retailer prices.</p>
-
-          <div class="p-card-actions"><a href="/find/?q=Women%20Casual%20Solid%20Black%20Sleeveless%20Crop%20Top" class="btn btn-primary p-card-buy-btn">Explore this style <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-        </div>
       </article>
 
-      <!-- Product 4: Kotty Wide Leg Jeans -->
-      <article class="p-card" data-cat="jeans" data-audience="women">
-        <div class="p-card-top">
-          <span class="p-card-badge badge-editorial">STYLE INSPIRATION</span>
-
-          <div class="p-card-img-wrap">
-            <img src="/img/samples/jeans-m.webp" alt="jeans style inspiration" loading="lazy">
+      <!-- Deal 4: Nike Sneakers -->
+      <article class="fd-comparison-card" data-cat="shoes">
+        <div class="fd-card-image-wrap">
+          <span class="fd-badge-save">Save 39%</span>
+          <img src="/img/products/deal-sneakers.jpg" alt="Nike Men Court Vision Low Sneakers" loading="lazy">
+        </div>
+        <div class="fd-card-body">
+          <p class="fd-card-brand">Nike</p>
+          <h3 class="fd-card-title">Men Court Vision Low Sneakers</h3>
+          <div class="fd-card-rating">
+            <svg aria-hidden="true"><use href="#i-star-fill"/></svg>
+            <span class="fd-rating-val">4.6</span>
+            <span class="fd-rating-count">(5.1K)</span>
           </div>
-        </div>
-        <div class="p-card-details">
-          <div class="p-card-store-row"><span class="p-card-brand">Explore this style</span></div>
-          <h3 class="p-card-name">Women High Rise Wide Leg Clean Look Blue Jeans</h3>
-          <p class="editorial-card-note">Check available matches and retailer prices.</p>
-
-          <div class="p-card-actions"><a href="/find/?q=Women%20High%20Rise%20Wide%20Leg%20Clean%20Look%20Blue%20Jeans" class="btn btn-primary p-card-buy-btn">Explore this style <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-        </div>
-      </article>
-
-      <!-- Product 5: Libas Embroidered Kurti -->
-      <article class="p-card" data-cat="ethnic" data-audience="women">
-        <div class="p-card-top">
-          <span class="p-card-badge badge-editorial">STYLE INSPIRATION</span>
-
-          <div class="p-card-img-wrap">
-            <img src="/img/samples/kurti-m.webp" alt="kurti style inspiration" loading="lazy">
+          <div class="fd-card-pricing">
+            <span class="fd-curr-price">₹3,299</span>
+            <s class="fd-orig-price">₹5,495</s>
           </div>
-        </div>
-        <div class="p-card-details">
-          <div class="p-card-store-row"><span class="p-card-brand">Explore this style</span></div>
-          <h3 class="p-card-name">Women Beige Embroidered Pure Cotton Straight Kurti</h3>
-          <p class="editorial-card-note">Check available matches and retailer prices.</p>
 
-          <div class="p-card-actions"><a href="/find/?q=Women%20Beige%20Embroidered%20Pure%20Cotton%20Straight%20Kurti" class="btn btn-primary p-card-buy-btn">Explore this style <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-        </div>
-      </article>
-
-      <!-- Product 6: Berrylush Wrap Dress -->
-      <article class="p-card" data-cat="dresses" data-audience="women">
-        <div class="p-card-top">
-          <span class="p-card-badge badge-editorial">STYLE INSPIRATION</span>
-
-          <div class="p-card-img-wrap">
-            <img src="/img/samples/dress-m.webp" alt="dress style inspiration" loading="lazy">
+          <div class="fd-card-retailers">
+            <div class="fd-retailer-line fd-best-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-flipkart"/></svg> Flipkart</span>
+              <span class="fd-ret-price">₹3,299</span>
+              <span class="fd-best-badge">Best Price</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-amazon"/></svg> Amazon</span>
+              <span class="fd-ret-price">₹3,499</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-myntra"/></svg> Myntra</span>
+              <span class="fd-ret-price">₹3,599</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-ajio"/></svg> AJIO</span>
+              <span class="fd-ret-price">₹3,799</span>
+            </div>
           </div>
-        </div>
-        <div class="p-card-details">
-          <div class="p-card-store-row"><span class="p-card-brand">Explore this style</span></div>
-          <h3 class="p-card-name">Women Pink &amp; White Floral Print Wrap Midi Dress</h3>
-          <p class="editorial-card-note">Check available matches and retailer prices.</p>
 
-          <div class="p-card-actions"><a href="/find/?q=Women%20Pink%20%26%20White%20Floral%20Print%20Wrap%20Midi%20Dress" class="btn btn-primary p-card-buy-btn">Explore this style <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-        </div>
-      </article>
-
-      <!-- Product 7: Highlander Olive Shirt -->
-      <article class="p-card" data-cat="men" data-audience="men">
-        <div class="p-card-top">
-          <span class="p-card-badge badge-editorial">STYLE INSPIRATION</span>
-
-          <div class="p-card-img-wrap">
-            <img src="/img/samples/shirt-m.webp" alt="shirt style inspiration" loading="lazy">
+          <div class="fd-card-actions">
+            <a href="/find/?q=Nike%20Men%20Court%20Vision%20Low%20Sneakers" class="fd-btn-view-product">View Product</a>
+            <button type="button" class="fd-card-heart" data-save-id="deal-sneakers" aria-label="Save item">
+              <svg aria-hidden="true"><use href="#i-heart"/></svg>
+            </button>
           </div>
-        </div>
-        <div class="p-card-details">
-          <div class="p-card-store-row"><span class="p-card-brand">Explore this style</span></div>
-          <h3 class="p-card-name">Men Olive Green Solid Casual Cotton Shirt</h3>
-          <p class="editorial-card-note">Check available matches and retailer prices.</p>
-
-          <div class="p-card-actions"><a href="/find/?q=Men%20Olive%20Green%20Solid%20Casual%20Cotton%20Shirt" class="btn btn-primary p-card-buy-btn">Explore this style <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-        </div>
-      </article>
-
-      <!-- Product 8: H&M Black Tank Top -->
-      <article class="p-card" data-cat="tops" data-audience="women">
-        <div class="p-card-top">
-          <span class="p-card-badge badge-editorial">STYLE INSPIRATION</span>
-
-          <div class="p-card-img-wrap">
-            <img src="/img/samples/top-m.webp" alt="top style inspiration" loading="lazy">
-          </div>
-        </div>
-        <div class="p-card-details">
-          <div class="p-card-store-row"><span class="p-card-brand">Explore this style</span></div>
-          <h3 class="p-card-name">Women Black Ribbed Fitted Sleeveless Tank Top</h3>
-          <p class="editorial-card-note">Check available matches and retailer prices.</p>
-
-          <div class="p-card-actions"><a href="/find/?q=Women%20Black%20Ribbed%20Fitted%20Sleeveless%20Tank%20Top" class="btn btn-primary p-card-buy-btn">Explore this style <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- 5. Celebrity & Streetwear Outfits (Shop The Complete Look) -->
-
-
-  <!-- 6. More Top Styles (Curated Picks) -->
-  <section class="shop-shelf" id="picks" aria-labelledby="picksTitle">
-    <div class="shelf-header">
-      <div class="shelf-title-wrap">
-        <h2 id="picksTitle">More styles to explore</h2>
-      </div>
-    </div>
-    <div class="product-shelf-grid" id="pickGrid">
-      <!-- Pick 1: Harpa Top -->
-      <article class="p-card" data-cat="tops">
-        <div class="p-card-top">
-          <span class="p-card-badge badge-editorial">STYLE INSPIRATION</span>
-
-          <div class="p-card-img-wrap"><img src="/img/samples/top-m.webp" alt="top style inspiration" loading="lazy"></div>
-        </div>
-        <div class="p-card-details">
-          <div class="p-card-store-row"><span class="p-card-brand">Explore this style</span></div>
-          <h3 class="p-card-name">Women Solid Regular Fit Black Sleeveless Top</h3>
-          <p class="editorial-card-note">Check available matches and retailer prices.</p>
-          <div class="p-card-actions"><a href="/find/?q=Women%20Solid%20Regular%20Fit%20Black%20Sleeveless%20Top" class="btn btn-primary p-card-buy-btn">Explore this style <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-        </div>
-      </article>
-
-      <!-- Pick 2: Levi's Jeans -->
-      <article class="p-card" data-cat="jeans">
-        <div class="p-card-top">
-          <span class="p-card-badge badge-editorial">STYLE INSPIRATION</span>
-
-          <div class="p-card-img-wrap"><img src="/img/samples/jeans-m.webp" alt="jeans style inspiration" loading="lazy"></div>
-        </div>
-        <div class="p-card-details">
-          <div class="p-card-store-row"><span class="p-card-brand">Explore this style</span></div>
-          <h3 class="p-card-name">Women Blue High-Rise Light Fade Wide-Leg Jeans</h3>
-          <p class="editorial-card-note">Check available matches and retailer prices.</p>
-          <div class="p-card-actions"><a href="/find/?q=Women%20Blue%20High-Rise%20Light%20Fade%20Wide-Leg%20Jeans" class="btn btn-primary p-card-buy-btn">Explore this style <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-        </div>
-      </article>
-
-      <!-- Pick 3: Sassafras Midi Dress -->
-      <article class="p-card" data-cat="dresses">
-        <div class="p-card-top">
-          <span class="p-card-badge badge-editorial">STYLE INSPIRATION</span>
-
-          <div class="p-card-img-wrap"><img src="/img/samples/dress-m.webp" alt="dress style inspiration" loading="lazy"></div>
-        </div>
-        <div class="p-card-details">
-          <div class="p-card-store-row"><span class="p-card-brand">Explore this style</span></div>
-          <h3 class="p-card-name">Women Pink Floral Printed Fit &amp; Flare Midi Dress</h3>
-          <p class="editorial-card-note">Check available matches and retailer prices.</p>
-          <div class="p-card-actions"><a href="/find/?q=Women%20Pink%20Floral%20Printed%20Fit%20%26%20Flare%20Midi%20Dress" class="btn btn-primary p-card-buy-btn">Explore this style <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
-        </div>
-      </article>
-
-      <!-- Pick 4: W for Woman Kurti -->
-      <article class="p-card" data-cat="ethnic">
-        <div class="p-card-top">
-          <span class="p-card-badge badge-editorial">STYLE INSPIRATION</span>
-
-          <div class="p-card-img-wrap"><img src="/img/samples/kurti-m.webp" alt="kurti style inspiration" loading="lazy"></div>
-        </div>
-        <div class="p-card-details">
-          <div class="p-card-store-row"><span class="p-card-brand">Explore this style</span></div>
-          <h3 class="p-card-name">Women Beige Ethnic Embroidered Straight Kurti</h3>
-          <p class="editorial-card-note">Check available matches and retailer prices.</p>
-          <div class="p-card-actions"><a href="/find/?q=Women%20Beige%20Ethnic%20Embroidered%20Straight%20Kurti" class="btn btn-primary p-card-buy-btn">Explore this style <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
         </div>
       </article>
     </div>
   </section>
 
-  <!-- SHOP_EXPANSION -->
-
-  <!-- 7. Recent searches on this device -->
-  <section class="shop-shelf" id="recent" aria-labelledby="recentTitle" hidden>
-    <div class="shelf-header">
-      <div class="shelf-title-wrap">
-        <h2 id="recentTitle">Your Recent Searches</h2>
+  <!-- 7. COMPARE ACROSS STORES -->
+  <section class="fd-section fd-compare-shelf" aria-labelledby="compareShelfTitle">
+    <div class="fd-section-header">
+      <div>
+        <h2 id="compareShelfTitle" class="fd-section-title">Compare Across Stores</h2>
+        <p class="fd-section-sub">Same products. Different prices. See it all in one place.</p>
       </div>
-      <button type="button" class="shelf-more-link" id="recentClear">Clear History</button>
+      <a href="/deals/" class="fd-section-more">View more products <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
-    <ul class="recent-list" id="recentList"></ul>
+
+    <div class="fd-product-grid-3">
+      <!-- Item 1: MANGO Blazer -->
+      <article class="fd-compare-featured-card">
+        <div class="fd-card-image-wrap">
+          <span class="fd-badge-save">Save ₹1,000</span>
+          <img src="/img/products/compare-blazer.jpg" alt="MANGO Women Tailored Blazer" loading="lazy">
+        </div>
+        <div class="fd-card-body">
+          <p class="fd-card-brand">MANGO</p>
+          <h3 class="fd-card-title">Women Tailored Blazer</h3>
+          <div class="fd-card-rating">
+            <svg aria-hidden="true"><use href="#i-star-fill"/></svg>
+            <span class="fd-rating-val">4.5</span>
+            <span class="fd-rating-count">(2.1K)</span>
+          </div>
+          <p class="fd-lowest-label">Lowest Price</p>
+          <div class="fd-card-pricing">
+            <span class="fd-curr-price">₹2,999</span>
+            <s class="fd-orig-price">₹3,999</s>
+          </div>
+
+          <div class="fd-card-retailers">
+            <div class="fd-retailer-line fd-best-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-myntra"/></svg> Myntra</span>
+              <span class="fd-ret-price">₹2,999</span>
+              <span class="fd-best-badge">Best Price</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-flipkart"/></svg> Flipkart</span>
+              <span class="fd-ret-price">₹3,249</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-amazon"/></svg> Amazon</span>
+              <span class="fd-ret-price">₹3,429</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-ajio"/></svg> AJIO</span>
+              <span class="fd-ret-price">₹3,999</span>
+            </div>
+          </div>
+
+          <div class="fd-featured-footer">
+            <span class="fd-stores-compared-tag">
+              <svg aria-hidden="true"><use href="#i-step-compare"/></svg>
+              4 stores compared
+            </span>
+            <a href="/find/?q=MANGO%20Women%20Tailored%20Blazer" class="fd-link-view">View Product</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 2: Fossil Watch -->
+      <article class="fd-compare-featured-card">
+        <div class="fd-card-image-wrap">
+          <span class="fd-badge-save">Save ₹1,700</span>
+          <img src="/img/products/compare-watch.jpg" alt="Fossil Men Chronograph Watch" loading="lazy">
+        </div>
+        <div class="fd-card-body">
+          <p class="fd-card-brand">Fossil</p>
+          <h3 class="fd-card-title">Men Chronograph Watch</h3>
+          <div class="fd-card-rating">
+            <svg aria-hidden="true"><use href="#i-star-fill"/></svg>
+            <span class="fd-rating-val">4.6</span>
+            <span class="fd-rating-count">(1.1K)</span>
+          </div>
+          <p class="fd-lowest-label">Lowest Price</p>
+          <div class="fd-card-pricing">
+            <span class="fd-curr-price">₹5,699</span>
+            <s class="fd-orig-price">₹6,899</s>
+          </div>
+
+          <div class="fd-card-retailers">
+            <div class="fd-retailer-line fd-best-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-amazon"/></svg> Amazon</span>
+              <span class="fd-ret-price">₹5,699</span>
+              <span class="fd-best-badge">Best Price</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-flipkart"/></svg> Flipkart</span>
+              <span class="fd-ret-price">₹6,099</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-myntra"/></svg> Myntra</span>
+              <span class="fd-ret-price">₹6,299</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-ajio"/></svg> AJIO</span>
+              <span class="fd-ret-price">₹6,899</span>
+            </div>
+          </div>
+
+          <div class="fd-featured-footer">
+            <span class="fd-stores-compared-tag">
+              <svg aria-hidden="true"><use href="#i-step-compare"/></svg>
+              4 stores compared
+            </span>
+            <a href="/find/?q=Fossil%20Men%20Chronograph%20Watch" class="fd-link-view">View Product</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Item 3: Lavie Handbag -->
+      <article class="fd-compare-featured-card">
+        <div class="fd-card-image-wrap">
+          <span class="fd-badge-save">Save ₹600</span>
+          <img src="/img/products/compare-bag.jpg" alt="Lavie Women Handbag" loading="lazy">
+        </div>
+        <div class="fd-card-body">
+          <p class="fd-card-brand">Lavie</p>
+          <h3 class="fd-card-title">Women Handbag</h3>
+          <div class="fd-card-rating">
+            <svg aria-hidden="true"><use href="#i-star-fill"/></svg>
+            <span class="fd-rating-val">4.5</span>
+            <span class="fd-rating-count">(3.1K)</span>
+          </div>
+          <p class="fd-lowest-label">Lowest Price</p>
+          <div class="fd-card-pricing">
+            <span class="fd-curr-price">₹1,199</span>
+            <s class="fd-orig-price">₹1,899</s>
+          </div>
+
+          <div class="fd-card-retailers">
+            <div class="fd-retailer-line fd-best-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-flipkart"/></svg> Flipkart</span>
+              <span class="fd-ret-price">₹1,199</span>
+              <span class="fd-best-badge">Best Price</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-amazon"/></svg> Amazon</span>
+              <span class="fd-ret-price">₹1,349</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-myntra"/></svg> Myntra</span>
+              <span class="fd-ret-price">₹1,499</span>
+            </div>
+            <div class="fd-retailer-line">
+              <span class="fd-ret-store"><svg aria-hidden="true"><use href="#i-store-ajio"/></svg> AJIO</span>
+              <span class="fd-ret-price">₹1,999</span>
+            </div>
+          </div>
+
+          <div class="fd-featured-footer">
+            <span class="fd-stores-compared-tag">
+              <svg aria-hidden="true"><use href="#i-step-compare"/></svg>
+              4 stores compared
+            </span>
+            <a href="/find/?q=Lavie%20Women%20Handbag" class="fd-link-view">View Product</a>
+          </div>
+        </div>
+      </article>
+    </div>
   </section>
 
-  <!-- 8. E-Commerce Trust Badges & Guarantee -->
-  <section class="ecommerce-trust-section" aria-label="Trust & Guarantees">
-    <div class="trust-grid">
-      <div class="trust-card">
-        <span class="trust-ico t-purple"><svg aria-hidden="true"><use href="#i-search"/></svg></span>
-        <h3>Explore trusted stores</h3>
-        <p>Discover fashion on Amazon, Flipkart, Myntra &amp; AJIO.</p>
+  <!-- 8. TRENDING LOOKS -->
+  <section class="fd-section fd-trending-shelf" aria-labelledby="trendingShelfTitle">
+    <div class="fd-section-header">
+      <div>
+        <h2 id="trendingShelfTitle" class="fd-section-title">Trending Looks</h2>
+        <p class="fd-section-sub">Fresh styles for every you</p>
       </div>
-      <div class="trust-card">
-        <span class="trust-ico t-green"><svg aria-hidden="true"><use href="#i-scale"/></svg></span>
-        <h3>Independent ranking</h3>
-        <p>Results consider relevance and price. Affiliate commission never changes their order.</p>
+      <a href="/find/?q=trending%20fashion" class="fd-section-more">View all looks <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+
+    <div class="fd-product-grid-4">
+      <a href="/find/?q=everyday%20essentials%20women" class="fd-trend-card">
+        <div class="fd-trend-img-wrap">
+          <img src="/img/products/trend-everyday.jpg" alt="Everyday Essentials" loading="lazy">
+        </div>
+        <div class="fd-trend-info">
+          <h3 class="fd-trend-title">Everyday Essentials</h3>
+          <p class="fd-trend-sub">Comfy styles for your daily routine</p>
+          <span class="fd-trend-cta">Shop Now <svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/find/?q=mens%20casual%20outfits" class="fd-trend-card">
+        <div class="fd-trend-img-wrap">
+          <img src="/img/products/trend-men.jpg" alt="Men's Casuals" loading="lazy">
+        </div>
+        <div class="fd-trend-info">
+          <h3 class="fd-trend-title">Men's Casuals</h3>
+          <p class="fd-trend-sub">Relaxed. Refined. On point.</p>
+          <span class="fd-trend-cta">Shop Now <svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/find/?q=festive%20ethnic%20collection" class="fd-trend-card">
+        <div class="fd-trend-img-wrap">
+          <img src="/img/products/trend-festive.jpg" alt="Festive Collection" loading="lazy">
+        </div>
+        <div class="fd-trend-info">
+          <h3 class="fd-trend-title">Festive Collection</h3>
+          <p class="fd-trend-sub">Traditional with a modern twist.</p>
+          <span class="fd-trend-cta">Shop Now <svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/find/?q=sneakers%20shoes" class="fd-trend-card">
+        <div class="fd-trend-img-wrap">
+          <img src="/img/products/trend-sneaker.jpg" alt="Sneaker Edit" loading="lazy">
+        </div>
+        <div class="fd-trend-info">
+          <h3 class="fd-trend-title">Sneaker Edit</h3>
+          <p class="fd-trend-sub">Step into style</p>
+          <span class="fd-trend-cta">Shop Now <svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 9. FIND FROM SCREENSHOT -->
+  <section class="fd-section fd-screenshot-shelf" aria-labelledby="screenshotTitle">
+    <div class="fd-screenshot-container">
+      <div class="fd-screenshot-header">
+        <h2 id="screenshotTitle" class="fd-section-title">Find from Screenshot</h2>
+        <p class="fd-section-sub">Upload a screenshot and we'll find the exact product (when available) or similar styles across top stores.</p>
       </div>
-      <div class="trust-card">
-        <span class="trust-ico t-blue"><svg aria-hidden="true"><use href="#i-ruler"/></svg></span>
-        <h3>Check your fit</h3>
-        <p>Use the size chart on the retailer’s product page before placing your order.</p>
+
+      <div class="fd-screenshot-body">
+        <div class="fd-screenshot-dropzone" id="sectionDropzone" role="button" tabindex="0" aria-label="Upload photo or screenshot">
+          <div class="fd-dropzone-icon">
+            <svg aria-hidden="true"><use href="#i-upload-cloud"/></svg>
+          </div>
+          <p class="fd-dropzone-title">Drag &amp; drop an image here or click to upload</p>
+          <p class="fd-dropzone-hint">Supports JPG, PNG, WEBP (max 10MB)</p>
+          <input type="file" id="sectionPhotoInput" accept="image/*" hidden>
+        </div>
+
+        <div class="fd-screenshot-polaroids" aria-hidden="true">
+          <div class="fd-polaroid-stack">
+            <div class="fd-polaroid-item fd-pol-1">
+              <img src="/img/products/deal-crop-top.jpg" alt="">
+            </div>
+            <div class="fd-polaroid-item fd-pol-2">
+              <img src="/img/products/hero-dress.jpg" alt="">
+            </div>
+            <div class="fd-polaroid-item fd-pol-3">
+              <img src="/img/products/trend-everyday.jpg" alt="">
+            </div>
+          </div>
+          <div class="fd-polaroid-note">
+            <p>Try a screenshot<br>of any outfit!</p>
+            <svg class="fd-curved-arrow" viewBox="0 0 50 60" fill="none" stroke="#7041ff" stroke-width="2.5" stroke-linecap="round">
+              <path d="M40,5 Q10,20 25,50" />
+              <path d="M12,42 L25,50 L32,38" />
+            </svg>
+          </div>
+        </div>
       </div>
-      <div class="trust-card">
-        <span class="trust-ico t-pink"><svg aria-hidden="true"><use href="#i-shield"/></svg></span>
-        <h3>Photo privacy</h3>
-        <p>Photos go to our recognition provider for analysis. Fit Deal does not save them on its servers.</p>
+    </div>
+  </section>
+
+  <!-- 10. SAME STYLE, LOWER PRICE -->
+  <section class="fd-section fd-same-style-shelf" aria-labelledby="sameStyleTitle">
+    <div class="fd-section-header">
+      <div>
+        <h2 id="sameStyleTitle" class="fd-section-title">Same Style, Lower Price</h2>
+        <p class="fd-section-sub">Love the look? Compare similar styles for less.</p>
+      </div>
+      <a href="/find/?q=linen%20dress" class="fd-section-more">View more <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+
+    <div class="fd-same-style-wrap">
+      <!-- Left: Original Style -->
+      <div class="fd-original-style-card">
+        <div class="fd-orig-badge-wrap">
+          <span class="fd-original-badge">Original Style</span>
+        </div>
+        <div class="fd-orig-img-wrap">
+          <img src="/img/products/style-zara.jpg" alt="ZARA Linen Blend Dress" loading="lazy">
+        </div>
+        <div class="fd-orig-info">
+          <p class="fd-orig-brand">ZARA</p>
+          <h3 class="fd-orig-name">Linen Blend Dress</h3>
+          <p class="fd-orig-price">₹3,990</p>
+          <span class="fd-orig-tier">Premium brand</span>
+        </div>
+      </div>
+
+      <!-- Right: Similar Styles Grid -->
+      <div class="fd-similar-styles-container">
+        <h3 class="fd-similar-heading">Similar Styles (Save up to 68%)</h3>
+        <div class="fd-similar-grid">
+          <a href="/find/?q=black%20midi%20dress" class="fd-similar-card">
+            <div class="fd-sim-img-wrap">
+              <img src="/img/products/style-alt1.jpg" alt="Myntra Similar Dress" loading="lazy">
+            </div>
+            <div class="fd-sim-info">
+              <span class="fd-sim-store">Myntra</span>
+              <p class="fd-sim-price">₹1,599</p>
+              <span class="fd-sim-save-badge">Save 60%</span>
+            </div>
+          </a>
+
+          <a href="/find/?q=olive%20green%20dress" class="fd-similar-card">
+            <div class="fd-sim-img-wrap">
+              <img src="/img/products/style-alt2.jpg" alt="AJIO Similar Dress" loading="lazy">
+            </div>
+            <div class="fd-sim-info">
+              <span class="fd-sim-store">AJIO</span>
+              <p class="fd-sim-price">₹1,459</p>
+              <span class="fd-sim-save-badge">Save 62%</span>
+            </div>
+          </a>
+
+          <a href="/find/?q=yellow%20floral%20dress" class="fd-similar-card">
+            <div class="fd-sim-img-wrap">
+              <img src="/img/products/style-alt3.jpg" alt="Flipkart Similar Dress" loading="lazy">
+            </div>
+            <div class="fd-sim-info">
+              <span class="fd-sim-store">Flipkart</span>
+              <p class="fd-sim-price">₹1,389</p>
+              <span class="fd-sim-save-badge">Save 65%</span>
+            </div>
+          </a>
+
+          <a href="/find/?q=green%20cotton%20dress" class="fd-similar-card">
+            <div class="fd-sim-img-wrap">
+              <img src="/img/products/style-alt4.jpg" alt="Amazon Similar Dress" loading="lazy">
+            </div>
+            <div class="fd-sim-info">
+              <span class="fd-sim-store">Amazon</span>
+              <p class="fd-sim-price">₹1,199</p>
+              <span class="fd-sim-save-badge">Save 68%</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. RECENTLY VIEWED -->
+  <section class="fd-section fd-recent-shelf" aria-labelledby="recentSectionTitle">
+    <div class="fd-section-header">
+      <div>
+        <h2 id="recentSectionTitle" class="fd-section-title">Recently Viewed</h2>
+        <p class="fd-section-sub">Pick up where you left off.</p>
+      </div>
+      <a href="/saved/" class="fd-section-more">View all <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+
+    <div class="fd-recent-rail" id="recentlyViewedRail">
+      <a href="/find/?q=H%26M%20Linen%20Shirt" class="fd-recent-item">
+        <div class="fd-recent-img-wrap">
+          <img src="/img/products/deal-linen-shirt.jpg" alt="H&M Shirt" loading="lazy">
+        </div>
+        <p class="fd-recent-name">H&amp;M Shirt</p>
+        <p class="fd-recent-price">₹999</p>
+      </a>
+
+      <a href="/find/?q=SASSAFRAS%20Puff%20Top" class="fd-recent-item">
+        <div class="fd-recent-img-wrap">
+          <img src="/img/products/deal-crop-top.jpg" alt="SASSAFRAS Top" loading="lazy">
+        </div>
+        <p class="fd-recent-name">SASSAFRAS Top</p>
+        <p class="fd-recent-price">₹699</p>
+      </a>
+
+      <a href="/find/?q=Levi%27s%20Jeans" class="fd-recent-item">
+        <div class="fd-recent-img-wrap">
+          <img src="/img/products/deal-jeans.jpg" alt="Levi's Jeans" loading="lazy">
+        </div>
+        <p class="fd-recent-name">Levi's Jeans</p>
+        <p class="fd-recent-price">₹1,949</p>
+      </a>
+
+      <a href="/find/?q=Nike%20Sneakers" class="fd-recent-item">
+        <div class="fd-recent-img-wrap">
+          <img src="/img/products/deal-sneakers.jpg" alt="Nike Sneakers" loading="lazy">
+        </div>
+        <p class="fd-recent-name">Nike Sneakers</p>
+        <p class="fd-recent-price">₹3,299</p>
+      </a>
+
+      <a href="/find/?q=Lavie%20Handbag" class="fd-recent-item">
+        <div class="fd-recent-img-wrap">
+          <img src="/img/products/compare-bag.jpg" alt="Lavie Handbag" loading="lazy">
+        </div>
+        <p class="fd-recent-name">Lavie Handbag</p>
+        <p class="fd-recent-price">₹1,199</p>
+      </a>
+
+      <a href="/find/?q=Fossil%20Watch" class="fd-recent-item">
+        <div class="fd-recent-img-wrap">
+          <img src="/img/products/compare-watch.jpg" alt="Fossil Watch" loading="lazy">
+        </div>
+        <p class="fd-recent-name">Fossil Watch</p>
+        <p class="fd-recent-price">₹5,699</p>
+      </a>
+
+      <a href="/find/?q=MANGO%20Blazer" class="fd-recent-item">
+        <div class="fd-recent-img-wrap">
+          <img src="/img/products/compare-blazer.jpg" alt="MANGO Blazer" loading="lazy">
+        </div>
+        <p class="fd-recent-name">MANGO Blazer</p>
+        <p class="fd-recent-price">₹2,999</p>
+      </a>
+
+      <a href="/find/?q=Sunglasses" class="fd-recent-item">
+        <div class="fd-recent-img-wrap">
+          <img src="/img/products/cat-sunglasses.jpg" alt="Sunglasses" loading="lazy">
+        </div>
+        <p class="fd-recent-name">Sunglasses</p>
+        <p class="fd-recent-price">₹1,499</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- 12. TRUST BADGES STRIP -->
+  <section class="fd-trust-strip" aria-label="Why choose Fit Deal">
+    <div class="fd-trust-grid">
+      <div class="fd-trust-card">
+        <div class="fd-trust-card-icon">
+          <svg aria-hidden="true"><use href="#i-step-compare"/></svg>
+        </div>
+        <div class="fd-trust-card-text">
+          <h3>Compare Prices Easily</h3>
+          <p>See multiple-store prices in one place</p>
+        </div>
+      </div>
+
+      <div class="fd-trust-card">
+        <div class="fd-trust-card-icon">
+          <svg aria-hidden="true"><use href="#i-store"/></svg>
+        </div>
+        <div class="fd-trust-card-text">
+          <h3>Shop from Official Retailers</h3>
+          <p>Amazon, Flipkart, Myntra, AJIO</p>
+        </div>
+      </div>
+
+      <div class="fd-trust-card">
+        <div class="fd-trust-card-icon">
+          <svg aria-hidden="true"><use href="#i-heart"/></svg>
+        </div>
+        <div class="fd-trust-card-text">
+          <h3>Save Your Favorites</h3>
+          <p>Keep track of what you love</p>
+        </div>
+      </div>
+
+      <div class="fd-trust-card">
+        <div class="fd-trust-card-icon">
+          <svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>
+        </div>
+        <div class="fd-trust-card-text">
+          <h3>Smarter Fashion Choices</h3>
+          <p>Same style. Better prices.</p>
+        </div>
       </div>
     </div>
   </section>

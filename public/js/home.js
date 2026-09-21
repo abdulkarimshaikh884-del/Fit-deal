@@ -268,8 +268,8 @@
     }
   }
 
-  // Header & Banner trigger buttons
-  ["headerSnapBtn", "headerUploadCta", "mobileSnapBtn", "bannerSnapBtn"].forEach(function (id) {
+  // Header & Banner & Hero trigger buttons
+  ["headerSnapBtn", "headerUploadCta", "mobileSnapBtn", "bannerSnapBtn", "heroUploadBtn"].forEach(function (id) {
     var btn = document.getElementById(id);
     if (btn) {
       btn.addEventListener("click", function (ev) {
@@ -278,6 +278,69 @@
       });
     }
   });
+
+  var heroLinkBtn = document.getElementById("heroLinkBtn");
+  if (heroLinkBtn) {
+    heroLinkBtn.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      var shopInput = document.getElementById("shopSearchInput") || document.getElementById("shopSearchInputMobile");
+      if (shopInput) {
+        shopInput.scrollIntoView({ behavior: "smooth", block: "center" });
+        shopInput.focus();
+        FD.toast("Paste your product link from Amazon, Flipkart, Myntra or AJIO");
+      } else {
+        openUploadDrawer(false);
+      }
+    });
+  }
+
+  // Section 9 Screenshot dropzone
+  var secDrop = document.getElementById("sectionDropzone");
+  var secInput = document.getElementById("sectionPhotoInput");
+  if (secDrop) {
+    secDrop.addEventListener("click", function () {
+      if (secInput) secInput.click();
+      else if (photo) photo.click();
+    });
+    secDrop.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter" || ev.key === " ") {
+        ev.preventDefault();
+        if (secInput) secInput.click();
+        else if (photo) photo.click();
+      }
+    });
+    secDrop.addEventListener("dragover", function (ev) {
+      ev.preventDefault();
+      secDrop.style.borderColor = "#7041ff";
+      secDrop.style.backgroundColor = "#f4efff";
+    });
+    secDrop.addEventListener("dragleave", function () {
+      secDrop.style.borderColor = "";
+      secDrop.style.backgroundColor = "";
+    });
+    secDrop.addEventListener("drop", function (ev) {
+      ev.preventDefault();
+      secDrop.style.borderColor = "";
+      secDrop.style.backgroundColor = "";
+      var file = ev.dataTransfer && ev.dataTransfer.files && ev.dataTransfer.files[0];
+      if (file) {
+        if (busy) reset();
+        openUploadDrawer(false);
+        startPhoto(file);
+      }
+    });
+  }
+  if (secInput) {
+    secInput.addEventListener("change", function () {
+      var file = secInput.files && secInput.files[0];
+      secInput.value = "";
+      if (file) {
+        if (busy) reset();
+        openUploadDrawer(false);
+        startPhoto(file);
+      }
+    });
+  }
 
   // Photo input listener
   if (photo) {
@@ -498,27 +561,29 @@
   Array.prototype.forEach.call(document.querySelectorAll("[data-search-form]"), setupSearchForm);
 
   // ── Wishlist Heart Toggles ────────────────────────────────────────────────
-  Array.prototype.forEach.call(document.querySelectorAll(".p-card-wish"), function (btn) {
+  Array.prototype.forEach.call(document.querySelectorAll(".p-card-wish, .fd-card-heart, .fd-showcase-heart"), function (btn) {
     var id = btn.getAttribute("data-save-id") || btn.getAttribute("data-wish-id");
     if (!id) return;
     if (FD.saved.has("deal", id)) {
       btn.classList.add("is-active");
+      btn.innerHTML = '<svg aria-hidden="true"><use href="#i-heart-fill"/></svg>';
     }
     btn.addEventListener("click", function (ev) {
       ev.preventDefault();
       ev.stopPropagation();
-      var card = btn.closest(".p-card");
-      var title = card ? (card.querySelector(".p-card-name") || {}).textContent || id : id;
-      var priceText = card ? (card.querySelector(".p-card-price") || {}).textContent || "" : "";
+      var card = btn.closest(".p-card, .fd-comparison-card, .fd-showcase-card, .fd-compare-featured-card");
+      var title = card ? (card.querySelector(".p-card-name, .fd-card-title, .fd-showcase-title") || {}).textContent || id : id;
+      var priceText = card ? (card.querySelector(".p-card-price, .fd-curr-price, .fd-showcase-main-price") || {}).textContent || "" : "";
       var price = Number(priceText.replace(/[^0-9]/g, "")) || 0;
-      var brand = card ? (card.querySelector(".p-card-brand") || {}).textContent || "" : "";
-      var storeEl = card ? card.querySelector(".store-badge") : null;
+      var brand = card ? (card.querySelector(".p-card-brand, .fd-card-brand, .fd-showcase-brand") || {}).textContent || "" : "";
+      var storeEl = card ? card.querySelector(".store-badge, .fd-ret-store, .fd-store-name") : null;
       var storeName = storeEl ? storeEl.textContent.trim() : "Store";
       var img = card ? (card.querySelector("img") || {}).src || "" : "";
 
       if (FD.saved.has("deal", id)) {
         FD.saved.remove("deal", id);
         btn.classList.remove("is-active");
+        btn.innerHTML = '<svg aria-hidden="true"><use href="#i-heart"/></svg>';
         FD.toast("Removed from Saved");
       } else {
         FD.saved.add({
@@ -531,9 +596,10 @@
           image: img,
           price: price,
           checkedAt: new Date().toISOString(),
-          match: "similar"
+          match: "exact"
         });
         btn.classList.add("is-active");
+        btn.innerHTML = '<svg aria-hidden="true"><use href="#i-heart-fill"/></svg>';
         FD.toast("Saved on this device");
         FD.track("save", { from: "home_shelf" });
       }

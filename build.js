@@ -88,6 +88,68 @@ const brand = `<a href="/" class="brand" aria-label="Fit Deal home">
     </a>`;
 
 function desktopNav(p) {
+  if (p.page === "home") {
+    return `<div class="fd-utility-bar">
+  <div class="fd-utility-inner">
+    <div class="fd-utility-left">Smart Shopping. Better Fashion. Same You.</div>
+    <div class="fd-utility-right">
+      <span><svg aria-hidden="true"><use href="#i-step-compare"/></svg> Compare Across Top Stores</span>
+      <span class="fd-utility-sep">|</span>
+      <span><svg aria-hidden="true"><use href="#i-shield"/></svg> 100% Genuine Products</span>
+      <span class="fd-utility-sep">|</span>
+      <span><svg aria-hidden="true"><use href="#i-tag"/></svg> No Extra Cost to You</span>
+    </div>
+  </div>
+</div>
+<header class="d-nav fd-home-header">
+  <div class="d-nav-in fd-home-nav-in">
+    ${brand}
+    <form class="shop-search-box header-search-box fd-main-search" data-search-form role="search" action="/find/">
+      <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
+      <input type="text" id="shopSearchInput" name="q" placeholder="Search for clothes, shoes, bags, brands or paste a product link..." aria-label="Search clothes or paste product link" autocomplete="off">
+      <div class="search-actions">
+        <button type="button" class="search-cam-btn fd-visual-search-pill" id="headerSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
+          <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
+          <span class="cam-btn-text">Visual Search</span>
+        </button>
+        <button type="submit" class="search-go-btn fd-search-submit-btn" aria-label="Search">
+          <svg aria-hidden="true"><use href="#i-search"/></svg>
+        </button>
+      </div>
+    </form>
+    <div class="fd-nav-actions">
+      <a href="/saved/" class="fd-nav-item" aria-label="Saved items">
+        <svg aria-hidden="true"><use href="#i-heart"/></svg>
+        <span>Saved</span>
+      </a>
+      <a href="/profile/" class="fd-nav-item" aria-label="Account profile">
+        <svg aria-hidden="true"><use href="#i-user"/></svg>
+        <span>Account</span>
+      </a>
+      <button type="button" class="fd-nav-upload-btn" id="headerUploadCta" aria-label="Upload photo or screenshot">
+        <svg aria-hidden="true"><use href="#i-upload-cloud"/></svg>
+        <span>Upload Screenshot</span>
+      </button>
+    </div>
+  </div>
+</header>
+<nav class="fd-category-navbar" aria-label="Product Categories">
+  <div class="fd-category-navbar-in">
+    <a href="/find/" class="fd-cat-nav-link fd-cat-all"><span>All Categories</span> <svg aria-hidden="true"><use href="#i-chev-down"/></svg></a>
+    <a href="/find/?q=women%20fashion" class="fd-cat-nav-link">Women</a>
+    <a href="/find/?q=men%20fashion" class="fd-cat-nav-link">Men</a>
+    <a href="/find/?q=ethnic%20wear" class="fd-cat-nav-link">Ethnic Wear</a>
+    <a href="/find/?q=western%20wear" class="fd-cat-nav-link">Western Wear</a>
+    <a href="/find/?q=footwear%20shoes" class="fd-cat-nav-link">Footwear</a>
+    <a href="/find/?q=fashion%20accessories" class="fd-cat-nav-link">Accessories</a>
+    <a href="/find/?q=bags%20luggage" class="fd-cat-nav-link">Bags &amp; Luggage</a>
+    <a href="/find/?q=beauty%20makeup" class="fd-cat-nav-link">Beauty</a>
+    <a href="/find/?q=sportswear" class="fd-cat-nav-link">Sportswear</a>
+    <a href="/find/?q=top%20brands" class="fd-cat-nav-link">Brands</a>
+    <a href="/deals/" class="fd-cat-nav-link fd-cat-deals">Deals</a>
+  </div>
+</nav>`;
+  }
   const links = NAV.map((n) => `      <a href="${n.href}"${n.key === p.nav ? ' aria-current="page"' : ""}>${n.label}</a>`).join("\n");
   const searchBox = `    <form class="shop-search-box header-search-box" data-search-form role="search" action="/find/">
       <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
@@ -117,6 +179,36 @@ ${links}
 }
 
 function mobileHead(p) {
+  if (p.page === "home") {
+    return `<header class="m-head fd-home-mobile-head">
+  <div class="fd-mobile-top-row">
+    <div class="m-brand">
+      ${brand}
+      <p class="m-tag">Same Style. Lower Price.</p>
+    </div>
+    <div class="m-icons">
+      <a href="/deals/" class="m-icon" aria-label="Notifications / Deals"><svg aria-hidden="true"><use href="#i-bell"/></svg></a>
+      <a href="/profile/" class="m-icon" aria-label="Your profile"><svg aria-hidden="true"><use href="#i-user"/></svg></a>
+    </div>
+  </div>
+  <div class="fd-mobile-search-row">
+    <form class="shop-search-box fd-mobile-search-form" data-search-form role="search" action="/find/">
+      <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
+      <input type="text" id="shopSearchInputMobile" name="q" placeholder="Search for clothes, shoes, brands..." aria-label="Search clothes or paste product link" autocomplete="off">
+      <button type="button" class="fd-mobile-cam-btn" id="mobileSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
+        <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
+      </button>
+    </form>
+  </div>
+  <div class="fd-mobile-action-pill-banner">
+    <button type="button" class="fd-mobile-upload-cta" id="bannerSnapBtn">
+      <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
+      <span>Upload Screenshot</span>
+    </button>
+    <a href="/find/?mode=photo" class="fd-mobile-vs-link">Visual Search <svg aria-hidden="true"><use href="#i-chev"/></svg></a>
+  </div>
+</header>`;
+  }
   const find = `<a href="/find/" class="m-icon" aria-label="Find a look"><svg aria-hidden="true"><use href="#i-search"/></svg></a>`;
   const heart = `<a href="/saved/" class="m-icon m-heart" aria-label="Saved items"><svg aria-hidden="true"><use href="#i-heart"/></svg><i class="dot" id="savedDot" hidden></i></a>`;
   const profile = `<a href="/profile/" class="m-icon" aria-label="Your profile"><svg aria-hidden="true"><use href="#i-user"/></svg></a>`;
@@ -148,7 +240,7 @@ ${TABS.map((t) => `  <a href="${t.href}" class="tab"${t.action ? ` data-action="
 </nav>`;
 }
 
-const footer = `<footer class="foot">
+const defaultFooter = `<footer class="foot">
   <div class="foot-in">
     <div class="foot-brand">
       ${brand}
@@ -168,6 +260,81 @@ const footer = `<footer class="foot">
   <p class="foot-note">We may earn a commission when you buy through affiliate links, at no extra cost to you. Commission never changes which products we rank first. Prices and availability can change; confirm them at the retailer. Store names and logos belong to their owners.</p>
   <p class="foot-copy">© 2026 Fit Deal</p>
 </footer>`;
+
+function footer(p) {
+  if (p.page === "home") {
+    return `<footer class="foot fd-home-footer">
+  <div class="fd-footer-main">
+    <div class="fd-footer-col fd-footer-brand-col">
+      <div class="fd-footer-brand">
+        <a href="/" class="brand" aria-label="Fit Deal home">
+          <span class="brand-name">Fit Deal</span><svg class="brand-spark" aria-hidden="true"><use href="#i-sparkle"/></svg>
+        </a>
+      </div>
+      <p class="fd-footer-slogan">Fashion for every you.<br>Compare. Shop. Save.</p>
+      <div class="fd-footer-socials">
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg aria-hidden="true"><use href="#i-social-insta"/></svg></a>
+        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg aria-hidden="true"><use href="#i-social-youtube"/></svg></a>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg aria-hidden="true"><use href="#i-social-fb"/></svg></a>
+        <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true"><use href="#i-social-x"/></svg></a>
+        <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" aria-label="Pinterest"><svg aria-hidden="true"><use href="#i-social-pinterest"/></svg></a>
+      </div>
+    </div>
+    <div class="fd-footer-col">
+      <h4>About Fit Deal</h4>
+      <nav aria-label="About">
+        <a href="/about/">Our Story</a>
+        <a href="/how-it-works/">How It Works</a>
+        <a href="/about/">Careers</a>
+        <a href="/about/">Press</a>
+        <a href="/contact/">Contact Us</a>
+      </nav>
+    </div>
+    <div class="fd-footer-col">
+      <h4>Help</h4>
+      <nav aria-label="Help">
+        <a href="/faq/">FAQs</a>
+        <a href="/how-it-works/">Shopping Guide</a>
+        <a href="/contact/">Report an Issue</a>
+        <a href="/contact/">Suggest a Product</a>
+        <a href="/terms/">Terms of Use</a>
+      </nav>
+    </div>
+    <div class="fd-footer-col">
+      <h4>Legal</h4>
+      <nav aria-label="Legal">
+        <a href="/privacy/">Privacy Policy</a>
+        <a href="/privacy/">Cookie Policy</a>
+        <a href="/terms/">Terms &amp; Conditions</a>
+        <a href="/contact/">Grievance Redressal</a>
+      </nav>
+    </div>
+    <div class="fd-footer-col">
+      <h4>Top Stores</h4>
+      <nav aria-label="Top Stores">
+        <a href="https://www.amazon.in" target="_blank" rel="noopener noreferrer">Amazon</a>
+        <a href="https://www.flipkart.com" target="_blank" rel="noopener noreferrer">Flipkart</a>
+        <a href="https://www.myntra.com" target="_blank" rel="noopener noreferrer">Myntra</a>
+        <a href="https://www.ajio.com" target="_blank" rel="noopener noreferrer">AJIO</a>
+      </nav>
+    </div>
+    <div class="fd-footer-col fd-footer-newsletter-col">
+      <h4>Subscribe to our updates</h4>
+      <p>Get the latest deals and style inspo</p>
+      <form class="fd-newsletter-form" onsubmit="event.preventDefault(); FD.toast('Thank you for subscribing!'); this.reset();">
+        <input type="email" placeholder="Enter your email" required aria-label="Your email address">
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+  <div class="fd-footer-bottom">
+    <p>© 2026 Fit Deal. All rights reserved.</p>
+    <p class="fd-footer-tagline">A smarter way to shop fashion 💜</p>
+  </div>
+</footer>`;
+  }
+  return defaultFooter;
+}
 
 function jsonLd(p) {
   if (p.page === "home") {
@@ -245,7 +412,7 @@ ${mobileHead(p)}
 
 ${body.replace(/^<main\b/, '<main id="main"')}
 
-${footer}
+${footer(p)}
 
 ${tabs(p)}
 
