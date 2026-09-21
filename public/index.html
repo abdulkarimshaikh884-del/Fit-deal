@@ -29,8 +29,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&text=GodOutfisBerPcSamVbLkl&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/site.css?v=c4674691d4">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css?v=f20987ac08">
+<link rel="stylesheet" href="/css/home.css?v=f20987ac08">
+
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Fit Deal","url":"https://fitdeal.shop/","description":"See an outfit you love? Fit Deal finds it — and finds it for less."}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Fit Deal","url":"https://fitdeal.shop/","logo":"https://fitdeal.shop/img/brand/icon-512.png","email":"support@fitdeal.shop"}</script>
 </head>
@@ -116,13 +118,28 @@
     <a href="/" class="brand" aria-label="Fit Deal home">
       <span class="brand-name">Fit Deal</span><svg class="brand-spark" aria-hidden="true"><use href="#i-sparkle"/></svg>
     </a>
+    <form class="shop-search-box header-search-box" data-search-form role="search" action="/find/">
+      <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
+      <input type="text" id="shopSearchInput" name="q" placeholder="Search fashion (e.g. kurti, floral dress, olive shirt) or paste store link..." aria-label="Search clothes or paste product link" autocomplete="off">
+      <div class="search-actions">
+        <button type="button" class="search-cam-btn" id="headerSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
+          <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
+          <span class="cam-btn-text">Visual Search</span>
+        </button>
+        <button type="submit" class="search-go-btn" aria-label="Search">
+          <span>Search</span>
+          <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+        </button>
+      </div>
+    </form>
     <nav class="d-links" aria-label="Main">
       <a href="/" aria-current="page">Home</a>
+      <a href="/find/">Find</a>
       <a href="/deals/">Deals</a>
       <a href="/saved/">Saved</a>
       <a href="/how-it-works/">How it works</a>
     </nav>
-    <a href="#upload" class="d-cta" data-action="find"><svg aria-hidden="true"><use href="#i-camera-line"/></svg>Upload Screenshot</a>
+    <a href="#upload" class="d-cta" id="headerUploadCta" aria-label="Upload photo or screenshot"><svg aria-hidden="true"><use href="#i-camera-line"/></svg><span>Upload Screenshot</span></a>
   </div>
 </header>
 
@@ -134,187 +151,730 @@
     <p class="m-tag">Same look. Smarter prices.</p>
   </div>
   <div class="m-icons">
-    <a href="#upload" class="m-icon" data-action="focus-link" aria-label="Search by photo or link"><svg aria-hidden="true"><use href="#i-search"/></svg></a><a href="/saved/" class="m-icon m-heart" aria-label="Saved items"><svg aria-hidden="true"><use href="#i-heart"/></svg><i class="dot" id="savedDot" hidden></i></a>
+    <a href="/saved/" class="m-icon m-heart" aria-label="Saved items"><svg aria-hidden="true"><use href="#i-heart"/></svg><i class="dot" id="savedDot" hidden></i></a>
+    <a href="/profile/" class="m-icon" aria-label="Your profile"><svg aria-hidden="true"><use href="#i-user"/></svg></a>
   </div>
 </header>
 
-<main id="main" class="home">
-  <!-- Hero card (owner's mobile mockup, 18 Sep 2026) -->
-  <section class="hx" aria-labelledby="hxTitle">
-    <div class="hx-copy">
-      <p class="hx-kicker">Fashion for every you</p>
-      <h1 class="hx-title" id="hxTitle">Shop the look <span>for less</span></h1>
-      <p class="hx-sub">Find exact &amp; similar outfits from top brands at better prices.</p>
-      <a href="#looks" class="btn btn-primary hx-cta" data-action="looks">Explore Looks <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </div>
-    <div class="hx-art" aria-hidden="true">
-      <img class="hx-model" src="/img/hero-desktop.webp" alt="" width="500" height="796" fetchpriority="high">
-      <span class="hx-note hx-note-1">Good Outfits<br>Better Prices <b>♡</b></span>
-      <span class="hx-note hx-note-2">Same Vibe<br>Less Price <b>♡</b></span>
-    </div>
+<main id="main" class="shop-home">
+  <!-- Mobile-only search strip (on desktop, search bar sits right in the top header navbar) -->
+  <section class="m-search-strip" aria-label="Search and find deals">
+    <form class="shop-search-box" data-search-form role="search" action="/find/">
+      <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
+      <input type="text" id="shopSearchInputMobile" name="q" placeholder="Search fashion or paste store link..." aria-label="Search clothes or paste product link" autocomplete="off">
+      <div class="search-actions">
+        <button type="button" class="search-cam-btn" id="mobileSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
+          <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
+        </button>
+        <button type="submit" class="search-go-btn" aria-label="Search">
+          <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+        </button>
+      </div>
+    </form>
   </section>
 
-  <!-- Upload a screenshot / paste a link -->
-  <section class="up" id="upload" aria-label="Find an outfit">
+  <!-- Interactive Visual Snap Drawer (Revealed smoothly on Camera click or link paste) -->
+  <section class="visual-snap-drawer" id="upload" aria-label="Visual Dupe Search" hidden>
     <div class="drop" id="drop">
       <div class="drop-idle" id="dropIdle">
-        <div class="up-row">
-          <span class="up-ico"><svg aria-hidden="true"><use href="#i-camera"/></svg></span>
-          <span class="up-text">
-            <b>Upload a screenshot or photo</b>
-            <small class="m-only">Find exact &amp; similar outfits in seconds</small>
-            <small class="d-only">Drop it here or press Ctrl+V to paste</small>
-          </span>
-          <button type="button" class="btn btn-primary up-btn" id="choose">Choose Photo</button>
-          <input type="file" id="photo" accept="image/*" hidden>
+        <div class="snap-drop-row">
+          <div class="snap-cam-circle">
+            <svg aria-hidden="true"><use href="#i-camera"/></svg>
+          </div>
+          <div class="snap-drop-texts">
+            <h3>Find Any Outfit From A Screenshot</h3>
+            <p>Upload a photo, Instagram Reel screenshot, or Pinterest look — we'll find the best price on Amazon, Flipkart, Myntra &amp; AJIO.</p>
+          </div>
+          <div class="snap-drop-actions">
+            <button type="button" class="btn btn-primary snap-choose-btn" id="choose">
+              <svg aria-hidden="true"><use href="#i-image"/></svg>Choose Photo
+            </button>
+            <input type="file" id="photo" accept="image/*" hidden>
+          </div>
         </div>
-        <div class="up-or"><span>or</span></div>
-        <form class="up-link" data-link-form>
-          <svg class="up-link-ico" aria-hidden="true"><use href="#i-link"/></svg>
-          <input type="url" inputmode="url" placeholder="Paste product link (Amazon, Myntra, etc.)" aria-label="Product link" id="linkInput" autocomplete="off" enterkeyhint="search">
-          <button type="submit" class="up-go" aria-label="Find this product"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <div class="snap-link-divider"><span>or paste product link</span></div>
+        <form class="snap-link-form" data-link-form>
+          <svg class="snap-link-ico" aria-hidden="true"><use href="#i-link"/></svg>
+          <input type="url" inputmode="url" placeholder="Paste product link from Amazon, Flipkart, Myntra, or AJIO" aria-label="Product link" id="linkInput" autocomplete="off">
+          <button type="submit" class="snap-link-go" aria-label="Find best price">Find Best Price</button>
         </form>
       </div>
       <div class="flow" id="flow" hidden></div>
       <p class="sr-only" id="flowStatus" role="status" aria-live="polite"></p>
     </div>
-    <p class="finder-note"><svg aria-hidden="true"><use href="#i-shield"/></svg><span>Your photo is used once to find matches and is never stored. Searching Amazon, Flipkart, Myntra &amp; AJIO. <a href="/privacy/#photos">Privacy</a></span></p>
+    <p class="snap-privacy"><svg aria-hidden="true"><use href="#i-shield"/></svg><span>Your photo is processed in RAM only and never saved to any database. <a href="/privacy/#photos">Privacy Policy</a></span></p>
   </section>
 
-  <!-- Categories: filter the looks and deals below -->
-  <section class="cats" aria-label="Categories">
-    <div class="cat-row" role="group" aria-label="Show looks for" id="catRow">
-      <button type="button" class="cat" data-cat="women" aria-pressed="false"><img src="/img/looks/women.webp" alt="" width="40" height="40"><span>Women</span></button>
-      <button type="button" class="cat" data-cat="men" aria-pressed="false"><img src="/img/samples/shirt-m.webp" alt="" width="40" height="40"><span>Men</span></button>
-      <button type="button" class="cat" data-cat="ethnic" aria-pressed="false"><img src="/img/samples/kurti-m.webp" alt="" width="40" height="40"><span>Ethnic</span></button>
-      <button type="button" class="cat" data-cat="streetwear" aria-pressed="false"><img src="/img/looks/street-blazer.webp" alt="" width="40" height="40"><span>Streetwear</span></button>
-      <button type="button" class="cat" data-cat="dresses" aria-pressed="false"><img src="/img/samples/dress-m.webp" alt="" width="40" height="40"><span>Dresses</span></button>
-      <button type="button" class="cat" data-cat="jeans" aria-pressed="false"><img src="/img/samples/jeans-m.webp" alt="" width="40" height="40"><span>Jeans</span></button>
-      <button type="button" class="cat" data-cat="tops" aria-pressed="false"><img src="/img/samples/top-m.webp" alt="" width="40" height="40"><span>Tops</span></button>
+  <!-- 1. Category Story Circles Strip (Flipkart & Myntra Style) -->
+  <section class="cat-strip-section" aria-label="Fashion Categories">
+    <div class="cat-strip-scroll" id="catRow">
+      <button type="button" class="cat-circle-card is-active" data-cat="" aria-pressed="true">
+        <span class="cat-circle-avatar cat-all-avatar">🔥</span>
+        <span class="cat-circle-name">All Deals</span>
+      </button>
+      <button type="button" class="cat-circle-card" data-cat="women" aria-pressed="false">
+        <span class="cat-circle-avatar"><img src="/img/looks/women.webp" alt="Women"></span>
+        <span class="cat-circle-name">Women</span>
+      </button>
+      <button type="button" class="cat-circle-card" data-cat="men" aria-pressed="false">
+        <span class="cat-circle-avatar"><img src="/img/samples/shirt-m.webp" alt="Men"></span>
+        <span class="cat-circle-name">Men</span>
+      </button>
+      <button type="button" class="cat-circle-card" data-cat="dresses" aria-pressed="false">
+        <span class="cat-circle-avatar"><img src="/img/samples/dress-m.webp" alt="Dresses"></span>
+        <span class="cat-circle-name">Dresses</span>
+      </button>
+      <button type="button" class="cat-circle-card" data-cat="ethnic" aria-pressed="false">
+        <span class="cat-circle-avatar"><img src="/img/samples/kurti-m.webp" alt="Ethnic"></span>
+        <span class="cat-circle-name">Ethnic Wear</span>
+      </button>
+      <button type="button" class="cat-circle-card" data-cat="tops" aria-pressed="false">
+        <span class="cat-circle-avatar"><img src="/img/samples/top-m.webp" alt="Tops & Tees"></span>
+        <span class="cat-circle-name">Tops &amp; Tees</span>
+      </button>
+      <button type="button" class="cat-circle-card" data-cat="jeans" aria-pressed="false">
+        <span class="cat-circle-avatar"><img src="/img/samples/jeans-m.webp" alt="Jeans"></span>
+        <span class="cat-circle-name">Jeans &amp; Denim</span>
+      </button>
+      <button type="button" class="cat-circle-card" data-cat="streetwear" aria-pressed="false">
+        <span class="cat-circle-avatar"><img src="/img/looks/street-blazer.webp" alt="Streetwear"></span>
+        <span class="cat-circle-name">Streetwear</span>
+      </button>
+      <button type="button" class="cat-circle-card" data-cat="under499" aria-pressed="false">
+        <span class="cat-circle-avatar cat-badge-avatar">₹</span>
+        <span class="cat-circle-name">Under ₹499</span>
+      </button>
     </div>
   </section>
 
-  <!-- Looks to shop: tapping one runs a real search on that photo -->
-  <section class="hsec" id="looks" aria-labelledby="looksTitle">
-    <div class="hsec-head">
-      <h2 id="looksTitle">Shop These Looks</h2>
-      <a href="#upload" class="hsec-link" data-action="find">Upload yours <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  <!-- 2. High-Conversion Promo Banner (Moved Up & Compact) -->
+  <section class="mega-promo-banner banner-elevated" aria-label="Featured Offers">
+    <div class="mpb-content">
+      <span class="mpb-badge">✦ BIG FASHION DUPE FESTIVAL ✦</span>
+      <h1 class="mpb-heading">See An Outfit You Love?<br><span>Find It For Less Across Stores.</span></h1>
+      <p class="mpb-desc">Compare live prices across Amazon, Flipkart, Myntra &amp; AJIO. Guaranteed unbiased: lowest price always ranks first.</p>
+      <div class="mpb-ctas">
+        <a href="#homeDeals" class="btn btn-primary mpb-btn-primary">Shop Live Deals 🔥</a>
+        <button type="button" class="btn btn-ghost mpb-btn-secondary" id="bannerSnapBtn">
+          <svg aria-hidden="true"><use href="#i-camera-line"/></svg>Snap Outfit to Find Dupe
+        </button>
+      </div>
+      <div class="mpb-trust-row">
+        <span><svg aria-hidden="true"><use href="#i-check-plain"/></svg> Amazon · Flipkart · Myntra · AJIO</span>
+        <span><svg aria-hidden="true"><use href="#i-check-plain"/></svg> 100% Unbiased Ranking</span>
+        <span><svg aria-hidden="true"><use href="#i-check-plain"/></svg> Real Indian Sizes</span>
+      </div>
     </div>
-    <p class="hsec-sub">Tap a look and we'll find every piece in it.</p>
-    <div class="sl-row" id="slRow">
-      <article class="sl" data-cats="women streetwear jeans tops">
-        <button type="button" class="sl-btn" data-look="/img/looks/street-blazer.webp" data-name="Street Blazer Look">
-          <span class="sl-img"><img src="/img/looks/street-blazer.webp" alt="Woman in a beige blazer, white top and wide-leg jeans" loading="lazy" width="492" height="783"></span>
-          <span class="sl-info">
+    <div class="mpb-art" aria-hidden="true">
+      <img src="/img/hero-desktop.webp" alt="" class="mpb-model" width="420" height="520" fetchpriority="high">
+      <span class="mpb-sticker st1">Same Vibe<br><b>Best Price ♡</b></span>
+      <span class="mpb-sticker st2">Verified<br><b>Dupes ♡</b></span>
+    </div>
+  </section>
+
+  <!-- 3. Lightning Deals of the Day (Live Multi-Store Deals) -->
+  <section class="shop-shelf" id="homeDeals" aria-labelledby="dealsTitle">
+    <div class="shelf-header">
+      <div class="shelf-title-wrap">
+        <h2 id="dealsTitle">⚡ Lightning Deals of the Day</h2>
+        <span class="shelf-timer"><svg aria-hidden="true"><use href="#i-clock"/></svg> Updated Live Today</span>
+      </div>
+      <a href="#budgetStore" class="shelf-more-link">View Budget Deals <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+
+    <!-- Product Grid: 8 Top Deals with Authentic Prices & Store Badges -->
+    <div class="product-shelf-grid" id="dealRow">
+      <!-- Product 1: Tokyo Talkies Dress -->
+      <article class="p-card" data-cat="dresses" data-price="699" data-audience="women">
+        <div class="p-card-top">
+          <span class="p-card-badge">63% OFF</span>
+          <button type="button" class="p-card-wish" aria-label="Save Pink Floral Print Midi Dress" data-save-id="dress-1">
+            <svg aria-hidden="true"><use href="#i-heart"/></svg>
+          </button>
+          <div class="p-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&auto=format&fit=crop&q=80" alt="Tokyo Talkies Pink Floral Midi Dress" loading="lazy">
+          </div>
+        </div>
+        <div class="p-card-details">
+          <div class="p-card-store-row">
+            <span class="store-badge store-flipkart"><span class="s-dot"></span>Flipkart</span>
+            <span class="p-card-brand">Tokyo Talkies</span>
+          </div>
+          <h3 class="p-card-name">Women Pink Floral Print A-Line Midi Dress</h3>
+          <div class="p-card-price-row">
+            <span class="p-card-price">₹699</span>
+            <s class="p-card-mrp">₹1,899</s>
+            <span class="p-card-save">Save ₹1,200</span>
+          </div>
+          <div class="p-card-sizes">
+            <span>Sizes:</span>
+            <span class="size-pill">S</span>
+            <span class="size-pill">M</span>
+            <span class="size-pill">L</span>
+            <span class="size-pill">XL</span>
+          </div>
+          <div class="p-card-actions">
+            <a href="https://www.flipkart.com" target="_blank" rel="noopener" class="btn btn-primary p-card-buy-btn">Buy Now <svg aria-hidden="true"><use href="#i-external"/></svg></a>
+            <button type="button" class="btn btn-ghost p-card-dupe-btn" data-sample="dress" title="Find cheaper look-alikes across all stores">
+              <svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Find Dupes
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 2: Dennis Lingo Casual Shirt -->
+      <article class="p-card" data-cat="men" data-price="549" data-audience="men">
+        <div class="p-card-top">
+          <span class="p-card-badge badge-top">69% OFF</span>
+          <button type="button" class="p-card-wish" aria-label="Save Dennis Lingo Olive Casual Shirt" data-save-id="shirt-1">
+            <svg aria-hidden="true"><use href="#i-heart"/></svg>
+          </button>
+          <div class="p-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&auto=format&fit=crop&q=80" alt="Dennis Lingo Men Olive Casual Shirt" loading="lazy">
+          </div>
+        </div>
+        <div class="p-card-details">
+          <div class="p-card-store-row">
+            <span class="store-badge store-amazon"><span class="s-dot"></span>Amazon</span>
+            <span class="p-card-brand">Dennis Lingo</span>
+          </div>
+          <h3 class="p-card-name">Men Olive Green Solid Slim Fit Casual Shirt</h3>
+          <div class="p-card-price-row">
+            <span class="p-card-price">₹549</span>
+            <s class="p-card-mrp">₹1,849</s>
+            <span class="p-card-save">Save ₹1,300</span>
+          </div>
+          <div class="p-card-sizes">
+            <span>Sizes:</span>
+            <span class="size-pill">M</span>
+            <span class="size-pill">L</span>
+            <span class="size-pill">XL</span>
+          </div>
+          <div class="p-card-actions">
+            <a href="https://www.amazon.in" target="_blank" rel="noopener" class="btn btn-primary p-card-buy-btn">Buy Now <svg aria-hidden="true"><use href="#i-external"/></svg></a>
+            <button type="button" class="btn btn-ghost p-card-dupe-btn" data-sample="shirt" title="Find cheaper look-alikes across all stores">
+              <svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Find Dupes
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 3: Tokyo Talkies Black Crop Top -->
+      <article class="p-card" data-cat="tops" data-price="399" data-audience="women">
+        <div class="p-card-top">
+          <span class="p-card-badge">66% OFF</span>
+          <button type="button" class="p-card-wish" aria-label="Save Tokyo Talkies Black Crop Top" data-save-id="top-1">
+            <svg aria-hidden="true"><use href="#i-heart"/></svg>
+          </button>
+          <div class="p-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&auto=format&fit=crop&q=80" alt="Tokyo Talkies Black Crop Top" loading="lazy">
+          </div>
+        </div>
+        <div class="p-card-details">
+          <div class="p-card-store-row">
+            <span class="store-badge store-flipkart"><span class="s-dot"></span>Flipkart</span>
+            <span class="p-card-brand">Tokyo Talkies</span>
+          </div>
+          <h3 class="p-card-name">Women Casual Solid Black Sleeveless Crop Top</h3>
+          <div class="p-card-price-row">
+            <span class="p-card-price">₹399</span>
+            <s class="p-card-mrp">₹1,199</s>
+            <span class="p-card-save">Save ₹800</span>
+          </div>
+          <div class="p-card-sizes">
+            <span>Sizes:</span>
+            <span class="size-pill">XS</span>
+            <span class="size-pill">S</span>
+            <span class="size-pill">M</span>
+            <span class="size-pill">L</span>
+          </div>
+          <div class="p-card-actions">
+            <a href="https://www.flipkart.com" target="_blank" rel="noopener" class="btn btn-primary p-card-buy-btn">Buy Now <svg aria-hidden="true"><use href="#i-external"/></svg></a>
+            <button type="button" class="btn btn-ghost p-card-dupe-btn" data-sample="top" title="Find cheaper look-alikes across all stores">
+              <svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Find Dupes
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 4: Kotty Wide Leg Jeans -->
+      <article class="p-card" data-cat="jeans" data-price="799" data-audience="women">
+        <div class="p-card-top">
+          <span class="p-card-badge">60% OFF</span>
+          <button type="button" class="p-card-wish" aria-label="Save Kotty Wide Leg Jeans" data-save-id="jeans-1">
+            <svg aria-hidden="true"><use href="#i-heart"/></svg>
+          </button>
+          <div class="p-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&auto=format&fit=crop&q=80" alt="Kotty Women Blue Wide Leg Jeans" loading="lazy">
+          </div>
+        </div>
+        <div class="p-card-details">
+          <div class="p-card-store-row">
+            <span class="store-badge store-flipkart"><span class="s-dot"></span>Flipkart</span>
+            <span class="p-card-brand">Kotty</span>
+          </div>
+          <h3 class="p-card-name">Women High Rise Wide Leg Clean Look Blue Jeans</h3>
+          <div class="p-card-price-row">
+            <span class="p-card-price">₹799</span>
+            <s class="p-card-mrp">₹1,999</s>
+            <span class="p-card-save">Save ₹1,200</span>
+          </div>
+          <div class="p-card-sizes">
+            <span>Sizes:</span>
+            <span class="size-pill">28</span>
+            <span class="size-pill">30</span>
+            <span class="size-pill">32</span>
+          </div>
+          <div class="p-card-actions">
+            <a href="https://www.flipkart.com" target="_blank" rel="noopener" class="btn btn-primary p-card-buy-btn">Buy Now <svg aria-hidden="true"><use href="#i-external"/></svg></a>
+            <button type="button" class="btn btn-ghost p-card-dupe-btn" data-sample="jeans" title="Find cheaper look-alikes across all stores">
+              <svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Find Dupes
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 5: Libas Embroidered Kurti -->
+      <article class="p-card" data-cat="ethnic" data-price="749" data-audience="women">
+        <div class="p-card-top">
+          <span class="p-card-badge">67% OFF</span>
+          <button type="button" class="p-card-wish" aria-label="Save Libas Beige Kurti" data-save-id="kurti-1">
+            <svg aria-hidden="true"><use href="#i-heart"/></svg>
+          </button>
+          <div class="p-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=600&auto=format&fit=crop&q=80" alt="Libas Pure Cotton Embroidered Kurti" loading="lazy">
+          </div>
+        </div>
+        <div class="p-card-details">
+          <div class="p-card-store-row">
+            <span class="store-badge store-myntra"><span class="s-dot"></span>Myntra</span>
+            <span class="p-card-brand">Libas</span>
+          </div>
+          <h3 class="p-card-name">Women Beige Embroidered Pure Cotton Straight Kurti</h3>
+          <div class="p-card-price-row">
+            <span class="p-card-price">₹749</span>
+            <s class="p-card-mrp">₹2,299</s>
+            <span class="p-card-save">Save ₹1,550</span>
+          </div>
+          <div class="p-card-sizes">
+            <span>Sizes:</span>
+            <span class="size-pill">S</span>
+            <span class="size-pill">M</span>
+            <span class="size-pill">L</span>
+            <span class="size-pill">XL</span>
+          </div>
+          <div class="p-card-actions">
+            <a href="https://www.myntra.com" target="_blank" rel="noopener" class="btn btn-primary p-card-buy-btn">Buy Now <svg aria-hidden="true"><use href="#i-external"/></svg></a>
+            <button type="button" class="btn btn-ghost p-card-dupe-btn" data-sample="kurti" title="Find cheaper look-alikes across all stores">
+              <svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Find Dupes
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 6: Berrylush Wrap Dress -->
+      <article class="p-card" data-cat="dresses" data-price="849" data-audience="women">
+        <div class="p-card-top">
+          <span class="p-card-badge">61% OFF</span>
+          <button type="button" class="p-card-wish" aria-label="Save Berrylush Wrap Dress" data-save-id="dress-2">
+            <svg aria-hidden="true"><use href="#i-heart"/></svg>
+          </button>
+          <div class="p-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&auto=format&fit=crop&q=80" alt="Berrylush Floral Print Wrap Midi Dress" loading="lazy">
+          </div>
+        </div>
+        <div class="p-card-details">
+          <div class="p-card-store-row">
+            <span class="store-badge store-myntra"><span class="s-dot"></span>Myntra</span>
+            <span class="p-card-brand">Berrylush</span>
+          </div>
+          <h3 class="p-card-name">Women Pink &amp; White Floral Print Wrap Midi Dress</h3>
+          <div class="p-card-price-row">
+            <span class="p-card-price">₹849</span>
+            <s class="p-card-mrp">₹2,199</s>
+            <span class="p-card-save">Save ₹1,350</span>
+          </div>
+          <div class="p-card-sizes">
+            <span>Sizes:</span>
+            <span class="size-pill">XS</span>
+            <span class="size-pill">S</span>
+            <span class="size-pill">M</span>
+            <span class="size-pill">L</span>
+          </div>
+          <div class="p-card-actions">
+            <a href="https://www.myntra.com" target="_blank" rel="noopener" class="btn btn-primary p-card-buy-btn">Buy Now <svg aria-hidden="true"><use href="#i-external"/></svg></a>
+            <button type="button" class="btn btn-ghost p-card-dupe-btn" data-sample="dress" title="Find cheaper look-alikes across all stores">
+              <svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Find Dupes
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 7: Highlander Olive Shirt -->
+      <article class="p-card" data-cat="men" data-price="629" data-audience="men">
+        <div class="p-card-top">
+          <span class="p-card-badge">58% OFF</span>
+          <button type="button" class="p-card-wish" aria-label="Save Highlander Casual Shirt" data-save-id="shirt-2">
+            <svg aria-hidden="true"><use href="#i-heart"/></svg>
+          </button>
+          <div class="p-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&auto=format&fit=crop&q=80" alt="HIGHLANDER Men Olive Casual Shirt" loading="lazy">
+          </div>
+        </div>
+        <div class="p-card-details">
+          <div class="p-card-store-row">
+            <span class="store-badge store-flipkart"><span class="s-dot"></span>Flipkart</span>
+            <span class="p-card-brand">Highlander</span>
+          </div>
+          <h3 class="p-card-name">Men Olive Green Solid Casual Cotton Shirt</h3>
+          <div class="p-card-price-row">
+            <span class="p-card-price">₹629</span>
+            <s class="p-card-mrp">₹1,499</s>
+            <span class="p-card-save">Save ₹870</span>
+          </div>
+          <div class="p-card-sizes">
+            <span>Sizes:</span>
+            <span class="size-pill">S</span>
+            <span class="size-pill">M</span>
+            <span class="size-pill">L</span>
+            <span class="size-pill">XL</span>
+          </div>
+          <div class="p-card-actions">
+            <a href="https://www.flipkart.com" target="_blank" rel="noopener" class="btn btn-primary p-card-buy-btn">Buy Now <svg aria-hidden="true"><use href="#i-external"/></svg></a>
+            <button type="button" class="btn btn-ghost p-card-dupe-btn" data-sample="shirt" title="Find cheaper look-alikes across all stores">
+              <svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Find Dupes
+            </button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Product 8: H&M Black Tank Top -->
+      <article class="p-card" data-cat="tops" data-price="599" data-audience="women">
+        <div class="p-card-top">
+          <span class="p-card-badge">25% OFF</span>
+          <button type="button" class="p-card-wish" aria-label="Save H&M Black Tank Top" data-save-id="top-2">
+            <svg aria-hidden="true"><use href="#i-heart"/></svg>
+          </button>
+          <div class="p-card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&auto=format&fit=crop&q=80" alt="H&M Women Black Tank Top" loading="lazy">
+          </div>
+        </div>
+        <div class="p-card-details">
+          <div class="p-card-store-row">
+            <span class="store-badge store-myntra"><span class="s-dot"></span>Myntra</span>
+            <span class="p-card-brand">H&amp;M</span>
+          </div>
+          <h3 class="p-card-name">Women Black Ribbed Fitted Sleeveless Tank Top</h3>
+          <div class="p-card-price-row">
+            <span class="p-card-price">₹599</span>
+            <s class="p-card-mrp">₹799</s>
+            <span class="p-card-save">Save ₹200</span>
+          </div>
+          <div class="p-card-sizes">
+            <span>Sizes:</span>
+            <span class="size-pill">XS</span>
+            <span class="size-pill">S</span>
+            <span class="size-pill">M</span>
+            <span class="size-pill">L</span>
+          </div>
+          <div class="p-card-actions">
+            <a href="https://www.myntra.com" target="_blank" rel="noopener" class="btn btn-primary p-card-buy-btn">Buy Now <svg aria-hidden="true"><use href="#i-external"/></svg></a>
+            <button type="button" class="btn btn-ghost p-card-dupe-btn" data-sample="top" title="Find cheaper look-alikes across all stores">
+              <svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Find Dupes
+            </button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 4. Budget Fashion Steals (Under ₹499, Under ₹799, Under ₹999) -->
+  <section class="shop-shelf" id="budgetStore" aria-labelledby="budgetTitle">
+    <div class="shelf-header">
+      <div class="shelf-title-wrap">
+        <h2 id="budgetTitle">🏷️ Budget Corner — Trendy Fits Under ₹999</h2>
+      </div>
+      <div class="budget-filter-tabs" role="tablist" id="budgetTabs">
+        <button type="button" class="b-tab is-active" data-budget="all" role="tab" aria-selected="true">All Steals</button>
+        <button type="button" class="b-tab" data-budget="499" role="tab" aria-selected="false">Under ₹499</button>
+        <button type="button" class="b-tab" data-budget="799" role="tab" aria-selected="false">Under ₹799</button>
+        <button type="button" class="b-tab" data-budget="999" role="tab" aria-selected="false">Under ₹999</button>
+      </div>
+    </div>
+
+    <div class="product-shelf-grid" id="budgetGrid">
+      <!-- Budget 1: Tokyo Talkies Top ₹399 -->
+      <article class="p-card" data-price="399" data-cat="tops">
+        <div class="p-card-top">
+          <span class="p-card-badge badge-budget">UNDER ₹499</span>
+          <button type="button" class="p-card-wish" aria-label="Save Black Crop Top" data-save-id="b-top-1"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+          <div class="p-card-img-wrap"><img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&auto=format&fit=crop&q=80" alt="Black Crop Top" loading="lazy"></div>
+        </div>
+        <div class="p-card-details">
+          <div class="p-card-store-row"><span class="store-badge store-flipkart"><span class="s-dot"></span>Flipkart</span><span class="p-card-brand">Tokyo Talkies</span></div>
+          <h3 class="p-card-name">Casual Solid Black Sleeveless Crop Top</h3>
+          <div class="p-card-price-row"><span class="p-card-price">₹399</span><s class="p-card-mrp">₹1,199</s><span class="p-card-save">66% OFF</span></div>
+          <div class="p-card-actions">
+            <a href="https://www.flipkart.com" target="_blank" rel="noopener" class="btn btn-primary p-card-buy-btn">Buy Now</a>
+            <button type="button" class="btn btn-ghost p-card-dupe-btn" data-sample="top"><svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Dupes</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Budget 2: Dennis Lingo Shirt ₹549 -->
+      <article class="p-card" data-price="549" data-cat="men">
+        <div class="p-card-top">
+          <span class="p-card-badge">68% OFF</span>
+          <button type="button" class="p-card-wish" aria-label="Save Casual Shirt" data-save-id="b-shirt-1"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+          <div class="p-card-img-wrap"><img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&auto=format&fit=crop&q=80" alt="Casual Shirt" loading="lazy"></div>
+        </div>
+        <div class="p-card-details">
+          <div class="p-card-store-row"><span class="store-badge store-amazon"><span class="s-dot"></span>Amazon</span><span class="p-card-brand">Dennis Lingo</span></div>
+          <h3 class="p-card-name">Olive Green Solid Slim Casual Shirt</h3>
+          <div class="p-card-price-row"><span class="p-card-price">₹549</span><s class="p-card-mrp">₹1,849</s><span class="p-card-save">Save ₹1,300</span></div>
+          <div class="p-card-actions">
+            <a href="https://www.amazon.in" target="_blank" rel="noopener" class="btn btn-primary p-card-buy-btn">Buy Now</a>
+            <button type="button" class="btn btn-ghost p-card-dupe-btn" data-sample="shirt"><svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Dupes</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Budget 3: Anubhutee Kurti ₹599 -->
+      <article class="p-card" data-price="599" data-cat="ethnic">
+        <div class="p-card-top">
+          <span class="p-card-badge">66% OFF</span>
+          <button type="button" class="p-card-wish" aria-label="Save Cotton Kurti" data-save-id="b-kurti-1"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+          <div class="p-card-img-wrap"><img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=600&auto=format&fit=crop&q=80" alt="Embroidered Kurti" loading="lazy"></div>
+        </div>
+        <div class="p-card-details">
+          <div class="p-card-store-row"><span class="store-badge store-flipkart"><span class="s-dot"></span>Flipkart</span><span class="p-card-brand">Anubhutee</span></div>
+          <h3 class="p-card-name">Beige Embroidered Straight Cotton Kurti</h3>
+          <div class="p-card-price-row"><span class="p-card-price">₹599</span><s class="p-card-mrp">₹1,799</s><span class="p-card-save">Save ₹1,200</span></div>
+          <div class="p-card-actions">
+            <a href="https://www.flipkart.com" target="_blank" rel="noopener" class="btn btn-primary p-card-buy-btn">Buy Now</a>
+            <button type="button" class="btn btn-ghost p-card-dupe-btn" data-sample="kurti"><svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Dupes</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Budget 4: Tokyo Talkies Dress ₹699 -->
+      <article class="p-card" data-price="699" data-cat="dresses">
+        <div class="p-card-top">
+          <span class="p-card-badge">63% OFF</span>
+          <button type="button" class="p-card-wish" aria-label="Save Floral Dress" data-save-id="b-dress-1"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+          <div class="p-card-img-wrap"><img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&auto=format&fit=crop&q=80" alt="Floral Midi Dress" loading="lazy"></div>
+        </div>
+        <div class="p-card-details">
+          <div class="p-card-store-row"><span class="store-badge store-flipkart"><span class="s-dot"></span>Flipkart</span><span class="p-card-brand">Tokyo Talkies</span></div>
+          <h3 class="p-card-name">Pink Floral Print A-Line Midi Dress</h3>
+          <div class="p-card-price-row"><span class="p-card-price">₹699</span><s class="p-card-mrp">₹1,899</s><span class="p-card-save">Save ₹1,200</span></div>
+          <div class="p-card-actions">
+            <a href="https://www.flipkart.com" target="_blank" rel="noopener" class="btn btn-primary p-card-buy-btn">Buy Now</a>
+            <button type="button" class="btn btn-ghost p-card-dupe-btn" data-sample="dress"><svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Dupes</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 5. Celebrity & Streetwear Outfits (Shop The Complete Look) -->
+  <section class="shop-shelf" id="looks" aria-labelledby="looksTitle">
+    <div class="shelf-header">
+      <div class="shelf-title-wrap">
+        <h2 id="looksTitle">🌟 Trending Celebrity &amp; Streetwear Outfits</h2>
+        <p class="shelf-sub">Tap any look to find the exact garment pieces across stores.</p>
+      </div>
+    </div>
+    <div class="looks-shelf-grid" id="slRow">
+      <!-- Look 1: Street Blazer -->
+      <article class="look-card" data-cats="women streetwear jeans tops">
+        <button type="button" class="look-card-btn" data-look="/img/looks/street-blazer.webp" data-name="Street Blazer Look">
+          <div class="look-card-photo">
+            <img src="/img/looks/street-blazer.webp" alt="Woman in a beige blazer, white top and wide-leg jeans" loading="lazy">
+          </div>
+          <div class="look-card-info">
             <b>Street Blazer Look</b>
             <small>Beige blazer, white top, wide jeans</small>
-            <span class="sl-pieces">
-              <img src="/img/looks/blazer.webp" alt="" width="336" height="288">
-              <img src="/img/looks/knit-top.webp" alt="" width="339" height="288">
-              <img src="/img/looks/wide-jeans.webp" alt="" width="339" height="288">
-              <span class="sl-go"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
-            </span>
-          </span>
+            <div class="look-garments">
+              <span class="garment-thumb" title="Blazer"><img src="/img/looks/blazer.webp" alt="Blazer"></span>
+              <span class="garment-thumb" title="Top"><img src="/img/looks/knit-top.webp" alt="Top"></span>
+              <span class="garment-thumb" title="Jeans"><img src="/img/looks/wide-jeans.webp" alt="Jeans"></span>
+              <span class="look-go"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+            </div>
+          </div>
         </button>
       </article>
-      <article class="sl" data-cats="men">
-        <button type="button" class="sl-btn" data-look="/img/samples/shirt-m.webp" data-name="Olive Smart Casual">
-          <span class="sl-img"><img src="/img/samples/shirt-m.webp" alt="Man in an olive green casual shirt" loading="lazy" width="297" height="348"></span>
-          <span class="sl-info">
+
+      <!-- Look 2: Olive Smart Casual -->
+      <article class="look-card" data-cats="men">
+        <button type="button" class="look-card-btn" data-look="/img/samples/shirt-m.webp" data-name="Olive Smart Casual">
+          <div class="look-card-photo">
+            <img src="/img/samples/shirt-m.webp" alt="Man in an olive green casual shirt" loading="lazy">
+          </div>
+          <div class="look-card-info">
             <b>Olive Smart Casual</b>
             <small>Olive shirt for work or weekends</small>
-            <span class="sl-pieces">
-              <img src="/img/samples/shirt-d.webp" alt="" width="262" height="160">
-              <span class="sl-go"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
-            </span>
-          </span>
+            <div class="look-garments">
+              <span class="garment-thumb" title="Shirt"><img src="/img/samples/shirt-d.webp" alt="Shirt"></span>
+              <span class="look-go"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+            </div>
+          </div>
         </button>
       </article>
-      <article class="sl" data-cats="women dresses">
-        <button type="button" class="sl-btn" data-look="/img/samples/dress-m.webp" data-name="Pink Floral Midi">
-          <span class="sl-img"><img src="/img/samples/dress-m.webp" alt="Woman in a pink floral midi dress" loading="lazy" width="300" height="348"></span>
-          <span class="sl-info">
+
+      <!-- Look 3: Pink Floral Midi -->
+      <article class="look-card" data-cats="women dresses">
+        <button type="button" class="look-card-btn" data-look="/img/samples/dress-m.webp" data-name="Pink Floral Midi">
+          <div class="look-card-photo">
+            <img src="/img/samples/dress-m.webp" alt="Woman in a pink floral midi dress" loading="lazy">
+          </div>
+          <div class="look-card-info">
             <b>Pink Floral Midi</b>
-            <small>Easy summer dress</small>
-            <span class="sl-pieces">
-              <img src="/img/samples/dress-d.webp" alt="" width="262" height="160">
-              <span class="sl-go"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
-            </span>
-          </span>
+            <small>Easy summer floral dress</small>
+            <div class="look-garments">
+              <span class="garment-thumb" title="Dress"><img src="/img/samples/dress-d.webp" alt="Dress"></span>
+              <span class="look-go"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+            </div>
+          </div>
         </button>
       </article>
-      <article class="sl" data-cats="women ethnic">
-        <button type="button" class="sl-btn" data-look="/img/samples/kurti-m.webp" data-name="Everyday Ethnic">
-          <span class="sl-img"><img src="/img/samples/kurti-m.webp" alt="Woman in a beige embroidered kurti" loading="lazy" width="294" height="348"></span>
-          <span class="sl-info">
+
+      <!-- Look 4: Everyday Ethnic -->
+      <article class="look-card" data-cats="women ethnic">
+        <button type="button" class="look-card-btn" data-look="/img/samples/kurti-m.webp" data-name="Everyday Ethnic">
+          <div class="look-card-photo">
+            <img src="/img/samples/kurti-m.webp" alt="Woman in a beige embroidered kurti" loading="lazy">
+          </div>
+          <div class="look-card-info">
             <b>Everyday Ethnic</b>
             <small>Beige embroidered kurti</small>
-            <span class="sl-pieces">
-              <img src="/img/samples/kurti-d.webp" alt="" width="262" height="160">
-              <span class="sl-go"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
-            </span>
-          </span>
-        </button>
-      </article>
-      <article class="sl" data-cats="women tops jeans">
-        <button type="button" class="sl-btn" data-look="/img/samples/top-m.webp" data-name="Black Tank Basics">
-          <span class="sl-img"><img src="/img/samples/top-m.webp" alt="Woman in a black sleeveless top" loading="lazy" width="294" height="348"></span>
-          <span class="sl-info">
-            <b>Black Tank Basics</b>
-            <small>Sleeveless top, goes with everything</small>
-            <span class="sl-pieces">
-              <img src="/img/samples/top-d.webp" alt="" width="262" height="160">
-              <img src="/img/samples/jeans-d.webp" alt="" width="260" height="160">
-              <span class="sl-go"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
-            </span>
-          </span>
+            <div class="look-garments">
+              <span class="garment-thumb" title="Kurti"><img src="/img/samples/kurti-d.webp" alt="Kurti"></span>
+              <span class="look-go"><svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+            </div>
+          </div>
         </button>
       </article>
     </div>
   </section>
 
-  <!-- Best deals: real prices from recent searches (filled by home.js; stays hidden when there are none) -->
-  <section class="hsec" id="deals" aria-labelledby="dealsTitle" hidden>
-    <div class="hsec-head">
-      <h2 id="dealsTitle">Best Deals Today <span aria-hidden="true">🔥</span></h2>
-      <a href="/deals/" class="hsec-link">See all deals <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  <!-- 6. More Top Styles (Curated Picks) -->
+  <section class="shop-shelf" id="picks" aria-labelledby="picksTitle">
+    <div class="shelf-header">
+      <div class="shelf-title-wrap">
+        <h2 id="picksTitle">✨ More Handpicked Deals For You</h2>
+      </div>
     </div>
-    <p class="hsec-sub">Real prices people found on Fit Deal in the last 48 hours.</p>
-    <div class="deal-row" id="dealRow"></div>
+    <div class="product-shelf-grid" id="pickGrid">
+      <!-- Pick 1: Harpa Top -->
+      <article class="p-card" data-cat="tops">
+        <div class="p-card-top">
+          <span class="p-card-badge">56% OFF</span>
+          <button type="button" class="p-card-wish" aria-label="Save Harpa Top" data-save-id="harpa-top"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+          <div class="p-card-img-wrap"><img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&auto=format&fit=crop&q=80" alt="Harpa Top" loading="lazy"></div>
+        </div>
+        <div class="p-card-details">
+          <div class="p-card-store-row"><span class="store-badge store-amazon"><span class="s-dot"></span>Amazon</span><span class="p-card-brand">Harpa</span></div>
+          <h3 class="p-card-name">Women Solid Regular Fit Black Sleeveless Top</h3>
+          <div class="p-card-price-row"><span class="p-card-price">₹649</span><s class="p-card-mrp">₹1,499</s><span class="p-card-save">Save ₹850</span></div>
+          <div class="p-card-actions">
+            <a href="https://www.amazon.in" target="_blank" rel="noopener" class="btn btn-primary p-card-buy-btn">Buy Now</a>
+            <button type="button" class="btn btn-ghost p-card-dupe-btn" data-sample="top"><svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Dupes</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Pick 2: Levi's Jeans -->
+      <article class="p-card" data-cat="jeans">
+        <div class="p-card-top">
+          <span class="p-card-badge">58% OFF</span>
+          <button type="button" class="p-card-wish" aria-label="Save Levi's Jeans" data-save-id="levis-jeans"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+          <div class="p-card-img-wrap"><img src="https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=600&auto=format&fit=crop&q=80" alt="Levi's Jeans" loading="lazy"></div>
+        </div>
+        <div class="p-card-details">
+          <div class="p-card-store-row"><span class="store-badge store-myntra"><span class="s-dot"></span>Myntra</span><span class="p-card-brand">Levi's</span></div>
+          <h3 class="p-card-name">Women Blue High-Rise Light Fade Wide-Leg Jeans</h3>
+          <div class="p-card-price-row"><span class="p-card-price">₹1,499</span><s class="p-card-mrp">₹3,599</s><span class="p-card-save">Save ₹2,100</span></div>
+          <div class="p-card-actions">
+            <a href="https://www.myntra.com" target="_blank" rel="noopener" class="btn btn-primary p-card-buy-btn">Buy Now</a>
+            <button type="button" class="btn btn-ghost p-card-dupe-btn" data-sample="jeans"><svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Dupes</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Pick 3: Sassafras Midi Dress -->
+      <article class="p-card" data-cat="dresses">
+        <div class="p-card-top">
+          <span class="p-card-badge">60% OFF</span>
+          <button type="button" class="p-card-wish" aria-label="Save Sassafras Dress" data-save-id="sass-dress"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+          <div class="p-card-img-wrap"><img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600&auto=format&fit=crop&q=80" alt="Sassafras Dress" loading="lazy"></div>
+        </div>
+        <div class="p-card-details">
+          <div class="p-card-store-row"><span class="store-badge store-amazon"><span class="s-dot"></span>Amazon</span><span class="p-card-brand">Sassafras</span></div>
+          <h3 class="p-card-name">Women Pink Floral Printed Fit &amp; Flare Midi Dress</h3>
+          <div class="p-card-price-row"><span class="p-card-price">₹999</span><s class="p-card-mrp">₹2,499</s><span class="p-card-save">Save ₹1,500</span></div>
+          <div class="p-card-actions">
+            <a href="https://www.amazon.in" target="_blank" rel="noopener" class="btn btn-primary p-card-buy-btn">Buy Now</a>
+            <button type="button" class="btn btn-ghost p-card-dupe-btn" data-sample="dress"><svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Dupes</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Pick 4: W for Woman Kurti -->
+      <article class="p-card" data-cat="ethnic">
+        <div class="p-card-top">
+          <span class="p-card-badge">60% OFF</span>
+          <button type="button" class="p-card-wish" aria-label="Save W Kurti" data-save-id="w-kurti"><svg aria-hidden="true"><use href="#i-heart"/></svg></button>
+          <div class="p-card-img-wrap"><img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600&auto=format&fit=crop&q=80" alt="W for Woman Kurti" loading="lazy"></div>
+        </div>
+        <div class="p-card-details">
+          <div class="p-card-store-row"><span class="store-badge store-amazon"><span class="s-dot"></span>Amazon</span><span class="p-card-brand">W for Woman</span></div>
+          <h3 class="p-card-name">Women Beige Ethnic Embroidered Straight Kurti</h3>
+          <div class="p-card-price-row"><span class="p-card-price">₹999</span><s class="p-card-mrp">₹2,499</s><span class="p-card-save">Save ₹1,500</span></div>
+          <div class="p-card-actions">
+            <a href="https://www.amazon.in" target="_blank" rel="noopener" class="btn btn-primary p-card-buy-btn">Buy Now</a>
+            <button type="button" class="btn btn-ghost p-card-dupe-btn" data-sample="kurti"><svg aria-hidden="true"><use href="#i-sparkle-plain"/></svg>Dupes</button>
+          </div>
+        </div>
+      </article>
+    </div>
   </section>
 
-  <!-- More real products from recent searches -->
-  <section class="hsec" id="picks" aria-labelledby="picksTitle" hidden>
-    <div class="hsec-head">
-      <h2 id="picksTitle">Looks You May Love</h2>
-      <a href="/deals/" class="hsec-link">See more <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </div>
-    <div class="pick-grid" id="pickGrid"></div>
-  </section>
-
-  <p class="cat-empty" id="catEmpty" hidden>No looks in this category yet. <button type="button" class="link-btn" id="catClear">Show all</button></p>
-
-  <!-- How it works, short -->
-  <section class="hsec how-mini" aria-labelledby="howTitle">
-    <div class="hsec-head">
-      <h2 id="howTitle">How it works</h2>
-      <a href="/how-it-works/" class="hsec-link">Learn more <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-    </div>
-    <ol class="how-steps">
-      <li><span class="hs-ico s-upload"><svg aria-hidden="true"><use href="#i-step-upload"/></svg></span><b>Upload</b><small>Screenshot or link</small></li>
-      <li><span class="hs-ico s-find"><svg aria-hidden="true"><use href="#i-step-find"/></svg></span><b>Find</b><small>Exact &amp; similar</small></li>
-      <li><span class="hs-ico s-try"><svg aria-hidden="true"><use href="#i-step-compare"/></svg></span><b>Compare</b><small>Store prices</small></li>
-      <li><span class="hs-ico s-buy"><svg aria-hidden="true"><use href="#i-step-buy"/></svg></span><b>Buy</b><small>Best deal first</small></li>
-    </ol>
-  </section>
-
-  <!-- Recent searches on this device -->
-  <section class="hsec" id="recent" aria-labelledby="recentTitle" hidden>
-    <div class="hsec-head">
-      <h2 id="recentTitle">Your recent searches</h2>
-      <button type="button" class="hsec-link" id="recentClear">Clear</button>
+  <!-- 7. Recent searches on this device -->
+  <section class="shop-shelf" id="recent" aria-labelledby="recentTitle" hidden>
+    <div class="shelf-header">
+      <div class="shelf-title-wrap">
+        <h2 id="recentTitle">Your Recent Searches</h2>
+      </div>
+      <button type="button" class="shelf-more-link" id="recentClear">Clear History</button>
     </div>
     <ul class="recent-list" id="recentList"></ul>
+  </section>
+
+  <!-- 8. E-Commerce Trust Badges & Guarantee -->
+  <section class="ecommerce-trust-section" aria-label="Trust & Guarantees">
+    <div class="trust-grid">
+      <div class="trust-card">
+        <span class="trust-ico t-purple"><svg aria-hidden="true"><use href="#i-search"/></svg></span>
+        <h3>4 Mega Stores Searched</h3>
+        <p>Live comparison across Amazon, Flipkart, Myntra &amp; AJIO simultaneously.</p>
+      </div>
+      <div class="trust-card">
+        <span class="trust-ico t-green"><svg aria-hidden="true"><use href="#i-scale"/></svg></span>
+        <h3>100% Unbiased Pricing</h3>
+        <p>Commission never alters rank. Lowest price deal always comes first.</p>
+      </div>
+      <div class="trust-card">
+        <span class="trust-ico t-blue"><svg aria-hidden="true"><use href="#i-ruler"/></svg></span>
+        <h3>Indian Standard Sizing</h3>
+        <p>Unified S, M, L, XL size guidance tailored to Indian brand charts.</p>
+      </div>
+      <div class="trust-card">
+        <span class="trust-ico t-pink"><svg aria-hidden="true"><use href="#i-shield"/></svg></span>
+        <h3>Zero Photo Storage</h3>
+        <p>Upload screenshots with confidence. Photos are processed in RAM and never stored.</p>
+      </div>
+    </div>
   </section>
 </main>
 
@@ -337,13 +897,13 @@
       <a href="/affiliate-disclosure/">Affiliate disclosure</a>
     </nav>
   </div>
-  <p class="foot-note">As an Amazon Associate, Fit Deal earns from qualifying purchases. We may also earn a commission from other stores when you buy through our links, at no extra cost to you. It never changes which deal we rank first. Store names and logos belong to their owners.</p>
+  <p class="foot-note">We may earn a commission when you buy through affiliate links, at no extra cost to you. Commission never changes which products we rank first. Prices and availability can change; confirm them at the retailer. Store names and logos belong to their owners.</p>
   <p class="foot-copy">© 2026 Fit Deal</p>
 </footer>
 
 <nav class="tabs" aria-label="Main">
   <a href="/" class="tab" aria-current="page"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-home"/></svg></span><span>Home</span></a>
-  <a href="/#upload" class="tab" data-action="find"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-search"/></svg></span><span>Find</span></a>
+  <a href="/find/" class="tab"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-search"/></svg></span><span>Find</span></a>
   <a href="/saved/" class="tab"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-heart"/></svg></span><span>Saved</span></a>
   <a href="/deals/" class="tab"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-tag"/></svg><i class="dot" id="dealsDot" hidden></i></span><span>Deals</span></a>
   <a href="/profile/" class="tab"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-user"/></svg></span><span>Profile</span></a>
@@ -351,7 +911,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="/js/app.js?v=c4674691d4" defer></script>
-<script src="/js/home.js?v=c4674691d4" defer></script>
+<script src="/js/app.js?v=f20987ac08" defer></script>
+<script src="/js/home.js?v=f20987ac08" defer></script>
 </body>
 </html>

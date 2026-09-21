@@ -229,3 +229,53 @@ test("rate limits stop floods", async () => {
   assert.strictEqual(last.status, 429);
   http._buckets.clear();
 });
+
+test("text search works without an image and refinement replaces stale garment filters", async () => {
+  resetFetch();
+  const previous = config.providers.serper.key;
+  config.providers.serper.key = "test-only";
+  fakeFetch(/google\.serper\.dev/, () => ({ json: { shopping: [
+    { title: "Women Black Oversized Shirt", link: "https://www.myntra.com/8000001", price: "₹900" },
+    { title: "Women Red Floral Dress", link: "https://www.myntra.com/8000002", price: "₹1200" }
+  ] } }));
+  try {
+    let r = await post("/api/search", { query: "women black oversized shirt" });
+    assert.strictEqual(r.status, 200);
+    const first = await r.json();
+    let data = await (await fetch(base + "/api/search/" + first.id)).json();
+    assert.strictEqual(data.kind, "text");
+    assert.strictEqual(data.item.category, "shirt");
+    assert.strictEqual(data.exact.length, 0);
+    assert.strictEqual(data.similar.length, 1);
+    assert.match(data.similar[0].title, /Shirt/);
+    r = await post("/api/search", { refine: first.id, query: "women red floral dress" });
+    assert.strictEqual(r.status, 200);
+    const second = await r.json();
+    data = await (await fetch(base + "/api/search/" + second.id)).json();
+    assert.strictEqual(data.item.category, "dress");
+    assert.deepStrictEqual(data.item.colors, ["red"]);
+    assert.strictEqual(data.similar.length, 1);
+    assert.match(data.similar[0].title, /Dress/);
+    const page = await (await fetch(base + "/find/" + second.id)).text();
+    assert.match(page, /id="findReady"/);
+    for (const query of ["", " ", "a", "<>", 123, {}]) {
+      const bad = await post("/api/search", { query });
+      assert.strictEqual(bad.status, 400, "invalid query: " + JSON.stringify(query));
+    }
+  } finally { config.providers.serper.key = previous; resetFetch(); }
+});
+
+test("Home and Find expose honest shopping controls; Try-On cannot simulate a result", async () => {
+  const home = await (await fetch(base + "/")).text();
+  assert.match(home, /id="homeDeals"/);
+  assert.doesNotMatch(home, /Ends in|70%|40%|data-wish-id|Trusted by thousands/);
+  const start = await (await fetch(base + "/find/")).text();
+  assert.match(start, /What are you looking for/);
+  assert.match(start, /id="queryInput"/);
+  assert.match(start, /id="photo"/);
+  assert.match(start, /id="linkInput"/);
+  assert.doesNotMatch(start, /id="findMissing"/);
+  const tryon = await (await fetch(base + "/try-on/")).text();
+  assert.match(tryon, /not available yet/);
+  assert.doesNotMatch(tryon, /tryon\.js|type="file"|id="tryGo"/);
+});

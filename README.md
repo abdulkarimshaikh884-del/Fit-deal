@@ -11,7 +11,7 @@ Needs Node 20 or newer. There's nothing to install: the project has no npm depen
 ```
 cp .env.example .env      # add your keys; everything works without them, just with less
 npm run dev               # http://localhost:5173
-npm test                  # 28 tests, no real API calls
+npm test                  # automated regressions, no real API calls
 ```
 
 What each key switches on:
@@ -25,6 +25,12 @@ What each key switches on:
 | `ADMIN_PASSWORD` | The `/admin` dashboard |
 
 ## Where things are
+
+Current audit and release gaps: [docs/AUDIT-2026-09-20.md](docs/AUDIT-2026-09-20.md).
+`/find/` accepts text, photos and product links; `/find/:id` displays results.
+Without product-provider credentials, the default is honest empty results with direct store searches.
+The fictional local catalog requires `ENABLE_SAMPLE_CATALOG=true` and is always disabled in production.
+Virtual Try-On is unavailable until a real generation provider is integrated.
 
 | Path | What |
 |---|---|

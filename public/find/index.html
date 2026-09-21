@@ -3,22 +3,22 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Your matches — Fit Deal</title>
-<meta name="description" content="Same and similar products for your look, and the best price to buy them.">
+<title>Find your look — Fit Deal</title>
+<meta name="description" content="Search fashion by description, screenshot or product link across Indian stores.">
 <meta name="robots" content="noindex">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Fit Deal">
 <meta property="og:locale" content="en_IN">
-<meta property="og:title" content="Your matches — Fit Deal">
-<meta property="og:description" content="Same and similar products for your look, and the best price to buy them.">
+<meta property="og:title" content="Find your look — Fit Deal">
+<meta property="og:description" content="Search fashion by description, screenshot or product link across Indian stores.">
 <meta property="og:url" content="https://fitdeal.shop/find/">
 <meta property="og:image" content="https://fitdeal.shop/img/brand/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Fit Deal: see an outfit you love? We'll find it for less.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Your matches — Fit Deal">
-<meta name="twitter:description" content="Same and similar products for your look, and the best price to buy them.">
+<meta name="twitter:title" content="Find your look — Fit Deal">
+<meta name="twitter:description" content="Search fashion by description, screenshot or product link across Indian stores.">
 <meta name="twitter:image" content="https://fitdeal.shop/img/brand/og.png">
 <meta name="theme-color" content="#6a4ff0">
 <meta name="color-scheme" content="light">
@@ -29,9 +29,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/site.css?v=c4674691d4">
+<link rel="stylesheet" href="/css/site.css?v=f20987ac08">
+
 </head>
-<body data-page="find">
+<body data-page="find-start">
 
 <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
   <defs>
@@ -113,210 +114,74 @@
     <a href="/" class="brand" aria-label="Fit Deal home">
       <span class="brand-name">Fit Deal</span><svg class="brand-spark" aria-hidden="true"><use href="#i-sparkle"/></svg>
     </a>
+    <form class="shop-search-box header-search-box" data-search-form role="search" action="/find/">
+      <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
+      <input type="text" id="shopSearchInput" name="q" placeholder="Search fashion (e.g. kurti, floral dress, olive shirt) or paste store link..." aria-label="Search clothes or paste product link" autocomplete="off">
+      <div class="search-actions">
+        <button type="button" class="search-cam-btn" id="headerSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
+          <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
+          <span class="cam-btn-text">Visual Search</span>
+        </button>
+        <button type="submit" class="search-go-btn" aria-label="Search">
+          <span>Search</span>
+          <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+        </button>
+      </div>
+    </form>
     <nav class="d-links" aria-label="Main">
       <a href="/">Home</a>
+      <a href="/find/" aria-current="page">Find</a>
       <a href="/deals/">Deals</a>
       <a href="/saved/">Saved</a>
       <a href="/how-it-works/">How it works</a>
     </nav>
-    <a href="/#upload" class="d-cta"><svg aria-hidden="true"><use href="#i-camera-line"/></svg>Upload Screenshot</a>
+    <a href="#upload" class="d-cta" id="headerUploadCta" aria-label="Upload photo or screenshot"><svg aria-hidden="true"><use href="#i-camera-line"/></svg><span>Upload Screenshot</span></a>
   </div>
 </header>
 
-<header class="m-head m-back">
-  <a href="/" class="m-back-btn" data-back aria-label="Back"><svg aria-hidden="true"><use href="#i-back"/></svg></a>
-  <p class="m-title">Results</p>
+<header class="m-head m-brandonly">
+  <div class="m-brand">
+    <a href="/" class="brand" aria-label="Fit Deal home">
+      <span class="brand-name">Fit Deal</span><svg class="brand-spark" aria-hidden="true"><use href="#i-sparkle"/></svg>
+    </a>
+
+  </div>
   <div class="m-icons">
-    <a href="/#upload" class="m-icon" aria-label="Find a look"><svg aria-hidden="true"><use href="#i-search"/></svg></a>
+    <a href="/saved/" class="m-icon m-heart" aria-label="Saved items"><svg aria-hidden="true"><use href="#i-heart"/></svg><i class="dot" id="savedDot" hidden></i></a>
+    <a href="/profile/" class="m-icon" aria-label="Your profile"><svg aria-hidden="true"><use href="#i-user"/></svg></a>
   </div>
 </header>
 
-<main id="main" class="page page-find">
-  <div class="find-state" id="findLoading">
-    <div class="find-layout">
-      <aside class="find-side"><div class="card look-card sk"><div class="sk-img"></div><div class="sk-lines"><i></i><i></i><i></i></div></div></aside>
-      <section class="find-main">
-        <div class="p-grid">
-          <div class="p-card sk"><div class="sk-img"></div><div class="sk-lines"><i></i><i></i></div></div>
-          <div class="p-card sk"><div class="sk-img"></div><div class="sk-lines"><i></i><i></i></div></div>
-          <div class="p-card sk"><div class="sk-img"></div><div class="sk-lines"><i></i><i></i></div></div>
-          <div class="p-card sk"><div class="sk-img"></div><div class="sk-lines"><i></i><i></i></div></div>
-        </div>
-      </section>
+<main id="main" class="page search-page">
+  <div class="page-head"><p class="search-eyebrow">YOUR NEXT GREAT FIND</p><h1>What are you looking for?</h1><p>A look you spotted. A piece you love. Let's find your options.</p></div>
+  <form class="search-entry" id="textSearch" role="search">
+    <label class="sr-only" for="queryInput">Describe your look</label>
+    <input type="search" id="queryInput" name="query" maxlength="90" minlength="2" placeholder="Try “black oversized shirt”" required>
+    <button class="btn btn-primary" type="submit">Search <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+  </form>
+  <p class="fine search-status" id="searchStatus" role="status"></p>
+  <section class="search-upload" id="upload" aria-label="Search by photo or product link">
+    <div class="drop" id="drop">
+      <div class="drop-idle" id="dropIdle">
+        <span class="empty-ico"><svg aria-hidden="true"><use href="#i-camera-line"/></svg></span>
+        <h2>Seen a look you love?</h2><p>Upload a screenshot or photo. Choose the clothing item you want us to find.</p>
+        <button type="button" class="btn btn-primary" id="choose">Upload Screenshot</button>
+        <input type="file" id="photo" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" hidden>
+        <p class="fine">JPG, PNG or WebP · up to 25 MB · drag and drop supported</p>
+        <div class="snap-link-divider"><span>or start with a product link</span></div>
+        <form class="snap-link-form" data-link-form>
+          <label class="sr-only" for="linkInput">Product link</label>
+          <input type="text" inputmode="url" placeholder="Paste an Amazon, Flipkart, Myntra or AJIO link" id="linkInput" maxlength="2000" required>
+          <button type="submit" class="snap-link-go">Find matches</button>
+        </form>
+      </div>
+      <div class="flow" id="flow" hidden></div>
+      <p class="sr-only" id="flowStatus" role="status" aria-live="polite"></p>
     </div>
-    <p class="sr-only" role="status">Loading your results…</p>
-  </div>
-
-  <section class="find-state empty-state" id="findMissing" hidden>
-    <span class="empty-ico"><svg aria-hidden="true"><use href="#i-search"/></svg></span>
-    <h1>Start with a screenshot</h1>
-    <p id="findMissingText">Upload a photo of an outfit or paste a product link, and your matches will show up here.</p>
-    <a href="/#upload" class="btn btn-primary"><svg aria-hidden="true"><use href="#i-camera-line"/></svg>Upload a screenshot</a>
+    <p class="fine search-privacy">Photos are sent to our recognition provider to identify clothing. Fit Deal does not save photos on its servers. A preview stays in this browser tab for your results. <a href="/privacy/#photos">Photo privacy</a></p>
   </section>
-
-  <div class="find-state" id="findReady" hidden>
-    <div class="page-head d-only">
-      <h1 id="findTitle">Your matches</h1>
-      <p id="findSub">Same and similar products, and the best place to buy them.</p>
-    </div>
-
-    <div class="find-layout">
-      <aside class="find-side">
-        <section class="card look-card" aria-label="What we searched for">
-          <div class="look-img" id="lookImgWrap"><img id="lookImg" alt="Your screenshot" hidden><span class="look-store" id="lookStore" hidden></span></div>
-          <div class="look-info">
-            <p class="look-label" id="lookLabel">We looked for</p>
-            <p class="look-title" id="lookTitle"></p>
-            <div class="chips" id="lookChips"></div>
-            <div class="look-actions">
-              <button type="button" class="btn btn-ghost btn-sm" id="refineOpen"><svg aria-hidden="true"><use href="#i-edit"/></svg>Not right? Edit</button>
-              <a href="/#upload" class="btn btn-ghost btn-sm"><svg aria-hidden="true"><use href="#i-camera-line"/></svg>New search</a>
-            </div>
-          </div>
-          <form class="refine" id="refineForm" hidden>
-            <label class="field"><span>Describe what you want</span><input type="text" name="query" id="refineInput" maxlength="90" autocomplete="off" required></label>
-            <p class="fine">For example: “women navy blue floral wrap dress”. We'll search again with these words.</p>
-            <div class="btn-row">
-              <button type="submit" class="btn btn-primary btn-sm"><svg aria-hidden="true"><use href="#i-refresh"/></svg>Search again</button>
-              <button type="button" class="btn btn-ghost btn-sm" id="refineCancel">Cancel</button>
-            </div>
-          </form>
-        </section>
-
-        <div class="other-items" id="otherItems" hidden>
-          <p class="section-title">Also in your photo</p>
-          <div class="chips" id="otherChips"></div>
-        </div>
-
-        <a href="#exactSection" class="deal" id="bestDeal" hidden>
-          <svg class="deal-ico" aria-hidden="true"><use href="#i-trophy"/></svg>
-          <span class="deal-label" id="dealLabel">Best price</span>
-          <span class="deal-text"><b id="dealPrice"></b><small id="dealName"></small></span>
-          <svg class="deal-chev" aria-hidden="true"><use href="#i-chev"/></svg>
-        </a>
-
-        <section class="card side-card d-only" id="voteCtaSide">
-          <span class="vote-cta-ico"><svg aria-hidden="true"><use href="#i-heart-fill"/></svg></span>
-          <div class="vote-cta-text">
-            <p class="vc-title">Can't decide?</p>
-            <p class="vc-sub">Pick 2 or 3 and ask friends to vote.</p>
-          </div>
-          <button type="button" class="btn btn-primary btn-sm" data-choose>Help me choose</button>
-        </section>
-
-        <section class="card side-card share-side">
-          <p class="section-title">Share these results</p>
-          <div class="share-row">
-            <a class="share-btn share-wa" id="shareWa" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg>WhatsApp</a>
-            <button type="button" class="share-btn" id="shareCopy"><svg aria-hidden="true"><use href="#i-copy"/></svg>Copy link</button>
-            <button type="button" class="share-btn" id="shareMore" hidden><svg aria-hidden="true"><use href="#i-share"/></svg>More</button>
-          </div>
-        </section>
-      </aside>
-
-      <section class="find-main" aria-label="Products">
-        <div class="find-bar" id="findBar">
-          <div class="filter-row" role="group" aria-label="Filter by store" id="storeFilter"></div>
-          <div class="find-bar-right">
-            <label class="price-max">
-              <span>Max ₹</span>
-              <input type="number" inputmode="numeric" min="0" step="100" id="priceMax" placeholder="Any" aria-label="Maximum price in rupees">
-            </label>
-            <label class="sort">
-              <svg aria-hidden="true"><use href="#i-sort"/></svg>
-              <span class="sr-only">Sort by</span>
-              <select id="sortBy">
-                <option value="match">Best match</option>
-                <option value="price">Lowest price</option>
-              </select>
-            </label>
-          </div>
-        </div>
-
-        <div class="choose-bar" id="chooseBar" hidden>
-          <p><b id="chooseCount">0</b> of 3 picked. Pick 2 or 3 for your friends to vote on.</p>
-          <div class="btn-row">
-            <button type="button" class="btn btn-primary btn-sm" id="chooseGo" disabled>Create vote</button>
-            <button type="button" class="btn btn-ghost btn-sm" id="chooseCancel">Cancel</button>
-          </div>
-        </div>
-
-        <section class="result-sec" id="exactSection" aria-labelledby="exactTitle" hidden>
-          <div class="sec-head">
-            <h2 id="exactTitle"><span class="badge badge-exact">Exact</span>Same product</h2>
-            <p class="sec-note">Confirmed the same item: the product from your link, the same barcode, or the same brand and style code.</p>
-          </div>
-          <div class="p-grid" id="exactGrid"></div>
-        </section>
-
-        <section class="result-sec" id="similarSection" aria-labelledby="similarTitle" hidden>
-          <div class="sec-head">
-            <h2 id="similarTitle"><span class="badge badge-similar">Similar</span>Look-alikes</h2>
-            <p class="sec-note" id="similarNote">Close in style, colour and type. Not the same product. Closest first, then cheapest.</p>
-          </div>
-          <div class="p-grid" id="similarGrid"></div>
-        </section>
-
-        <section class="card empty-results" id="noResults" hidden>
-          <span class="empty-ico"><svg aria-hidden="true"><use href="#i-search"/></svg></span>
-          <h2>No products found yet</h2>
-          <p id="noResultsText">We couldn't find products for this search. Try editing the description, or search the stores directly below.</p>
-          <button type="button" class="btn btn-primary btn-sm" data-refine><svg aria-hidden="true"><use href="#i-edit"/></svg>Edit and search again</button>
-        </section>
-
-        <p class="filtered-out" id="filteredOut" hidden>No products match these filters. <button type="button" class="link-btn" id="clearFilters">Clear filters</button></p>
-
-        <section class="card store-links" aria-labelledby="storeLinksTitle">
-          <h2 id="storeLinksTitle">Search the stores directly</h2>
-          <p>See every result for “<span id="storeQuery"></span>” on the store's own site.</p>
-          <div class="store-link-row" id="storeLinks"></div>
-        </section>
-
-        <section class="card vote-cta m-only">
-          <span class="vote-cta-ico"><svg aria-hidden="true"><use href="#i-heart-fill"/></svg></span>
-          <div class="vote-cta-text">
-            <p class="vc-title">Can't decide?</p>
-            <p class="vc-sub">Pick 2 or 3 and ask friends to vote.</p>
-          </div>
-          <button type="button" class="btn btn-primary btn-sm" data-choose>Help me choose</button>
-        </section>
-
-        <p class="sources" id="sources"></p>
-        <p class="disclose"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Prices and stock come from the stores and can change. Check the final price on the store's page before you buy. We may earn a commission when you buy through our links; it never changes the order. <a href="/affiliate-disclosure/">Learn more</a></span></p>
-      </section>
-    </div>
-  </div>
-
-  <dialog class="sheet" id="voteSheet" aria-labelledby="voteSheetTitle">
-    <form method="dialog" class="sheet-in" id="voteForm">
-      <h2 id="voteSheetTitle">Ask friends to vote</h2>
-      <p>We'll make a page with your picks. Friends tap the one they like. No sign-in needed.</p>
-      <label class="field"><span>Your first name (optional)</span><input type="text" name="name" maxlength="20" autocomplete="given-name" placeholder="e.g. Riya"></label>
-      <div class="btn-row">
-        <button type="submit" class="btn btn-primary" value="create">Create vote page</button>
-        <button type="button" class="btn btn-ghost" id="voteSheetClose">Cancel</button>
-      </div>
-    </form>
-  </dialog>
-
-  <dialog class="sheet" id="reportSheet" aria-labelledby="reportTitle">
-    <form method="dialog" class="sheet-in" id="reportForm">
-      <h2 id="reportTitle">What's wrong with this result?</h2>
-      <p class="report-product" id="reportProduct"></p>
-      <fieldset class="radios">
-        <label><input type="radio" name="reason" value="not_same" required> <span>It's not the same product</span></label>
-        <label><input type="radio" name="reason" value="wrong_item"> <span>Wrong kind of clothing</span></label>
-        <label><input type="radio" name="reason" value="bad_price"> <span>Price is wrong</span></label>
-        <label><input type="radio" name="reason" value="broken_link"> <span>Link doesn't work</span></label>
-        <label><input type="radio" name="reason" value="other"> <span>Something else</span></label>
-      </fieldset>
-      <label class="field"><span>Details (optional)</span><textarea name="note" rows="2" maxlength="300"></textarea></label>
-      <div class="btn-row">
-        <button type="submit" class="btn btn-primary" value="send">Send report</button>
-        <button type="button" class="btn btn-ghost" id="reportClose">Cancel</button>
-      </div>
-    </form>
-  </dialog>
+  <section class="hsec" aria-labelledby="searchIdeas"><h2 id="searchIdeas">A little inspiration</h2><div class="search-suggestions"><a class="cat" href="/find/?q=women%20floral%20dress">Floral dresses</a><a class="cat" href="/find/?q=men%20linen%20shirt">Linen shirts</a><a class="cat" href="/find/?q=women%20wide%20leg%20jeans">Wide-leg jeans</a><a class="cat" href="/find/?q=cotton%20kurti">Cotton kurtis</a></div></section>
+  <section class="hsec" id="recent" hidden><div class="hsec-head"><h2>Recent searches</h2><button type="button" class="link-btn" id="recentClear">Clear</button></div><ul class="recent-list" id="recentList"></ul></section>
 </main>
 
 <footer class="foot">
@@ -338,13 +203,13 @@
       <a href="/affiliate-disclosure/">Affiliate disclosure</a>
     </nav>
   </div>
-  <p class="foot-note">As an Amazon Associate, Fit Deal earns from qualifying purchases. We may also earn a commission from other stores when you buy through our links, at no extra cost to you. It never changes which deal we rank first. Store names and logos belong to their owners.</p>
+  <p class="foot-note">We may earn a commission when you buy through affiliate links, at no extra cost to you. Commission never changes which products we rank first. Prices and availability can change; confirm them at the retailer. Store names and logos belong to their owners.</p>
   <p class="foot-copy">© 2026 Fit Deal</p>
 </footer>
 
 <nav class="tabs" aria-label="Main">
   <a href="/" class="tab"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-home"/></svg></span><span>Home</span></a>
-  <a href="/#upload" class="tab" data-action="find" aria-current="page"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-search"/></svg></span><span>Find</span></a>
+  <a href="/find/" class="tab" aria-current="page"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-search"/></svg></span><span>Find</span></a>
   <a href="/saved/" class="tab"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-heart"/></svg></span><span>Saved</span></a>
   <a href="/deals/" class="tab"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-tag"/></svg><i class="dot" id="dealsDot" hidden></i></span><span>Deals</span></a>
   <a href="/profile/" class="tab"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-user"/></svg></span><span>Profile</span></a>
@@ -352,7 +217,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="/js/app.js?v=c4674691d4" defer></script>
-<script src="/js/find.js?v=c4674691d4" defer></script>
+<script src="/js/app.js?v=f20987ac08" defer></script>
+<script src="/js/search-input.js?v=f20987ac08" defer></script>
 </body>
 </html>

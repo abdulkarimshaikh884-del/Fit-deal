@@ -29,7 +29,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/site.css?v=c4674691d4">
+<link rel="stylesheet" href="/css/site.css?v=f20987ac08">
+
 </head>
 <body data-page="deals">
 
@@ -113,13 +114,28 @@
     <a href="/" class="brand" aria-label="Fit Deal home">
       <span class="brand-name">Fit Deal</span><svg class="brand-spark" aria-hidden="true"><use href="#i-sparkle"/></svg>
     </a>
+    <form class="shop-search-box header-search-box" data-search-form role="search" action="/find/">
+      <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
+      <input type="text" id="shopSearchInput" name="q" placeholder="Search fashion (e.g. kurti, floral dress, olive shirt) or paste store link..." aria-label="Search clothes or paste product link" autocomplete="off">
+      <div class="search-actions">
+        <button type="button" class="search-cam-btn" id="headerSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
+          <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
+          <span class="cam-btn-text">Visual Search</span>
+        </button>
+        <button type="submit" class="search-go-btn" aria-label="Search">
+          <span>Search</span>
+          <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+        </button>
+      </div>
+    </form>
     <nav class="d-links" aria-label="Main">
       <a href="/">Home</a>
+      <a href="/find/">Find</a>
       <a href="/deals/" aria-current="page">Deals</a>
       <a href="/saved/">Saved</a>
       <a href="/how-it-works/">How it works</a>
     </nav>
-    <a href="/#upload" class="d-cta"><svg aria-hidden="true"><use href="#i-camera-line"/></svg>Upload Screenshot</a>
+    <a href="#upload" class="d-cta" id="headerUploadCta" aria-label="Upload photo or screenshot"><svg aria-hidden="true"><use href="#i-camera-line"/></svg><span>Upload Screenshot</span></a>
   </div>
 </header>
 
@@ -128,10 +144,11 @@
     <a href="/" class="brand" aria-label="Fit Deal home">
       <span class="brand-name">Fit Deal</span><svg class="brand-spark" aria-hidden="true"><use href="#i-sparkle"/></svg>
     </a>
-    
+
   </div>
   <div class="m-icons">
-    <a href="/#upload" class="m-icon" aria-label="Find a look"><svg aria-hidden="true"><use href="#i-search"/></svg></a><a href="/saved/" class="m-icon m-heart" aria-label="Saved items"><svg aria-hidden="true"><use href="#i-heart"/></svg><i class="dot" id="savedDot" hidden></i></a>
+    <a href="/saved/" class="m-icon m-heart" aria-label="Saved items"><svg aria-hidden="true"><use href="#i-heart"/></svg><i class="dot" id="savedDot" hidden></i></a>
+    <a href="/profile/" class="m-icon" aria-label="Your profile"><svg aria-hidden="true"><use href="#i-user"/></svg></a>
   </div>
 </header>
 
@@ -163,7 +180,7 @@
     <span class="empty-ico"><svg aria-hidden="true"><use href="#i-tag"/></svg></span>
     <h2 id="dealsEmptyTitle">No deals to show yet</h2>
     <p id="dealsEmptyText">Deals appear here when searches on Fit Deal find real discounts. Search for a look and you'll see its prices across stores.</p>
-    <a href="/#upload" class="btn btn-primary btn-sm"><svg aria-hidden="true"><use href="#i-camera-line"/></svg>Find a look</a>
+    <a href="/find/?mode=photo" class="btn btn-primary btn-sm"><svg aria-hidden="true"><use href="#i-camera-line"/></svg>Find a look</a>
   </section>
 
   <p class="disclose"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Discounts are worked out from each store's own MRP. Prices change often; the store's page has the final price. We may earn a commission when you buy through our links. <a href="/affiliate-disclosure/">Learn more</a></span></p>
@@ -188,13 +205,13 @@
       <a href="/affiliate-disclosure/">Affiliate disclosure</a>
     </nav>
   </div>
-  <p class="foot-note">As an Amazon Associate, Fit Deal earns from qualifying purchases. We may also earn a commission from other stores when you buy through our links, at no extra cost to you. It never changes which deal we rank first. Store names and logos belong to their owners.</p>
+  <p class="foot-note">We may earn a commission when you buy through affiliate links, at no extra cost to you. Commission never changes which products we rank first. Prices and availability can change; confirm them at the retailer. Store names and logos belong to their owners.</p>
   <p class="foot-copy">© 2026 Fit Deal</p>
 </footer>
 
 <nav class="tabs" aria-label="Main">
   <a href="/" class="tab"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-home"/></svg></span><span>Home</span></a>
-  <a href="/#upload" class="tab" data-action="find"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-search"/></svg></span><span>Find</span></a>
+  <a href="/find/" class="tab"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-search"/></svg></span><span>Find</span></a>
   <a href="/saved/" class="tab"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-heart"/></svg></span><span>Saved</span></a>
   <a href="/deals/" class="tab" aria-current="page"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-tag"/></svg><i class="dot" id="dealsDot" hidden></i></span><span>Deals</span></a>
   <a href="/profile/" class="tab"><span class="tab-ico"><svg aria-hidden="true"><use href="#i-user"/></svg></span><span>Profile</span></a>
@@ -202,7 +219,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="/js/app.js?v=c4674691d4" defer></script>
-<script src="/js/deals.js?v=c4674691d4" defer></script>
+<script src="/js/app.js?v=f20987ac08" defer></script>
+<script src="/js/deals.js?v=f20987ac08" defer></script>
 </body>
 </html>

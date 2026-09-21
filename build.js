@@ -6,6 +6,7 @@
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
+const shopping = require("./src/home-shopping");
 
 const ROOT = __dirname;
 const OUT = path.join(ROOT, "public");
@@ -16,7 +17,7 @@ const SPRITE = fs.readFileSync(path.join(ROOT, "src", "sprite.svg"), "utf8").tri
 // Asset version from the CSS and JS contents, so browsers refetch exactly
 // when something changed.
 const V = crypto.createHash("sha1")
-  .update(["css/site.css"].concat(fs.readdirSync(path.join(OUT, "js")).filter((f) => f.endsWith(".js")).sort().map((f) => "js/" + f))
+  .update(["css/site.css", "css/home.css"].concat(fs.readdirSync(path.join(OUT, "js")).filter((f) => f.endsWith(".js")).sort().map((f) => "js/" + f))
     .map((f) => fs.readFileSync(path.join(OUT, f))).join("|"))
   .digest("hex").slice(0, 10);
 
@@ -26,13 +27,14 @@ const POSITIONING = "See an outfit you love? Fit Deal finds it — and finds it 
 // Home · Find · Saved · Deals · Profile; desktop links to match.
 const NAV = [
   { key: "home", href: "/", label: "Home" },
+  { key: "find", href: "/find/", label: "Find" },
   { key: "deals", href: "/deals/", label: "Deals" },
   { key: "saved", href: "/saved/", label: "Saved" },
   { key: "how", href: "/how-it-works/", label: "How it works" }
 ];
 const TABS = [
   { key: "home", href: "/", label: "Home", icon: "i-home" },
-  { key: "find", href: "/#upload", label: "Find", icon: "i-search", action: "find" },
+  { key: "find", href: "/find/", label: "Find", icon: "i-search" },
   { key: "saved", href: "/saved/", label: "Saved", icon: "i-heart" },
   { key: "deals", href: "/deals/", label: "Deals", icon: "i-tag", dot: "dealsDot" },
   { key: "profile", href: "/profile/", label: "Profile", icon: "i-user" }
@@ -43,7 +45,9 @@ const PAGES = [
   { out: "index.html", src: "home", page: "home", nav: "home", tab: "home", head: "home", path: "/", index: true, script: "home",
     title: "Fit Deal — Find any outfit from a screenshot, for less",
     desc: "Upload a screenshot or paste a product link. Fit Deal finds the same or similar clothes on Amazon, Flipkart, Myntra and AJIO and shows the best price." },
-  { out: "find/index.html", src: "find", page: "find", nav: "", tab: "find", head: "back", heading: "Results", path: "/find/", script: "find",
+  { out: "find/index.html", src: "find-start", page: "find-start", nav: "find", tab: "find", head: "brand", path: "/find/", script: "search-input",
+    title: "Find your look — Fit Deal", desc: "Search fashion by description, screenshot or product link across Indian stores." },
+  { out: "find/results.html", src: "find", page: "find", nav: "find", tab: "find", head: "back", heading: "Results", path: "/find/", script: "find",
     title: "Your matches — Fit Deal", desc: "Same and similar products for your look, and the best price to buy them." },
   { out: "vote/index.html", src: "vote", page: "vote", head: "back", heading: "Help me choose", path: "/vote/", script: "vote",
     title: "Which one should I buy? — Fit Deal", desc: "Vote for the one you like most." },
@@ -53,7 +57,7 @@ const PAGES = [
     title: "Deals — real prices from recent Fit Deal searches", desc: "The biggest real discounts people found on Fit Deal in the last two days, across Amazon, Flipkart, Myntra and AJIO." },
   { out: "profile/index.html", src: "profile", page: "profile", nav: "profile", tab: "profile", head: "brand", path: "/profile/", script: "profile",
     title: "Your Fit Deal — Profile", desc: "Your saved items, searches, votes and size notes, kept on this device." },
-  { out: "try-on/index.html", src: "try-on", page: "tryon", head: "back", heading: "Virtual Try-On", path: "/try-on/", script: "tryon",
+  { out: "try-on/index.html", src: "try-on", page: "tryon", head: "back", heading: "Virtual Try-On", path: "/try-on/",
     title: "AI Virtual Try-On — Fit Deal", desc: "Try outfits virtually before buying smarter." },
   { out: "how-it-works/index.html", src: "how-it-works", page: "info", nav: "how", head: "back", heading: "How it works", path: "/how-it-works/", index: true,
     title: "How Fit Deal works — screenshot to best price", desc: "Upload a screenshot, we find the same or similar clothes, compare prices across Indian stores, and you buy from the store directly." },
@@ -83,12 +87,25 @@ const brand = `<a href="/" class="brand" aria-label="Fit Deal home">
 
 function desktopNav(p) {
   const links = NAV.map((n) => `      <a href="${n.href}"${n.key === p.nav ? ' aria-current="page"' : ""}>${n.label}</a>`).join("\n");
-  const cta = p.page === "home"
-    ? `<a href="#upload" class="d-cta" data-action="find"><svg aria-hidden="true"><use href="#i-camera-line"/></svg>Upload Screenshot</a>`
-    : `<a href="/#upload" class="d-cta"><svg aria-hidden="true"><use href="#i-camera-line"/></svg>Upload Screenshot</a>`;
+  const searchBox = `    <form class="shop-search-box header-search-box" data-search-form role="search" action="/find/">
+      <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
+      <input type="text" id="shopSearchInput" name="q" placeholder="Search fashion (e.g. kurti, floral dress, olive shirt) or paste store link..." aria-label="Search clothes or paste product link" autocomplete="off">
+      <div class="search-actions">
+        <button type="button" class="search-cam-btn" id="headerSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
+          <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
+          <span class="cam-btn-text">Visual Search</span>
+        </button>
+        <button type="submit" class="search-go-btn" aria-label="Search">
+          <span>Search</span>
+          <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+        </button>
+      </div>
+    </form>`;
+  const cta = `<a href="#upload" class="d-cta" id="headerUploadCta" aria-label="Upload photo or screenshot"><svg aria-hidden="true"><use href="#i-camera-line"/></svg><span>Upload Screenshot</span></a>`;
   return `<header class="d-nav">
   <div class="d-nav-in">
     ${brand}
+${searchBox}
     <nav class="d-links" aria-label="Main">
 ${links}
     </nav>
@@ -98,28 +115,27 @@ ${links}
 }
 
 function mobileHead(p) {
-  const find = p.page === "home"
-    ? `<a href="#upload" class="m-icon" data-action="focus-link" aria-label="Search by photo or link"><svg aria-hidden="true"><use href="#i-search"/></svg></a>`
-    : `<a href="/#upload" class="m-icon" aria-label="Find a look"><svg aria-hidden="true"><use href="#i-search"/></svg></a>`;
-  // The heart shows a dot when something is saved on this device (app.js).
+  const find = `<a href="/find/" class="m-icon" aria-label="Find a look"><svg aria-hidden="true"><use href="#i-search"/></svg></a>`;
   const heart = `<a href="/saved/" class="m-icon m-heart" aria-label="Saved items"><svg aria-hidden="true"><use href="#i-heart"/></svg><i class="dot" id="savedDot" hidden></i></a>`;
-  const icons = p.head === "back" ? find : find + heart;
+  const profile = `<a href="/profile/" class="m-icon" aria-label="Your profile"><svg aria-hidden="true"><use href="#i-user"/></svg></a>`;
   if (p.head === "back") {
     return `<header class="m-head m-back">
   <a href="/" class="m-back-btn" data-back aria-label="Back"><svg aria-hidden="true"><use href="#i-back"/></svg></a>
   <p class="m-title">${p.heading}</p>
   <div class="m-icons">
-    ${icons}
+    ${find}
+    ${heart}
   </div>
 </header>`;
   }
   return `<header class="m-head${p.head === "brand" ? " m-brandonly" : ""}">
   <div class="m-brand">
     ${brand}
-    ${p.head === "home" ? `<p class="m-tag">Same look. Smarter prices.</p>` : ""}
+${p.head === "home" ? `    <p class="m-tag">Same look. Smarter prices.</p>` : ""}
   </div>
   <div class="m-icons">
-    ${icons}
+    ${heart}
+    ${profile}
   </div>
 </header>`;
 }
@@ -147,7 +163,7 @@ const footer = `<footer class="foot">
       <a href="/affiliate-disclosure/">Affiliate disclosure</a>
     </nav>
   </div>
-  <p class="foot-note">As an Amazon Associate, Fit Deal earns from qualifying purchases. We may also earn a commission from other stores when you buy through our links, at no extra cost to you. It never changes which deal we rank first. Store names and logos belong to their owners.</p>
+  <p class="foot-note">We may earn a commission when you buy through affiliate links, at no extra cost to you. Commission never changes which products we rank first. Prices and availability can change; confirm them at the retailer. Store names and logos belong to their owners.</p>
   <p class="foot-copy">© 2026 Fit Deal</p>
 </footer>`;
 
@@ -175,7 +191,9 @@ function jsonLd(p) {
 }
 
 function render(p) {
-  const body = fs.readFileSync(path.join(ROOT, "src", "pages", p.src + ".html"), "utf8").trim();
+  let body = fs.readFileSync(path.join(ROOT, "src", "pages", p.src + ".html"), "utf8").trim();
+  if (p.page === "home") body = body.replace('<!-- SHOP_NAV -->', shopping.navigation())
+    .replace('<!-- SHOP_CAMPAIGNS -->', shopping.campaigns()).replace('<!-- SHOP_EXPANSION -->', shopping.expansion());
   const home = p.page === "home";
   const url = SITE + (p.path === "/404" || p.path === "/500" ? "/" : p.path);
   const ld = jsonLd(p).map((o) => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join("\n");
@@ -210,7 +228,8 @@ ${p.index ? `<link rel="canonical" href="${url}">` : '<meta name="robots" conten
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-${home ? '<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&text=GodOutfisBerPcSamVbLkl&display=swap" rel="stylesheet">\n' : ""}<link rel="stylesheet" href="/css/site.css?v=${V}">
+${home ? '<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">\n' : ""}<link rel="stylesheet" href="/css/site.css?v=${V}">
+${home ? `<link rel="stylesheet" href="/css/home.css?v=${V}">\n` : ""}
 ${ld ? ld + "\n" : ""}</head>
 <body data-page="${p.page}">
 

@@ -1,13 +1,12 @@
-/* Fit Deal — home page: photo upload, product link, samples.
-   Flow: photo → shrink in the browser (this also drops hidden details such
-   as location) → /api/analyze → pick the item (if there are several) →
-   /api/search → /find/<id>. */
+/* Fit Deal — home page: e-commerce shopping, photo upload, product link, samples.
+   Flow: photo → shrink in the browser (drops EXIF & location data) → /api/analyze →
+   pick item → /api/search → /find/<id>. */
 (function () {
   "use strict";
   var FD = window.FD;
   var el = FD.el;
 
-  var MAX_RAW = 25 * 1024 * 1024;   // what we accept from the picker
+  var MAX_RAW = 25 * 1024 * 1024;   // what we accept from picker
   var MAX_SIDE = 1600;              // longest side sent for recognition
   var drop = document.getElementById("drop");
   var idle = document.getElementById("dropIdle");
@@ -15,28 +14,29 @@
   var status = document.getElementById("flowStatus");
   var photo = document.getElementById("photo");
   var busy = false;
-  var lastRun = null; // to retry the same thing
+  var lastRun = null;
 
-  function announce(text) { status.textContent = text; }
+  function announce(text) { if (status) status.textContent = text; }
 
   function show(nodes) {
+    if (!flow || !idle || !drop) return;
     flow.textContent = "";
     nodes.forEach(function (n) { if (n) flow.appendChild(n); });
     idle.hidden = true;
     flow.hidden = false;
     drop.classList.add("is-busy");
   }
+
   function reset() {
     busy = false;
-    flow.hidden = true;
-    flow.textContent = "";
-    idle.hidden = false;
-    drop.classList.remove("is-busy");
+    if (flow) { flow.hidden = true; flow.textContent = ""; }
+    if (idle) idle.hidden = false;
+    if (drop) drop.classList.remove("is-busy");
     Array.prototype.forEach.call(document.querySelectorAll("[data-link-form].is-busy"), function (f) { f.classList.remove("is-busy"); });
     Array.prototype.forEach.call(document.querySelectorAll("[data-look][aria-busy]"), function (b) { b.removeAttribute("aria-busy"); });
   }
 
-  // ── Screens inside the upload box ────────────────────────────────────────
+  // ── Screens inside upload box ─────────────────────────────────────────────
   function working(thumbUrl, steps, active, msg) {
     var list = el("ol.flow-steps", null, steps.map(function (s, i) {
       return el("li", { class: i < active ? "done" : i === active ? "active" : "" }, [s]);
@@ -53,7 +53,7 @@
     busy = false;
     var buttons = [];
     if (canRetry && lastRun) buttons.push(el("button.btn btn-primary btn-sm", { type: "button", on: { click: function () { lastRun(); } } }, [FD.icon("i-refresh"), "Try again"]));
-    buttons.push(el("button.btn " + (buttons.length ? "btn-ghost" : "btn-primary") + " btn-sm", { type: "button", on: { click: function () { reset(); photo.click(); } } }, [FD.icon("i-camera-line"), "Choose another photo"]));
+    buttons.push(el("button.btn " + (buttons.length ? "btn-ghost" : "btn-primary") + " btn-sm", { type: "button", on: { click: function () { reset(); if (photo) photo.click(); } } }, [FD.icon("i-camera-line"), "Choose another photo"]));
     buttons.push(el("button.btn btn-ghost btn-sm", { type: "button", on: { click: reset } }, ["Cancel"]));
     show([
       el("span.flow-err", null, [FD.icon("i-info")]),
@@ -62,17 +62,18 @@
       el("div.btn-row", null, buttons)
     ]);
     announce(message);
-    var first = flow.querySelector("button");
+    var first = flow ? flow.querySelector("button") : null;
     if (first) first.focus();
   }
 
-  // ── Image handling (all in the browser) ──────────────────────────────────
+  // ── Browser-side image handling ──────────────────────────────────────────
   function decode(file) {
     if (window.createImageBitmap) {
       return createImageBitmap(file, { imageOrientation: "from-image" }).catch(function () { return decodeWithImg(file); });
     }
     return decodeWithImg(file);
   }
+
   function decodeWithImg(file) {
     return new Promise(function (resolve, reject) {
       var url = URL.createObjectURL(file);
@@ -82,6 +83,7 @@
       img.src = url;
     });
   }
+
   function draw(src, maxSide, quality, crop) {
     var sw = crop ? crop.w : src.width, sh = crop ? crop.h : src.height;
     var scale = Math.min(1, maxSide / Math.max(sw, sh));
@@ -94,13 +96,13 @@
     ctx.drawImage(src, crop ? crop.x : 0, crop ? crop.y : 0, sw, sh, 0, 0, c.width, c.height);
     return c;
   }
+
   function toBlob(canvas, quality) {
     return new Promise(function (resolve, reject) {
       canvas.toBlob(function (b) { b ? resolve(b) : reject(new Error("encode")); }, "image/jpeg", quality);
     });
   }
-  // Re-drawing the photo on a canvas and saving it as a new JPEG leaves out
-  // every bit of hidden data (EXIF, GPS location, camera details).
+
   function prepare(file) {
     if (!file || !/^image\//.test(file.type || "image/")) {
       return Promise.reject(new Error("Please choose a photo or screenshot (JPG, PNG, WebP or HEIC)."));
@@ -116,6 +118,7 @@
       throw new Error("We can't open this type of photo in your browser. Take a screenshot of it and upload that instead.");
     });
   }
+
   function cropThumb(img, box) {
     if (!box) return draw(img, 160).toDataURL("image/jpeg", 0.75);
     var pad = 0.04;
@@ -125,7 +128,7 @@
     return draw(img, 200, 0.8, crop).toDataURL("image/jpeg", 0.78);
   }
 
-  // ── The flow ─────────────────────────────────────────────────────────────
+  // ── Outfit recognition flow ──────────────────────────────────────────────
   var PHOTO_STEPS = ["Reading your photo", "Spotting the clothes", "Finding matches"];
 
   function startPhoto(file, opts) {
@@ -134,7 +137,10 @@
     opts = opts || {};
     lastRun = function () { busy = false; startPhoto(file, opts); };
     FD.track("upload_start", { sample: !!opts.sample, type: (file.type || "").slice(6, 12) });
+    var up = document.getElementById("upload");
+    if (up) up.hidden = false;
     working(null, PHOTO_STEPS, 0, "Preparing your photo…");
+
     prepare(file).then(function (p) {
       working(p.thumb, PHOTO_STEPS, 1);
       return FD.api("/api/analyze", { method: "POST", body: p.blob, headers: { "Content-Type": "image/jpeg" } }).then(function (res) {
@@ -164,7 +170,7 @@
     var list = el("div.pick-list", { role: "list" }, ctx.items.map(function (it, i) {
       var thumb = cropThumb(ctx.img, it.box);
       return el("button.pick", { type: "button", role: "listitem", on: { click: function () { busy = true; confirmOrSearch(ctx, i); } } }, [
-        el("span.pick-img", { style: null, "aria-hidden": "true", dataset: { bg: thumb } }),
+        el("span.pick-img", { "aria-hidden": "true", dataset: { bg: thumb } }),
         el("span", null, [el("b", { text: it.label }), el("small", { text: describe(it) })])
       ]);
     }));
@@ -174,11 +180,10 @@
       list,
       el("button.link-btn", { type: "button", on: { click: reset } }, ["Start over"])
     ]);
-    // Background images set through the DOM (no inline style attributes, so
-    // the page's security policy can stay strict).
     Array.prototype.forEach.call(list.querySelectorAll(".pick-img"), function (s) { s.style.backgroundImage = "url(" + s.dataset.bg + ")"; });
     announce("We found " + ctx.items.length + " pieces of clothing. Pick one to search for.");
-    list.querySelector("button").focus();
+    var firstBtn = list.querySelector("button");
+    if (firstBtn) firstBtn.focus();
   }
 
   function describe(it) {
@@ -190,7 +195,6 @@
     return bits.join(" · ");
   }
 
-  // Low confidence → ask before searching, and let the shopper fix the words.
   function confirmOrSearch(ctx, index) {
     var it = ctx.items[index];
     if (!it.needsConfirm) return search(ctx, index);
@@ -222,7 +226,6 @@
     var body = { analysisId: ctx.analysisId, index: index, sample: ctx.sample };
     if (query && query !== it.query) body.query = query;
     FD.api("/api/search", { json: body }).then(function (res) {
-      // The photo stays on this device: the results page shows it from here.
       FD.store.sessionSet("fd_img_" + res.id, ctx.thumb);
       FD.store.sessionSet("fd_items_" + res.id, { analysisId: ctx.analysisId, index: index, sample: ctx.sample, items: ctx.items.map(function (x) { return { label: x.label }; }) });
       FD.recent.add({ id: res.id, label: it.label, kind: "photo" });
@@ -239,6 +242,8 @@
     form.classList.add("is-busy");
     lastRun = function () { busy = false; startLink(form, value); };
     FD.track("link_submit", {});
+    var up = document.getElementById("upload");
+    if (up) up.hidden = false;
     working(null, ["Reading the link", "Finding prices"], 0, "Checking the stores…");
     setTimeout(function () { if (busy) working(null, ["Reading the link", "Finding prices"], 1, "Checking the stores…"); }, 900);
     FD.api("/api/search", { json: { link: value } }).then(function (res) {
@@ -251,41 +256,74 @@
     });
   }
 
-  // ── Wiring ───────────────────────────────────────────────────────────────
-  document.getElementById("choose").addEventListener("click", function () { photo.click(); });
-  photo.addEventListener("change", function () {
-    var file = photo.files && photo.files[0];
-    photo.value = "";
-    if (file) { if (busy) reset(); startPhoto(file); }
+  // ── Visual search drawer trigger helpers ─────────────────────────────────
+  function openUploadDrawer(autoPick) {
+    var up = document.getElementById("upload");
+    if (up) {
+      up.hidden = false;
+      up.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (autoPick && photo) {
+        setTimeout(function () { photo.click(); }, 200);
+      }
+    }
+  }
+
+  // Header & Banner trigger buttons
+  ["headerSnapBtn", "headerUploadCta", "mobileSnapBtn", "bannerSnapBtn"].forEach(function (id) {
+    var btn = document.getElementById(id);
+    if (btn) {
+      btn.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        openUploadDrawer(true);
+      });
+    }
   });
 
+  // Photo input listener
+  if (photo) {
+    photo.addEventListener("change", function () {
+      var file = photo.files && photo.files[0];
+      photo.value = "";
+      if (file) { if (busy) reset(); startPhoto(file); }
+    });
+  }
+  var chooseBtn = document.getElementById("choose");
+  if (chooseBtn && photo) {
+    chooseBtn.addEventListener("click", function () { photo.click(); });
+  }
+
+  // Link forms
   Array.prototype.forEach.call(document.querySelectorAll("[data-link-form]"), function (form) {
     form.addEventListener("submit", function (ev) {
       ev.preventDefault();
       var input = form.querySelector("input");
-      var value = input.value.trim();
-      if (!value) { input.focus(); FD.toast("Paste a product link from Amazon, Flipkart, Myntra or AJIO."); return; }
+      var value = (input && input.value || "").trim();
+      if (!value) {
+        if (input) input.focus();
+        FD.toast("Paste a product link from Amazon, Flipkart, Myntra or AJIO.");
+        return;
+      }
       if (busy) reset();
-      document.getElementById("upload").scrollIntoView({ behavior: "smooth", block: "center" });
+      openUploadDrawer(false);
       startLink(form, value);
     });
   });
 
-  // Drag and drop anywhere on the page (desktop), and paste (Ctrl+V).
+  // Drag and drop & paste (Ctrl+V)
   var dragDepth = 0;
   function hasFiles(ev) { return ev.dataTransfer && Array.prototype.indexOf.call(ev.dataTransfer.types || [], "Files") >= 0; }
-  document.addEventListener("dragenter", function (ev) { if (!hasFiles(ev)) return; dragDepth++; drop.classList.add("is-over"); });
-  document.addEventListener("dragleave", function () { dragDepth = Math.max(0, dragDepth - 1); if (!dragDepth) drop.classList.remove("is-over"); });
+  document.addEventListener("dragenter", function (ev) { if (!hasFiles(ev)) return; dragDepth++; if (drop) drop.classList.add("is-over"); });
+  document.addEventListener("dragleave", function () { dragDepth = Math.max(0, dragDepth - 1); if (!dragDepth && drop) drop.classList.remove("is-over"); });
   document.addEventListener("dragover", function (ev) { if (hasFiles(ev)) { ev.preventDefault(); ev.dataTransfer.dropEffect = "copy"; } });
   document.addEventListener("drop", function (ev) {
     if (!hasFiles(ev)) return;
     ev.preventDefault();
     dragDepth = 0;
-    drop.classList.remove("is-over");
+    if (drop) drop.classList.remove("is-over");
     var file = ev.dataTransfer.files && ev.dataTransfer.files[0];
     if (!file) return;
     if (busy) reset();
-    document.getElementById("upload").scrollIntoView({ behavior: "smooth", block: "center" });
+    openUploadDrawer(false);
     startPhoto(file);
   });
   document.addEventListener("paste", function (ev) {
@@ -296,165 +334,270 @@
       if (items[i].kind === "file" && /^image\//.test(items[i].type)) {
         ev.preventDefault();
         if (busy) reset();
+        openUploadDrawer(false);
         startPhoto(items[i].getAsFile());
         return;
       }
     }
   });
 
-  // "Shop these looks": tapping a look runs the real photo search on it, so
-  // the shopper sees every piece we can find (and picks one if there are
-  // several).
+  // ── "Shop these looks" and sample product dupes ──────────────────────────
   function searchLook(url, name, btn) {
     if (busy) return;
-    btn.setAttribute("aria-busy", "true");
+    if (btn) btn.setAttribute("aria-busy", "true");
     FD.track("sample_click", { sample: name.slice(0, 40) });
-    document.getElementById("upload").scrollIntoView({ behavior: "smooth", block: "center" });
+    openUploadDrawer(false);
     fetch(url).then(function (r) {
       if (!r.ok) throw new Error("look");
       return r.blob();
     }).then(function (blob) {
-      btn.removeAttribute("aria-busy");
+      if (btn) btn.removeAttribute("aria-busy");
       startPhoto(new File([blob], "look.webp", { type: blob.type || "image/webp" }), { sample: true });
     }).catch(function () {
-      btn.removeAttribute("aria-busy");
-      FD.toast("Couldn't load that look. Please try again.");
+      if (btn) btn.removeAttribute("aria-busy");
+      FD.toast("Couldn't load outfit sample. Please try again.");
     });
   }
+
   Array.prototype.forEach.call(document.querySelectorAll("[data-look]"), function (btn) {
-    btn.addEventListener("click", function () { searchLook(btn.getAttribute("data-look"), btn.getAttribute("data-name") || "look", btn); });
+    btn.addEventListener("click", function () {
+      searchLook(btn.getAttribute("data-look"), btn.getAttribute("data-name") || "look", btn);
+    });
   });
 
-  // ── Real products from recent searches (deals + picks) ───────────────────
-  var feed = { deals: [], picks: [] };
-  var activeCat = "";
-  // Which feed items a category pill keeps.
-  var CAT_RULES = {
-    women: function (x) { return x.audience === "women"; },
-    men: function (x) { return x.audience === "men"; },
-    ethnic: function (x) { return x.category === "kurti"; },
-    streetwear: function (x) { return ["t_shirt", "jeans", "shirt"].indexOf(x.category) >= 0; },
-    dresses: function (x) { return x.category === "dress"; },
-    jeans: function (x) { return x.category === "jeans"; },
-    tops: function (x) { return x.category === "top" || x.category === "t_shirt"; }
+  var SAMPLE_URLS = {
+    dress: "/img/samples/dress-m.webp",
+    shirt: "/img/samples/shirt-m.webp",
+    top: "/img/samples/top-m.webp",
+    jeans: "/img/samples/jeans-m.webp",
+    kurti: "/img/samples/kurti-m.webp"
   };
-  var STORE_MARK = { amazon: "a", flipkart: "F", myntra: "M", ajio: "A" };
+  Array.prototype.forEach.call(document.querySelectorAll("[data-sample]"), function (btn) {
+    btn.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      var s = btn.getAttribute("data-sample");
+      var url = SAMPLE_URLS[s] || "/img/samples/dress-m.webp";
+      searchLook(url, s + " sample dupe", btn);
+    });
+  });
 
-  function storeTag(x) {
-    return el("span.st", null, [el("i.st-mark st-" + x.store, { text: STORE_MARK[x.store] || "", "aria-hidden": "true" }), x.storeName]);
-  }
-  function resultUrl(x) { return "/find/" + encodeURIComponent(x.searchId) + "#p-" + encodeURIComponent(x.key); }
-  function productImg(x) {
-    return el("img", { src: x.image, alt: x.title, loading: "lazy", referrerpolicy: "no-referrer", on: { error: function () { this.hidden = true; } } });
+  // ── Category Story Circles Strip Filtering ───────────────────────────────
+  var activeCat = "";
+
+  function filterAllProducts(cat) {
+    activeCat = cat || "";
+    Array.prototype.forEach.call(document.querySelectorAll("#catRow .cat-circle-card"), function (b) {
+      var bCat = b.getAttribute("data-cat") || "";
+      var isActive = bCat === activeCat;
+      b.classList.toggle("is-active", isActive);
+      b.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
+
+    var cards = document.querySelectorAll("#dealRow .p-card, #pickGrid .p-card");
+    Array.prototype.forEach.call(cards, function (card) {
+      if (!activeCat) {
+        card.hidden = false;
+        return;
+      }
+      var cardCat = card.getAttribute("data-cat") || "";
+      var cardAud = card.getAttribute("data-audience") || "";
+      var price = Number(card.getAttribute("data-price") || 9999);
+      var show = false;
+
+      if (activeCat === "women") show = cardAud === "women" || cardCat === "dresses" || cardCat === "ethnic";
+      else if (activeCat === "men") show = cardAud === "men" || cardCat === "men";
+      else if (activeCat === "under499") show = price <= 499;
+      else if (activeCat === "streetwear") show = cardCat === "jeans" || cardCat === "tops" || cardAud === "men";
+      else if (activeCat === "ethnic") show = cardCat === "ethnic";
+      else if (activeCat === "dresses") show = cardCat === "dresses";
+      else if (activeCat === "tops") show = cardCat === "tops";
+      else if (activeCat === "jeans") show = cardCat === "jeans";
+      else show = cardCat === activeCat;
+
+      card.hidden = !show;
+    });
+
+    // Celebrity looks
+    Array.prototype.forEach.call(document.querySelectorAll("#slRow .look-card"), function (look) {
+      if (!activeCat) {
+        look.hidden = false;
+        return;
+      }
+      var cats = " " + (look.getAttribute("data-cats") || "") + " ";
+      look.hidden = cats.indexOf(" " + activeCat + " ") < 0;
+    });
   }
 
-  function dealCard(x) {
-    return el("a.dcard", { href: resultUrl(x), "aria-label": x.title + ", " + FD.price(x.price) + " at " + x.storeName }, [
-      el("span.dcard-img", null, [productImg(x), x.off ? el("span.dcard-off", { text: x.off + "% OFF" }) : null]),
-      el("span.dcard-price", null, [el("b", { text: FD.price(x.price) }), x.mrp ? el("s", { text: FD.price(x.mrp) }) : null]),
-      storeTag(x),
-      el("small.dcard-time", { text: "Checked " + FD.ago(x.checkedAt) })
-    ]);
+  Array.prototype.forEach.call(document.querySelectorAll("#catRow .cat-circle-card"), function (btn) {
+    btn.addEventListener("click", function () {
+      var cat = btn.getAttribute("data-cat") || "";
+      filterAllProducts(cat);
+      FD.track("category", { cat: cat || "all" });
+    });
+  });
+
+  // ── Budget Corner Filter Tabs ─────────────────────────────────────────────
+  Array.prototype.forEach.call(document.querySelectorAll("#budgetTabs .b-tab"), function (tab) {
+    tab.addEventListener("click", function () {
+      var budget = tab.getAttribute("data-budget");
+      Array.prototype.forEach.call(document.querySelectorAll("#budgetTabs .b-tab"), function (t) {
+        var isActive = t === tab;
+        t.classList.toggle("is-active", isActive);
+        t.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+      var cards = document.querySelectorAll("#budgetGrid .p-card");
+      Array.prototype.forEach.call(cards, function (c) {
+        if (budget === "all") {
+          c.hidden = false;
+        } else {
+          var p = Number(c.getAttribute("data-price") || 9999);
+          c.hidden = p > Number(budget);
+        }
+      });
+    });
+  });
+
+  // ── Top Search Bar (Both Desktop in Nav & Mobile Strip) ───────────────────
+  function setupSearchForm(form) {
+    var input = form.querySelector("input[type='text']");
+    if (!input) return;
+
+    function handleSearch(query) {
+      var q = (query || "").trim().toLowerCase();
+      if (!q) {
+        filterAllProducts("");
+        return;
+      }
+      // If store link was pasted
+      if (/^https?:\/\//i.test(q) || /flipkart\.com|amazon\.in|myntra\.com|ajio\.com/i.test(q)) {
+        openUploadDrawer(false);
+        var linkForm = document.querySelector("[data-link-form]");
+        var linkIn = document.getElementById("linkInput");
+        if (linkIn) linkIn.value = query.trim();
+        if (linkForm) startLink(linkForm, query.trim());
+        return;
+      }
+      // Filter products on the page
+      var matchCount = 0;
+      var cards = document.querySelectorAll(".product-shelf-grid .p-card");
+      Array.prototype.forEach.call(cards, function (card) {
+        var text = (card.textContent || "").toLowerCase();
+        var cat = (card.getAttribute("data-cat") || "").toLowerCase();
+        var match = text.indexOf(q) >= 0 || cat.indexOf(q) >= 0;
+        card.hidden = !match;
+        if (match) matchCount++;
+      });
+      // Filter looks
+      Array.prototype.forEach.call(document.querySelectorAll("#slRow .look-card"), function (look) {
+        var text = (look.textContent || "").toLowerCase();
+        var cats = (look.getAttribute("data-cats") || "").toLowerCase();
+        var match = text.indexOf(q) >= 0 || cats.indexOf(q) >= 0;
+        look.hidden = !match;
+      });
+
+      if (matchCount > 0) {
+        var dealsSec = document.getElementById("homeDeals") || document.getElementById("deals");
+        if (dealsSec) dealsSec.scrollIntoView({ behavior: "smooth", block: "start" });
+        FD.toast("Found " + matchCount + " deals for \"" + query + "\"");
+      } else {
+        FD.toast("No direct deal for \"" + query + "\". Upload a screenshot for AI visual search!");
+        openUploadDrawer(false);
+      }
+    }
+
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      handleSearch(input.value);
+    });
+
+    input.addEventListener("input", function () {
+      if (!input.value.trim()) {
+        filterAllProducts(activeCat);
+      }
+    });
   }
 
-  function pickCard(x) {
-    var saved = FD.saved.has(x.searchId, x.key);
-    var fav = el("button.pcard-fav", { type: "button", "aria-pressed": saved ? "true" : "false", "aria-label": (saved ? "Remove from saved: " : "Save: ") + x.title }, [FD.icon(saved ? "i-heart-fill" : "i-heart")]);
-    fav.addEventListener("click", function () {
-      if (FD.saved.has(x.searchId, x.key)) {
-        FD.saved.remove(x.searchId, x.key);
+  Array.prototype.forEach.call(document.querySelectorAll("[data-search-form]"), setupSearchForm);
+
+  // ── Wishlist Heart Toggles ────────────────────────────────────────────────
+  Array.prototype.forEach.call(document.querySelectorAll(".p-card-wish"), function (btn) {
+    var id = btn.getAttribute("data-save-id") || btn.getAttribute("data-wish-id");
+    if (!id) return;
+    if (FD.saved.has("deal", id)) {
+      btn.classList.add("is-active");
+    }
+    btn.addEventListener("click", function (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      var card = btn.closest(".p-card");
+      var title = card ? (card.querySelector(".p-card-name") || {}).textContent || id : id;
+      var priceText = card ? (card.querySelector(".p-card-price") || {}).textContent || "" : "";
+      var price = Number(priceText.replace(/[^0-9]/g, "")) || 0;
+      var brand = card ? (card.querySelector(".p-card-brand") || {}).textContent || "" : "";
+      var storeEl = card ? card.querySelector(".store-badge") : null;
+      var storeName = storeEl ? storeEl.textContent.trim() : "Store";
+      var img = card ? (card.querySelector("img") || {}).src || "" : "";
+
+      if (FD.saved.has("deal", id)) {
+        FD.saved.remove("deal", id);
+        btn.classList.remove("is-active");
         FD.toast("Removed from Saved");
       } else {
-        FD.saved.add({ searchId: x.searchId, key: x.key, title: x.title, brand: x.brand, store: x.store, storeName: x.storeName, image: x.image, price: x.price, checkedAt: x.checkedAt, match: x.match });
+        FD.saved.add({
+          searchId: "deal",
+          key: id,
+          title: title,
+          brand: brand,
+          store: storeName.toLowerCase(),
+          storeName: storeName,
+          image: img,
+          price: price,
+          checkedAt: new Date().toISOString(),
+          match: "similar"
+        });
+        btn.classList.add("is-active");
         FD.toast("Saved on this device");
-        FD.track("save", { from: "home" });
+        FD.track("save", { from: "home_shelf" });
       }
-      var on = FD.saved.has(x.searchId, x.key);
-      fav.setAttribute("aria-pressed", on ? "true" : "false");
-      fav.replaceChild(FD.icon(on ? "i-heart-fill" : "i-heart"), fav.firstChild);
       FD.refreshDots();
     });
-    return el("article.pcard", null, [
-      el("a.pcard-link", { href: resultUrl(x) }, [
-        el("span.pcard-img", null, [productImg(x)]),
-        el("span.pcard-body", null, [
-          el("span.pcard-title", { text: x.title }),
-          el("span.pcard-price", null, [el("b", { text: FD.price(x.price) }), " · ", x.storeName])
-        ])
-      ]),
-      fav
-    ]);
-  }
+  });
 
-  function renderFeed() {
-    var keep = activeCat && CAT_RULES[activeCat] ? CAT_RULES[activeCat] : function () { return true; };
-    var deals = feed.deals.filter(keep).slice(0, 8);
-    var picks = feed.picks.filter(keep).slice(0, 8);
-    var dealRow = document.getElementById("dealRow");
-    var pickGrid = document.getElementById("pickGrid");
-    dealRow.textContent = "";
-    pickGrid.textContent = "";
-    deals.forEach(function (x) { dealRow.appendChild(dealCard(x)); });
-    picks.forEach(function (x) { pickGrid.appendChild(pickCard(x)); });
-    document.getElementById("deals").hidden = !deals.length;
-    document.getElementById("picks").hidden = !picks.length;
-    // Looks carry their own categories.
-    var looksShown = 0;
-    Array.prototype.forEach.call(document.querySelectorAll("#slRow .sl"), function (card) {
-      var show = !activeCat || (" " + card.getAttribute("data-cats") + " ").indexOf(" " + activeCat + " ") >= 0;
-      card.hidden = !show;
-      if (show) looksShown++;
-    });
-    document.getElementById("looks").hidden = !looksShown;
-    document.getElementById("catEmpty").hidden = !!(looksShown || deals.length || picks.length);
-  }
-
+  // ── Live Deals Feed Dot ───────────────────────────────────────────────────
   FD.api("/api/feed").then(function (data) {
-    feed = { deals: data.deals || [], picks: data.picks || [] };
-    renderFeed();
-    // New deals since the Deals page was last opened → dot on the Deals tab.
-    var newest = feed.deals.reduce(function (m, x) { return x.checkedAt > m ? x.checkedAt : m; }, "");
+    var deals = data.deals || [];
+    var newest = deals.reduce(function (m, x) { return x.checkedAt > m ? x.checkedAt : m; }, "");
     if (newest && newest > (FD.store.get("fd_deals_seen", "") || "")) {
       FD.store.set("fd_deals_new", true);
       FD.refreshDots();
     }
-  }).catch(function () { /* the feed is extra; the page works without it */ });
+  }).catch(function () { /* optional feed */ });
 
-  // Category pills filter the looks and the real products below them.
-  Array.prototype.forEach.call(document.querySelectorAll("#catRow .cat"), function (btn) {
-    btn.addEventListener("click", function () {
-      var cat = btn.getAttribute("data-cat");
-      activeCat = activeCat === cat ? "" : cat;
-      Array.prototype.forEach.call(document.querySelectorAll("#catRow .cat"), function (b) {
-        b.setAttribute("aria-pressed", b.getAttribute("data-cat") === activeCat ? "true" : "false");
-      });
-      renderFeed();
-      FD.track("category", { cat: activeCat || "all" });
-    });
-  });
-  document.getElementById("catClear").addEventListener("click", function () {
-    activeCat = "";
-    Array.prototype.forEach.call(document.querySelectorAll("#catRow .cat"), function (b) { b.setAttribute("aria-pressed", "false"); });
-    renderFeed();
-  });
-
-  // Recent searches on this device.
+  // ── Recent searches on this device ────────────────────────────────────────
   var recent = FD.recent.all().slice(0, 4);
   if (recent.length) {
     var list = document.getElementById("recentList");
-    recent.forEach(function (r) {
-      list.appendChild(el("li", null, [el("a", { href: "/find/" + encodeURIComponent(r.id) }, [
-        FD.icon(r.kind === "link" ? "i-link" : "i-search"), el("b", { text: r.label }), el("small", { text: FD.ago(r.at) })
-      ])]));
-    });
-    document.getElementById("recent").hidden = false;
-    document.getElementById("recentClear").addEventListener("click", function () {
-      FD.recent.clear();
-      document.getElementById("recent").hidden = true;
-    });
+    if (list) {
+      recent.forEach(function (r) {
+        list.appendChild(el("li", null, [el("a", { href: "/find/" + encodeURIComponent(r.id) }, [
+          FD.icon(r.kind === "link" ? "i-link" : "i-search"), el("b", { text: r.label }), el("small", { text: FD.ago(r.at) })
+        ])]));
+      });
+      var recentSec = document.getElementById("recent");
+      if (recentSec) recentSec.hidden = false;
+      var recentClear = document.getElementById("recentClear");
+      if (recentClear) {
+        recentClear.addEventListener("click", function () {
+          FD.recent.clear();
+          if (recentSec) recentSec.hidden = true;
+        });
+      }
+    }
   }
 
-  // Coming back with the browser's Back button: don't show a stale spinner.
+  // Handle browser Back button and hash
   window.addEventListener("pageshow", function (ev) { if (ev.persisted) reset(); });
-  if (location.hash === "#upload") setTimeout(function () { document.getElementById("upload").scrollIntoView({ block: "center" }); }, 50);
+  if (location.hash === "#upload") {
+    setTimeout(function () { openUploadDrawer(false); }, 50);
+  }
 })();

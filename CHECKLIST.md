@@ -1,3 +1,5 @@
+> Current direction (20 Sep 2026): see [the latest supplied product brief](docs/PRODUCT-BRIEF.md) and [current audit evidence](docs/AUDIT-2026-09-20.md). Older navigation, Try-On, sizing, launch and verification claims below are historical and must not override these documents.
+
 # Fit Deal — Complete Master Checklist
 
 Niyam: **Phase complete → test → tick ✅ → next phase.**

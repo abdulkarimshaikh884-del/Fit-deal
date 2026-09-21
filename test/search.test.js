@@ -139,3 +139,17 @@ test("Flipkart, Amazon and Serper answers map to one shape", async () => {
   config.providers.amazon.clientId = config.providers.amazon.clientSecret = config.providers.amazon.partnerTag = "";
   config.providers.serper.key = "";
 });
+
+test("fictional catalog is opt-in locally and never active in production", () => {
+  const config = require("../lib/config");
+  const { sampleCatalog } = require("../lib/search/providers");
+  const before = { env: config.env, sampleCatalog: config.sampleCatalog };
+  try {
+    config.env = "development";
+    config.sampleCatalog = false;
+    assert.strictEqual(sampleCatalog.enabled(), false);
+    config.env = "production";
+    config.sampleCatalog = true;
+    assert.strictEqual(sampleCatalog.enabled(), false);
+  } finally { Object.assign(config, before); }
+});

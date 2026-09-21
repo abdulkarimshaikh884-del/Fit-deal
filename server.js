@@ -198,7 +198,7 @@ async function route(req, res) {
   }
 
   const m = pathname.match(/^\/(find|vote)\/([A-Za-z0-9_-]{4,40})\/?$/);
-  if (m) return sendDynamic(req, res, m[1] + "/index.html", await dynamicMeta(m[1], m[2]));
+  if (m) return sendDynamic(req, res, m[1] === "find" ? "find/results.html" : "vote/index.html", await dynamicMeta(m[1], m[2]));
 
   const file = path.normalize(path.join(ROOT, pathname));
   if (!file.startsWith(ROOT)) return sendPage(req, res, "404.html", 404);

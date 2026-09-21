@@ -7,6 +7,7 @@ const path = require("path");
 
 process.env.DATA_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "fitdeal-test-"));
 process.env.NODE_ENV = "test";
+process.env.ENABLE_SAMPLE_CATALOG = "false";
 process.env.SITE_URL = "http://localhost";
 for (const k of ["GEMINI_API_KEY", "SUPABASE_URL", "SUPABASE_SERVICE_KEY", "FLIPKART_AFFILIATE_ID", "FLIPKART_AFFILIATE_TOKEN",
   "AMAZON_CREATORS_CLIENT_ID", "AMAZON_CREATORS_CLIENT_SECRET", "AMAZON_PARTNER_TAG", "SERPER_API_KEY",

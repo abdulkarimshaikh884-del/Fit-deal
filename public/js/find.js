@@ -58,7 +58,7 @@
       $("lookStore").hidden = false;
     } else {
       $("lookImgWrap").hidden = true;
-      document.querySelector(".look-card").style.gridTemplateColumns = "1fr";
+      $("lookImgWrap").closest(".look-card").classList.add("text-look");
     }
     $("lookLabel").textContent = data.kind === "link" ? "From your " + (data.link ? data.link.storeName : "") + " link" : data.kind === "sample" ? "Sample search" : "We looked for";
     $("lookTitle").textContent = item.label || data.query;
@@ -299,7 +299,7 @@
     renderStores();
     renderSources();
     var url = location.origin + "/find/" + id;
-    FD.wireShare({ url: url, text: "Found these on Fit Deal: " + (data.item && data.item.label ? data.item.label : "outfit") + " at the best price 👗", what: "results" });
+    FD.wireShare({ url: url, text: "Explore this look on Fit Deal: " + (data.item && data.item.label ? data.item.label : "outfit"), what: "results" });
   }
 
   $("priceMax").addEventListener("input", function () {

@@ -1,0 +1,31 @@
+<main class="page search-page">
+  <div class="page-head"><p class="search-eyebrow">YOUR NEXT GREAT FIND</p><h1>What are you looking for?</h1><p>A look you spotted. A piece you love. Let's find your options.</p></div>
+  <form class="search-entry" id="textSearch" role="search">
+    <label class="sr-only" for="queryInput">Describe your look</label>
+    <input type="search" id="queryInput" name="query" maxlength="90" minlength="2" placeholder="Try “black oversized shirt”" required>
+    <button class="btn btn-primary" type="submit">Search <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+  </form>
+  <p class="fine search-status" id="searchStatus" role="status"></p>
+  <section class="search-upload" id="upload" aria-label="Search by photo or product link">
+    <div class="drop" id="drop">
+      <div class="drop-idle" id="dropIdle">
+        <span class="empty-ico"><svg aria-hidden="true"><use href="#i-camera-line"/></svg></span>
+        <h2>Seen a look you love?</h2><p>Upload a screenshot or photo. Choose the clothing item you want us to find.</p>
+        <button type="button" class="btn btn-primary" id="choose">Upload Screenshot</button>
+        <input type="file" id="photo" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" hidden>
+        <p class="fine">JPG, PNG or WebP · up to 25 MB · drag and drop supported</p>
+        <div class="snap-link-divider"><span>or start with a product link</span></div>
+        <form class="snap-link-form" data-link-form>
+          <label class="sr-only" for="linkInput">Product link</label>
+          <input type="text" inputmode="url" placeholder="Paste an Amazon, Flipkart, Myntra or AJIO link" id="linkInput" maxlength="2000" required>
+          <button type="submit" class="snap-link-go">Find matches</button>
+        </form>
+      </div>
+      <div class="flow" id="flow" hidden></div>
+      <p class="sr-only" id="flowStatus" role="status" aria-live="polite"></p>
+    </div>
+    <p class="fine search-privacy">Photos are sent to our recognition provider to identify clothing. Fit Deal does not save photos on its servers. A preview stays in this browser tab for your results. <a href="/privacy/#photos">Photo privacy</a></p>
+  </section>
+  <section class="hsec" aria-labelledby="searchIdeas"><h2 id="searchIdeas">A little inspiration</h2><div class="search-suggestions"><a class="cat" href="/find/?q=women%20floral%20dress">Floral dresses</a><a class="cat" href="/find/?q=men%20linen%20shirt">Linen shirts</a><a class="cat" href="/find/?q=women%20wide%20leg%20jeans">Wide-leg jeans</a><a class="cat" href="/find/?q=cotton%20kurti">Cotton kurtis</a></div></section>
+  <section class="hsec" id="recent" hidden><div class="hsec-head"><h2>Recent searches</h2><button type="button" class="link-btn" id="recentClear">Clear</button></div><ul class="recent-list" id="recentList"></ul></section>
+</main>
