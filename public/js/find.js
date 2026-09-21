@@ -12,6 +12,11 @@
   var id = m ? m[1] : null;
   var data = null;
   var state = { store: "all", max: null, sort: "match", choosing: false, picked: [] };
+  var initialBudget = Number(new URLSearchParams(location.search).get("max"));
+  if (Number.isFinite(initialBudget) && initialBudget > 0 && initialBudget <= 1000000) {
+    state.max = Math.round(initialBudget);
+    $("priceMax").value = state.max;
+  }
 
   function showState(name) {
     ["findLoading", "findMissing", "findReady"].forEach(function (s) { $(s).hidden = s !== name; });

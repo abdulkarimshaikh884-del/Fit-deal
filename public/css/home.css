@@ -1,6 +1,18 @@
 /* Reference-led homepage. All rules are scoped to Home or fd-* components. */
 body[data-page="home"] { --purple: #7041ff; --purple-ink: #6734f4; }
 .fd-home { color: #11142b; overflow: clip; max-width: none; margin: 0; padding: 0; }
+.shop-home.fd-home { max-width: 1480px; margin: auto; padding: 0 24px; }
+.shop-home.fd-home .shop-campaigns { margin-bottom: 28px; }
+.shop-home.fd-home .shopping-floor { margin: 0 -24px 30px; }
+.editorial-card-note { font-size: 12px; color: #797085; line-height: 1.6; margin: 8px 0 13px; }
+.badge-editorial { font-size: 8px; letter-spacing: .06em; background: #eee8fa; color: #71519b; }
+.product-shelf-grid[hidden],.p-card[hidden] { display: none; }
+.shop-home .shelf-timer { background: #f3edf9; color: #79569a; }
+.shop-home .p-card-badge { box-shadow: none; }
+.shop-home .p-card-top { aspect-ratio: 1; }
+.shop-home .p-card-img-wrap img { object-position: center 25%; }
+.shop-home .ethnic-story .campaign-photo { background-position: left top; }
+@media (max-width: 899px) { .shop-home.fd-home { padding: 0 12px; }.shop-home.fd-home .shopping-floor { margin-inline: -12px; } }
 .fd-home a { -webkit-tap-highlight-color: transparent; }
 .fd-home a:focus-visible { outline: 3px solid #7041ff; outline-offset: 3px; }
 .fd-desktop-header .d-nav-in { max-width: 1440px; height: 74px; padding: 0 26px; gap: 27px; }
@@ -194,7 +206,7 @@ body[data-page="home"] > .foot { border-top: 0; margin-top: 0; }
 .campaign-copy > span { display: flex; gap: 7px; align-items: center; font-size: 11px; font-weight: 600; margin-top: auto; padding-top: 20px; }
 .campaign-copy svg { width: 16px; height: 16px; }
 .campaign-photo { position: absolute; right: 0; top: 0; bottom: 0; width: 49%; background-image: url('/img/home/shopping-edits.png'); background-size: 300% auto; background-repeat: no-repeat; }
-.campaign-photo-0 { background-position: 0 30%; }.campaign-photo-1 { background-position: 50% 30%; }.campaign-photo-2 { background-position: 100% 30%; }
+.campaign-photo-0 { background-position: 0 0; }.campaign-photo-1 { background-position: 50% 0; }.campaign-photo-2 { background-position: 100% 0; }
 .shop-campaign:after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(90deg,var(--campaign-bg) 38%,transparent 70%); }
 .campaign-lilac { --campaign-bg: #eee6fb; }.campaign-sage { --campaign-bg: #e4eadc; }.campaign-rose { --campaign-bg: #f5e7d6; }
 .shop-campaign:hover .campaign-copy > span { text-decoration: underline; text-underline-offset: 4px; }
@@ -229,7 +241,7 @@ body[data-page="home"] > .foot { border-top: 0; margin-top: 0; }
 .shop-fineprint { color: #8a8195; font-size: 11px; line-height: 1.5; margin-top: 15px; }
 .ethnic-section { padding: 0; display: grid; grid-template-columns: 1.25fr 1fr; overflow: hidden; }
 .ethnic-story { position: relative; min-height: 360px; background: #f5e9dc; isolation: isolate; }
-.ethnic-story .campaign-photo { width: 44%; background-position: 0 45%; }
+.ethnic-story .campaign-photo { width: 44%; background-position: 0 0; }
 .ethnic-story > div { position: relative; z-index: 1; width: 61%; padding: 40px 30px; background: linear-gradient(90deg,#f5e9dc 75%,transparent); min-height: 360px; }
 .ethnic-story .shop-kicker { color: #917157; }
 .ethnic-story h2 { font-size: 36px; letter-spacing: -.045em; line-height: 1.15; }

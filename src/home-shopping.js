@@ -35,7 +35,7 @@ function shelf(edit) {
 }
 
 function navigation() {
-  return `<nav class="shop-jump" aria-label="Shopping departments"><div>${[['categories','All categories'],['home-deals','Deals & discoveries'],['women-edit','Women'],['men-edit','Men'],['ethnic-edit','Ethnic wear'],['budget-edit','Shop by budget'],['extras-edit','Shoes & accessories'],['store-edit','Explore stores']].map(([id,label]) => `<a href="#${id}">${label}</a>`).join('')}</div></nav>`;
+  return `<nav class="shop-jump" aria-label="Shopping departments"><div>${[['categories','All categories'],['homeDeals','Deals & discoveries'],['women-edit','Women'],['men-edit','Men'],['ethnic-edit','Ethnic wear'],['budget-edit','Shop by budget'],['extras-edit','Shoes & accessories'],['store-edit','Explore stores']].map(([id,label]) => `<a href="#${id}">${label}</a>`).join('')}</div></nav>`;
 }
 
 function campaigns() {

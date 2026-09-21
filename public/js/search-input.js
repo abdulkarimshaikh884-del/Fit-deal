@@ -318,7 +318,9 @@
     working(null, ["Searching the stores", "Finding your options"], 0);
     FD.api("/api/search", { json: { query: query } }).then(function (res) {
       FD.recent.add({ id: res.id, label: query, kind: "text" });
-      location.href = "/find/" + res.id;
+      var budget = Number(new URLSearchParams(location.search).get("max"));
+      var budgetSuffix = Number.isFinite(budget) && budget > 0 && budget <= 1000000 ? "?max=" + Math.round(budget) : "";
+      location.href = "/find/" + res.id + budgetSuffix;
     }).catch(function (e) { failed(e.message, e.code === "network" || e.status >= 500); });
   }
   textForm.addEventListener("submit", function (ev) { ev.preventDefault(); searchText(queryInput.value); });

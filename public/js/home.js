@@ -477,32 +477,10 @@
         if (linkForm) startLink(linkForm, query.trim());
         return;
       }
-      // Filter products on the page
-      var matchCount = 0;
-      var cards = document.querySelectorAll(".product-shelf-grid .p-card");
-      Array.prototype.forEach.call(cards, function (card) {
-        var text = (card.textContent || "").toLowerCase();
-        var cat = (card.getAttribute("data-cat") || "").toLowerCase();
-        var match = text.indexOf(q) >= 0 || cat.indexOf(q) >= 0;
-        card.hidden = !match;
-        if (match) matchCount++;
-      });
-      // Filter looks
-      Array.prototype.forEach.call(document.querySelectorAll("#slRow .look-card"), function (look) {
-        var text = (look.textContent || "").toLowerCase();
-        var cats = (look.getAttribute("data-cats") || "").toLowerCase();
-        var match = text.indexOf(q) >= 0 || cats.indexOf(q) >= 0;
-        look.hidden = !match;
-      });
+      // Use the real search flow for text; editorial cards are not inventory.
+      location.href = "/find/?q=" + encodeURIComponent(query.trim());
+      return;
 
-      if (matchCount > 0) {
-        var dealsSec = document.getElementById("homeDeals") || document.getElementById("deals");
-        if (dealsSec) dealsSec.scrollIntoView({ behavior: "smooth", block: "start" });
-        FD.toast("Found " + matchCount + " deals for \"" + query + "\"");
-      } else {
-        FD.toast("No direct deal for \"" + query + "\". Upload a screenshot for AI visual search!");
-        openUploadDrawer(false);
-      }
     }
 
     form.addEventListener("submit", function (ev) {
@@ -563,15 +541,43 @@
     });
   });
 
-  // ── Live Deals Feed Dot ───────────────────────────────────────────────────
+  function offerCard(p) {
+    var saved = FD.saved.has(p.searchId, p.key);
+    var button = el("button.p-card-wish", { type: "button", "aria-label": "Save: " + p.title, "aria-pressed": String(saved), on: { click: function () {
+      var has = FD.saved.has(p.searchId, p.key);
+      if (has) FD.saved.remove(p.searchId, p.key); else FD.saved.add(p);
+      button.setAttribute("aria-pressed", String(!has));
+      button.textContent = ""; button.appendChild(FD.icon(has ? "i-heart" : "i-heart-fill"));
+      FD.refreshDots(); FD.toast(has ? "Removed from Saved" : "Saved on this device");
+    } } }, [FD.icon(saved ? "i-heart-fill" : "i-heart")]);
+    return el("article.p-card", null, [
+      el("div.p-card-top", null, [el("div.p-card-img-wrap", null, [el("img", { src: p.image, alt: p.title, loading: "lazy", referrerpolicy: "no-referrer" })]), button]),
+      el("div.p-card-details", null, [el("small", { text: p.storeName }), el("h3.p-card-name", { text: p.title }),
+        el("div.p-card-price-row", null, [el("b.p-card-price", { text: FD.price(p.price) }), p.mrp ? el("s.p-card-mrp", { text: FD.price(p.mrp) }) : null]),
+        el("p.editorial-card-note", { text: "Checked " + FD.ago(p.checkedAt) }),
+        el("a.btn btn-primary p-card-buy-btn", { href: "/find/" + encodeURIComponent(p.searchId) + "#p-" + encodeURIComponent(p.key), text: "View offer" })
+      ])
+    ]);
+  }
+  // Sourced offers replace the editorial fallback only when available.
   FD.api("/api/feed").then(function (data) {
     var deals = data.deals || [];
+    var grid = document.getElementById("homeLiveDeals");
+    if (grid) {
+      deals.slice(0, 8).forEach(function (p) { grid.appendChild(offerCard(p)); });
+      grid.hidden = deals.length === 0;
+      document.getElementById("dealRow").hidden = deals.length > 0;
+      document.getElementById("homeFeedStatus").textContent = deals.length ? "Recent offers · prices may change at checkout" : "Style inspiration · explore matches to check available prices";
+    }
     var newest = deals.reduce(function (m, x) { return x.checkedAt > m ? x.checkedAt : m; }, "");
     if (newest && newest > (FD.store.get("fd_deals_seen", "") || "")) {
       FD.store.set("fd_deals_new", true);
       FD.refreshDots();
     }
-  }).catch(function () { /* optional feed */ });
+  }).catch(function () {
+    var status = document.getElementById("homeFeedStatus");
+    if (status) status.textContent = "Offers could not load. Explore the style searches below.";
+  });
 
   // ── Recent searches on this device ────────────────────────────────────────
   var recent = FD.recent.all().slice(0, 4);

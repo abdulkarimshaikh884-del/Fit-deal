@@ -1,5 +1,19 @@
 # Home design — reference pass, 20 September 2026
 
+## Shopping expansion — 21 September 2026
+
+Expanded Home into a long fashion discovery storefront at the user's request, taking the breadth of a marketplace homepage while keeping Fit Deal's own brand and existing Node/vanilla architecture. Integrated with the newer header search and photo drawer found in commit `1d694a2`; did not replace those working components.
+
+- Added shopping department links, three editorial campaign banners, six budget searches, women's and men's shelves, an ethnic feature, occasion collections, footwear/accessory sections, four official-store destinations, screenshot-search explainer, browse chips and expandable FAQs.
+- Collections are edited in `src/home-shopping.js`, rendered at build time through the existing `build.js` placeholders. Content works without a client-side rendering framework.
+- Homepage text searches now open real Find searches. Budget searches carry a validated `max` parameter through the search redirect and initialise the existing result price filter.
+- Static illustrative prices, discounts, stock/size claims and generic "Buy Now" links were replaced with labelled style searches. The existing real deals feed now renders sourced offers with original search/product identities for Save and View Offer; an empty feed retains editorial discovery cards. Existing recent searches and photo drawer remain.
+- Existing editorial card photos are local sample assets. New built-in imagegen campaign triptych is saved at `public/img/home/shopping-edits.png`; exact prompt and mode are recorded in `docs/SHOPPING-IMAGE-PROMPT.json`.
+- Validation: build and all 32 tests passed. JavaScript syntax checks and `git diff --check` passed. Browser checked at 1440×1000, 768×1024, 390×844 and 360×800 with no horizontal document overflow. Desktop image/anchor scan found no broken loaded images or missing anchors. Department jump verified, photo drawer opens, text search reached “Linen Shirts”, and the ₹499 budget link reached `/find/<id>?max=499` with the maximum-price input set to 499. Browser console inspection returned no errors.
+- Preview remains `http://localhost:5183/` with isolated temporary data. Live retailer providers are not configured in this preview; no live-price verification or deployment is claimed.
+
+The earlier compact reference pass below is historical; the expansion above describes the current homepage.
+
 Keep the existing Node/vanilla-JS app and working Find/Saved/Deals routes. Recreate the supplied desktop and mobile visual structure with HTML and CSS, rather than displaying the reference as a flat screenshot.
 
 - Desktop: compact brand/navigation/search header, wide lavender fashion hero with striped outfit photograph, inset photo and three outfit-piece cards; overlapping retailer/value strip; eleven category thumbnails; four look cards beside four deal/style cards; quiet benefit footer.
