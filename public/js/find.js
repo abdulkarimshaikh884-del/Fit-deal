@@ -188,7 +188,8 @@
         priceRow,
         meta.length ? el("p.p-meta", null, meta) : null,
         el("div.p-buy", null, [
-          el("a.btn btn-primary", { href: goUrl, target: "_blank", rel: "sponsored noopener" }, ["Buy at " + p.storeName, FD.icon("i-external")])
+          el("a.btn btn-primary", { href: goUrl, target: "_blank", rel: "sponsored noopener" }, ["Buy at " + p.storeName, FD.icon("i-external")]),
+          el("a.btn btn-ghost p-detail-link", { href: "/product/" + encodeURIComponent(id) + "/" + encodeURIComponent(p.key) }, ["Compare & Details"])
         ]),
         el("div.p-tools", null, [
           el("button", { type: "button", on: { click: function () { shareProduct(p); } } }, [FD.icon("i-share"), "Share"]),

@@ -14,6 +14,30 @@
   }
   counts();
 
+  function renderRecent() {
+    var items = FD.recent.all().slice(0, 5);
+    var box = $("profileRecentBox");
+    var list = $("profileRecentList");
+    if (!box || !list) return;
+    if (!items.length) {
+      box.hidden = true;
+      return;
+    }
+    list.textContent = "";
+    items.forEach(function (r) {
+      var li = document.createElement("li");
+      li.className = "profile-recent-item";
+      li.innerHTML = '<a href="/find/' + encodeURIComponent(r.id) + '" class="profile-recent-link">' +
+        '<span class="profile-recent-ico"><svg aria-hidden="true"><use href="#' + (r.kind === "link" ? "i-link" : "i-search") + '"/></svg></span>' +
+        '<span class="profile-recent-label">' + FD.esc(r.label) + '</span>' +
+        '<small class="profile-recent-time">' + FD.esc(FD.ago(r.at)) + '</small>' +
+        '</a>';
+      list.appendChild(li);
+    });
+    box.hidden = false;
+  }
+  renderRecent();
+
   // ── Size helper ─────────────────────────────────────────────────────────
   // Body measurements in inches → usual size on common Indian charts.
   // Upper limits per size; the last size covers everything above.
@@ -102,6 +126,7 @@
     form.reset();
     $("sizeResult").hidden = true;
     counts();
+    renderRecent();
     FD.refreshDots();
     FD.track("profile_clear", {});
     FD.toast("Cleared from this device");

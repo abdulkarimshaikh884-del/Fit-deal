@@ -279,3 +279,23 @@ test("Home and Find expose honest shopping controls; Try-On cannot simulate a re
   assert.match(tryon, /not available yet/);
   assert.doesNotMatch(tryon, /tryon\.js|type="file"|id="tryGo"/);
 });
+
+test("product detail view, price comparison and diagnostics", async () => {
+  const healthRes = await fetch(base + "/api/health");
+  assert.strictEqual(healthRes.status, 200);
+  const health = await healthRes.json();
+  assert.strictEqual(health.ok, true);
+  assert.ok(health.diagnostics);
+  assert.strictEqual(typeof health.diagnostics.gemini, "string");
+  assert.strictEqual(typeof health.diagnostics.sources, "string");
+
+  const statusRes = await fetch(base + "/api/status");
+  assert.strictEqual(statusRes.status, 200);
+  const st = await statusRes.json();
+  assert.strictEqual(typeof st.tryonEnabled, "boolean");
+
+  const prodPage = await (await fetch(base + "/product/fakeSearch123/prodKey456")).text();
+  assert.match(prodPage, /id="compareTable"/);
+  assert.match(prodPage, /Compare Prices Across Indian Stores/);
+  assert.match(prodPage, /Bank offers, membership pricing/);
+});

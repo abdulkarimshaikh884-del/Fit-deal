@@ -1,0 +1,148 @@
+<main class="page page-product">
+  <div class="prod-state" id="prodLoading">
+    <div class="prod-layout sk-layout">
+      <div class="prod-gallery-sk sk"><div class="sk-img"></div></div>
+      <div class="prod-details-sk sk">
+        <div class="sk-lines"><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
+    <p class="sr-only" role="status">Loading product details…</p>
+  </div>
+
+  <section class="prod-state empty-state" id="prodMissing" hidden>
+    <span class="empty-ico"><svg aria-hidden="true"><use href="#i-search"/></svg></span>
+    <h1>Product not found</h1>
+    <p id="prodMissingText">We couldn't locate this product or its search session may have expired.</p>
+    <div class="btn-row">
+      <a href="/find/" class="btn btn-primary">Find an outfit</a>
+      <a href="/" class="btn btn-ghost">Home</a>
+    </div>
+  </section>
+
+  <article class="prod-state" id="prodReady" hidden>
+    <nav class="prod-top-nav" aria-label="Breadcrumb">
+      <a href="#" class="prod-back-link" id="prodBackLink">
+        <svg aria-hidden="true"><use href="#i-arrow-left"/></svg>
+        <span>Back to search results</span>
+      </a>
+    </nav>
+
+    <div class="prod-layout">
+      <div class="prod-gallery">
+        <div class="prod-img-box" id="prodImgBox">
+          <img id="prodImg" alt="Product image" loading="eager" referrerpolicy="no-referrer">
+          <span class="prod-badge-store" id="prodStoreBadge"></span>
+        </div>
+      </div>
+
+      <div class="prod-details">
+        <div class="prod-meta-top">
+          <span class="badge" id="prodMatchBadge">Exact Match</span>
+          <span class="prod-match-reason" id="prodMatchReason"></span>
+        </div>
+
+        <p class="prod-brand" id="prodBrand"></p>
+        <h1 class="prod-title" id="prodTitle"></h1>
+
+        <div class="prod-price-box">
+          <span class="prod-price" id="prodPrice"></span>
+          <s class="prod-mrp" id="prodMrp" hidden></s>
+          <span class="prod-off" id="prodOff" hidden></span>
+        </div>
+
+        <p class="prod-shipping" id="prodShipping" hidden></p>
+        <p class="prod-freshness" id="prodFreshness">
+          <svg aria-hidden="true"><use href="#i-clock"/></svg>
+          <span id="prodCheckedAt"></span>
+        </p>
+
+        <div class="prod-ctas">
+          <a id="prodBuyBtn" class="btn btn-primary btn-lg btn-block" href="#" target="_blank" rel="sponsored noopener">
+            <span>Buy at <span id="prodBuyStoreName"></span></span>
+            <svg aria-hidden="true"><use href="#i-external"/></svg>
+          </a>
+        </div>
+
+        <div class="prod-actions-row">
+          <button type="button" class="btn btn-ghost btn-sm" id="prodSaveBtn" aria-pressed="false">
+            <svg aria-hidden="true" id="prodSaveIco"><use href="#i-heart"/></svg>
+            <span id="prodSaveText">Save</span>
+          </button>
+          <a class="btn btn-ghost btn-sm" id="prodShareWa" href="#" target="_blank" rel="noopener">
+            <svg aria-hidden="true"><use href="#i-whatsapp"/></svg>
+            <span>WhatsApp</span>
+          </a>
+          <button type="button" class="btn btn-ghost btn-sm" id="prodShareCopy">
+            <svg aria-hidden="true"><use href="#i-copy"/></svg>
+            <span>Copy link</span>
+          </button>
+          <button type="button" class="btn btn-ghost btn-sm" id="prodReportBtn">
+            <svg aria-hidden="true"><use href="#i-flag"/></svg>
+            <span>Report match</span>
+          </button>
+        </div>
+
+        <div class="prod-disclaimer-box">
+          <svg aria-hidden="true"><use href="#i-info"/></svg>
+          <p>Bank offers, membership pricing and personalized coupons may differ on the retailer's website. Fit Deal verifies base catalog prices.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase G: Price Comparison across Indian Stores -->
+    <section class="card compare-section" id="compareSection" aria-labelledby="compareTitle">
+      <div class="compare-head">
+        <div>
+          <h2 id="compareTitle" class="section-title">
+            <svg aria-hidden="true"><use href="#i-tag"/></svg>
+            Compare Prices Across Indian Stores
+          </h2>
+          <p class="compare-sub">Price comparison for this outfit across Amazon, Flipkart, Myntra, and AJIO.</p>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="compare-table" id="compareTable">
+          <thead>
+            <tr>
+              <th>Store</th>
+              <th>Price</th>
+              <th>Difference vs This Deal</th>
+              <th>Status / Freshness</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="compareBody">
+            <!-- Populated dynamically by public/js/product.js -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="compare-footer-disclaimer">
+        <p class="fine">
+          <svg aria-hidden="true"><use href="#i-shield"/></svg>
+          Independent ranking: cheapest deal ranks first. Affiliate commissions never influence rankings or price comparisons.
+        </p>
+      </div>
+    </section>
+  </article>
+
+  <dialog class="sheet" id="reportSheet" aria-labelledby="reportTitle">
+    <form method="dialog" class="sheet-in" id="reportForm">
+      <h2 id="reportTitle">What's wrong with this result?</h2>
+      <p class="report-product" id="reportProduct"></p>
+      <fieldset class="radios">
+        <label><input type="radio" name="reason" value="not_same" required> <span>It's not the same product</span></label>
+        <label><input type="radio" name="reason" value="wrong_item"> <span>Wrong kind of clothing</span></label>
+        <label><input type="radio" name="reason" value="bad_price"> <span>Price is wrong</span></label>
+        <label><input type="radio" name="reason" value="broken_link"> <span>Link doesn't work</span></label>
+        <label><input type="radio" name="reason" value="other"> <span>Something else</span></label>
+      </fieldset>
+      <label class="field"><span>Details (optional)</span><textarea name="note" rows="2" maxlength="300"></textarea></label>
+      <div class="btn-row">
+        <button type="submit" class="btn btn-primary" value="send">Send report</button>
+        <button type="button" class="btn btn-ghost" id="reportClose">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+</main>

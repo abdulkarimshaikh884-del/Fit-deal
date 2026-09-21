@@ -136,7 +136,7 @@ async function sendDynamic(req, res, file, meta) {
   sendEntry(req, res, entry, 200, "/" + file, "", Buffer.from(html, "utf8"));
 }
 
-async function dynamicMeta(kind, id) {
+async function dynamicMeta(kind, id, extra) {
   const store = require("./lib/store");
   try {
     if (kind === "find") {
@@ -148,6 +148,20 @@ async function dynamicMeta(kind, id) {
         title: `${s.item && s.item.label ? s.item.label : "Outfit"}: ${n} options — Fit Deal`,
         desc: `See where to buy this for less across Amazon, Flipkart, Myntra and AJIO.`,
         image: first && first.image, path: "/find/" + id
+      };
+    }
+    if (kind === "product") {
+      const s = await store.get("searches", id);
+      if (!s) return null;
+      const all = (s.exact || []).concat(s.similar || []);
+      const p = all.find((x) => x.key === extra);
+      if (!p) return null;
+      const priceStr = p.price != null ? `₹${p.price.toLocaleString("en-IN")}` : "Best price";
+      return {
+        title: `${p.title} — ${priceStr} on ${p.storeName} | Fit Deal`,
+        desc: `Compare prices for ${p.title} across Amazon, Flipkart, Myntra and AJIO. Verified prices and direct store deals.`,
+        image: p.image,
+        path: `/product/${id}/${extra}`
       };
     }
     if (kind === "vote") {
@@ -196,6 +210,9 @@ async function route(req, res) {
     res.writeHead(200, { "Content-Type": "text/plain; charset=utf-8" });
     return res.end("User-agent: *\nDisallow: /\n");
   }
+
+  const pm = pathname.match(/^\/product\/([A-Za-z0-9_-]{4,40})\/([A-Za-z0-9_-]{4,40})\/?$/);
+  if (pm) return sendDynamic(req, res, "product/index.html", await dynamicMeta("product", pm[1], pm[2]));
 
   const m = pathname.match(/^\/(find|vote)\/([A-Za-z0-9_-]{4,40})\/?$/);
   if (m) return sendDynamic(req, res, m[1] === "find" ? "find/results.html" : "vote/index.html", await dynamicMeta(m[1], m[2]));
