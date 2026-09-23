@@ -18,20 +18,32 @@
 
   function announce(text) { if (status) status.textContent = text; }
 
+  var modal = document.getElementById("uploadModal");
+
   function show(nodes) {
-    if (!flow || !idle || !drop) return;
+    if (!flow) return;
     flow.textContent = "";
     nodes.forEach(function (n) { if (n) flow.appendChild(n); });
-    idle.hidden = true;
     flow.hidden = false;
-    drop.classList.add("is-busy");
+    if (modal) {
+      if (typeof modal.showModal === "function" && !modal.open) {
+        try { modal.showModal(); } catch (e) { modal.setAttribute("open", ""); }
+      } else {
+        modal.hidden = false;
+      }
+    }
   }
 
   function reset() {
     busy = false;
     if (flow) { flow.hidden = true; flow.textContent = ""; }
-    if (idle) idle.hidden = false;
-    if (drop) drop.classList.remove("is-busy");
+    if (modal) {
+      if (typeof modal.close === "function" && modal.open) {
+        try { modal.close(); } catch (e) { modal.removeAttribute("open"); }
+      } else {
+        modal.hidden = true;
+      }
+    }
     Array.prototype.forEach.call(document.querySelectorAll("[data-link-form].is-busy"), function (f) { f.classList.remove("is-busy"); });
     Array.prototype.forEach.call(document.querySelectorAll("[data-look][aria-busy]"), function (b) { b.removeAttribute("aria-busy"); });
   }
@@ -256,43 +268,21 @@
     });
   }
 
-  // ── Visual search drawer trigger helpers ─────────────────────────────────
-  function openUploadDrawer(autoPick) {
-    var up = document.getElementById("upload");
-    if (up) {
-      up.hidden = false;
-      up.scrollIntoView({ behavior: "smooth", block: "center" });
-      if (autoPick && photo) {
-        setTimeout(function () { photo.click(); }, 200);
-      }
-    }
+  // ── Photo upload trigger helpers ─────────────────────────────────────────
+  function triggerPhotoPicker() {
+    if (photo) photo.click();
   }
 
-  // Header & Banner & Hero trigger buttons
-  ["headerSnapBtn", "headerUploadCta", "mobileSnapBtn", "bannerSnapBtn", "heroUploadBtn"].forEach(function (id) {
+  // Header camera & Hero photo trigger buttons
+  ["headerSnapBtn", "mobileSnapBtn", "heroUploadBtn"].forEach(function (id) {
     var btn = document.getElementById(id);
     if (btn) {
       btn.addEventListener("click", function (ev) {
         ev.preventDefault();
-        openUploadDrawer(true);
+        triggerPhotoPicker();
       });
     }
   });
-
-  var heroLinkBtn = document.getElementById("heroLinkBtn");
-  if (heroLinkBtn) {
-    heroLinkBtn.addEventListener("click", function (ev) {
-      ev.preventDefault();
-      var shopInput = document.getElementById("shopSearchInput") || document.getElementById("shopSearchInputMobile");
-      if (shopInput) {
-        shopInput.scrollIntoView({ behavior: "smooth", block: "center" });
-        shopInput.focus();
-        FD.toast("Paste your product link from Amazon, Flipkart, Myntra or AJIO");
-      } else {
-        openUploadDrawer(false);
-      }
-    });
-  }
 
   // Section 9 Screenshot dropzone
   var secDrop = document.getElementById("sectionDropzone");

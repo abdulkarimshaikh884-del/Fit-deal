@@ -1,35 +1,15 @@
 <main class="shop-home fd-home" id="main">
-  <!-- Interactive Visual Snap Drawer (Modal / Dropzone for Camera and Link triggers) -->
-  <section class="visual-snap-drawer" id="upload" aria-label="Visual Dupe Search" hidden>
-    <div class="drop" id="drop">
-      <div class="drop-idle" id="dropIdle">
-        <div class="snap-drop-row">
-          <div class="snap-cam-circle">
-            <svg aria-hidden="true"><use href="#i-camera"/></svg>
-          </div>
-          <div class="snap-drop-texts">
-            <h3>Find Any Outfit From A Screenshot</h3>
-            <p>Upload a photo, Instagram Reel screenshot, or Pinterest look — we'll find the best price on Amazon, Flipkart, Myntra &amp; AJIO.</p>
-          </div>
-          <div class="snap-drop-actions">
-            <button type="button" class="btn btn-primary snap-choose-btn" id="choose">
-              <svg aria-hidden="true"><use href="#i-image"/></svg>Choose Photo
-            </button>
-            <input type="file" id="photo" accept="image/*" hidden>
-          </div>
-        </div>
-        <div class="snap-link-divider"><span>or paste product link</span></div>
-        <form class="snap-link-form" data-link-form>
-          <svg class="snap-link-ico" aria-hidden="true"><use href="#i-link"/></svg>
-          <input type="url" inputmode="url" placeholder="Paste product link from Amazon, Flipkart, Myntra, or AJIO" aria-label="Product link" id="linkInput" autocomplete="off">
-          <button type="submit" class="snap-link-go" aria-label="Find best price">Find Best Price</button>
-        </form>
-      </div>
-      <div class="flow" id="flow" hidden></div>
+  <!-- Hidden file picker for direct camera/screenshot search -->
+  <input type="file" id="photo" accept="image/*" hidden>
+
+  <!-- Photo Processing Loading Modal (only displayed while AI analyzes the photo) -->
+  <dialog class="sheet fd-analysis-modal" id="uploadModal" aria-labelledby="flowStatus">
+    <div class="sheet-in fd-analysis-modal-in">
+      <div class="flow" id="flow"></div>
       <p class="sr-only" id="flowStatus" role="status" aria-live="polite"></p>
+      <p class="snap-privacy"><svg aria-hidden="true"><use href="#i-shield"/></svg><span>Photo processed in RAM only and never saved to any database. <a href="/privacy/#photos">Privacy Policy</a></span></p>
     </div>
-    <p class="snap-privacy"><svg aria-hidden="true"><use href="#i-shield"/></svg><span>Your photo is processed in RAM only and never saved to any database. <a href="/privacy/#photos">Privacy Policy</a></span></p>
-  </section>
+  </dialog>
 
   <!-- 4. HERO SECTION -->
   <section class="fd-hero-section" aria-label="Fashion comparison hero">
@@ -40,13 +20,13 @@
         <p class="fd-hero-subtitle">Compare fashion across Amazon, Flipkart, Myntra &amp; AJIO — same style, better prices.</p>
         <div class="fd-hero-cta-group">
           <button type="button" class="fd-hero-btn fd-btn-purple" id="heroUploadBtn">
-            <svg aria-hidden="true"><use href="#i-upload-cloud"/></svg>
-            <span>Upload Screenshot</span>
+            <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
+            <span>Search with Photo</span>
           </button>
-          <button type="button" class="fd-hero-btn fd-btn-outline" id="heroLinkBtn">
-            <svg aria-hidden="true"><use href="#i-link"/></svg>
-            <span>Paste Product Link</span>
-          </button>
+          <a href="/deals/" class="fd-hero-btn fd-btn-outline">
+            <svg aria-hidden="true"><use href="#i-tag"/></svg>
+            <span>Explore Best Deals</span>
+          </a>
         </div>
         <div class="fd-hero-trust-strip">
           <div class="fd-hero-trust-item">

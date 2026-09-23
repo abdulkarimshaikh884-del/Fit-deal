@@ -30,8 +30,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/site.css?v=6c64545e92">
-<link rel="stylesheet" href="/css/home.css?v=6c64545e92">
+<link rel="stylesheet" href="/css/site.css?v=701fa164e3">
+<link rel="stylesheet" href="/css/home.css?v=701fa164e3">
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Fit Deal","url":"https://fitdeal.shop/","description":"See an outfit you love? Fit Deal finds it — and finds it for less."}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Fit Deal","url":"https://fitdeal.shop/","logo":"https://fitdeal.shop/img/brand/icon-512.png","email":"support@fitdeal.shop"}</script>
@@ -145,11 +145,10 @@
     </a>
     <form class="shop-search-box header-search-box fd-main-search" data-search-form role="search" action="/find/">
       <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
-      <input type="text" id="shopSearchInput" name="q" placeholder="Search for clothes, shoes, bags, brands or paste a product link..." aria-label="Search clothes or paste product link" autocomplete="off">
+      <input type="text" id="shopSearchInput" name="q" placeholder="Search fashion (e.g. kurti, floral dress, shoes) or paste product link..." aria-label="Search clothes or paste product link" autocomplete="off">
       <div class="search-actions">
-        <button type="button" class="search-cam-btn fd-visual-search-pill" id="headerSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
+        <button type="button" class="search-cam-btn" id="headerSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
           <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
-          <span class="cam-btn-text">Visual Search</span>
         </button>
         <button type="submit" class="search-go-btn fd-search-submit-btn" aria-label="Search">
           <svg aria-hidden="true"><use href="#i-search"/></svg>
@@ -170,10 +169,6 @@
         <svg aria-hidden="true"><use href="#i-user"/></svg>
         <span data-user-name>Account</span>
       </a>
-      <button type="button" class="fd-nav-upload-btn" id="headerUploadCta" aria-label="Upload photo or screenshot">
-        <svg aria-hidden="true"><use href="#i-upload-cloud"/></svg>
-        <span>Upload Screenshot</span>
-      </button>
     </div>
   </div>
 </header>
@@ -211,53 +206,26 @@
   <div class="fd-mobile-search-row">
     <form class="shop-search-box fd-mobile-search-form" data-search-form role="search" action="/find/">
       <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
-      <input type="text" id="shopSearchInputMobile" name="q" placeholder="Search for clothes, shoes, brands..." aria-label="Search clothes or paste product link" autocomplete="off">
+      <input type="text" id="shopSearchInputMobile" name="q" placeholder="Search clothes, shoes, brands or paste link..." aria-label="Search clothes or paste product link" autocomplete="off">
       <button type="button" class="fd-mobile-cam-btn" id="mobileSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
         <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
       </button>
     </form>
   </div>
-  <div class="fd-mobile-action-pill-banner">
-    <button type="button" class="fd-mobile-upload-cta" id="bannerSnapBtn">
-      <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
-      <span>Upload Screenshot</span>
-    </button>
-    <a href="/find/?mode=photo" class="fd-mobile-vs-link">Visual Search <svg aria-hidden="true"><use href="#i-chev"/></svg></a>
-  </div>
 </header>
 
 <main id="main" class="shop-home fd-home" id="main">
-  <!-- Interactive Visual Snap Drawer (Modal / Dropzone for Camera and Link triggers) -->
-  <section class="visual-snap-drawer" id="upload" aria-label="Visual Dupe Search" hidden>
-    <div class="drop" id="drop">
-      <div class="drop-idle" id="dropIdle">
-        <div class="snap-drop-row">
-          <div class="snap-cam-circle">
-            <svg aria-hidden="true"><use href="#i-camera"/></svg>
-          </div>
-          <div class="snap-drop-texts">
-            <h3>Find Any Outfit From A Screenshot</h3>
-            <p>Upload a photo, Instagram Reel screenshot, or Pinterest look — we'll find the best price on Amazon, Flipkart, Myntra &amp; AJIO.</p>
-          </div>
-          <div class="snap-drop-actions">
-            <button type="button" class="btn btn-primary snap-choose-btn" id="choose">
-              <svg aria-hidden="true"><use href="#i-image"/></svg>Choose Photo
-            </button>
-            <input type="file" id="photo" accept="image/*" hidden>
-          </div>
-        </div>
-        <div class="snap-link-divider"><span>or paste product link</span></div>
-        <form class="snap-link-form" data-link-form>
-          <svg class="snap-link-ico" aria-hidden="true"><use href="#i-link"/></svg>
-          <input type="url" inputmode="url" placeholder="Paste product link from Amazon, Flipkart, Myntra, or AJIO" aria-label="Product link" id="linkInput" autocomplete="off">
-          <button type="submit" class="snap-link-go" aria-label="Find best price">Find Best Price</button>
-        </form>
-      </div>
-      <div class="flow" id="flow" hidden></div>
+  <!-- Hidden file picker for direct camera/screenshot search -->
+  <input type="file" id="photo" accept="image/*" hidden>
+
+  <!-- Photo Processing Loading Modal (only displayed while AI analyzes the photo) -->
+  <dialog class="sheet fd-analysis-modal" id="uploadModal" aria-labelledby="flowStatus">
+    <div class="sheet-in fd-analysis-modal-in">
+      <div class="flow" id="flow"></div>
       <p class="sr-only" id="flowStatus" role="status" aria-live="polite"></p>
+      <p class="snap-privacy"><svg aria-hidden="true"><use href="#i-shield"/></svg><span>Photo processed in RAM only and never saved to any database. <a href="/privacy/#photos">Privacy Policy</a></span></p>
     </div>
-    <p class="snap-privacy"><svg aria-hidden="true"><use href="#i-shield"/></svg><span>Your photo is processed in RAM only and never saved to any database. <a href="/privacy/#photos">Privacy Policy</a></span></p>
-  </section>
+  </dialog>
 
   <!-- 4. HERO SECTION -->
   <section class="fd-hero-section" aria-label="Fashion comparison hero">
@@ -268,13 +236,13 @@
         <p class="fd-hero-subtitle">Compare fashion across Amazon, Flipkart, Myntra &amp; AJIO — same style, better prices.</p>
         <div class="fd-hero-cta-group">
           <button type="button" class="fd-hero-btn fd-btn-purple" id="heroUploadBtn">
-            <svg aria-hidden="true"><use href="#i-upload-cloud"/></svg>
-            <span>Upload Screenshot</span>
+            <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
+            <span>Search with Photo</span>
           </button>
-          <button type="button" class="fd-hero-btn fd-btn-outline" id="heroLinkBtn">
-            <svg aria-hidden="true"><use href="#i-link"/></svg>
-            <span>Paste Product Link</span>
-          </button>
+          <a href="/deals/" class="fd-hero-btn fd-btn-outline">
+            <svg aria-hidden="true"><use href="#i-tag"/></svg>
+            <span>Explore Best Deals</span>
+          </a>
         </div>
         <div class="fd-hero-trust-strip">
           <div class="fd-hero-trust-item">
@@ -1194,7 +1162,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="/js/app.js?v=6c64545e92" defer></script>
-<script src="/js/home.js?v=6c64545e92" defer></script>
+<script src="/js/app.js?v=701fa164e3" defer></script>
+<script src="/js/home.js?v=701fa164e3" defer></script>
 </body>
 </html>

@@ -110,11 +110,10 @@ function desktopNav(p) {
     ${brand}
     <form class="shop-search-box header-search-box fd-main-search" data-search-form role="search" action="/find/">
       <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
-      <input type="text" id="shopSearchInput" name="q" placeholder="Search for clothes, shoes, bags, brands or paste a product link..." aria-label="Search clothes or paste product link" autocomplete="off">
+      <input type="text" id="shopSearchInput" name="q" placeholder="Search fashion (e.g. kurti, floral dress, shoes) or paste product link..." aria-label="Search clothes or paste product link" autocomplete="off">
       <div class="search-actions">
-        <button type="button" class="search-cam-btn fd-visual-search-pill" id="headerSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
+        <button type="button" class="search-cam-btn" id="headerSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
           <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
-          <span class="cam-btn-text">Visual Search</span>
         </button>
         <button type="submit" class="search-go-btn fd-search-submit-btn" aria-label="Search">
           <svg aria-hidden="true"><use href="#i-search"/></svg>
@@ -135,10 +134,6 @@ function desktopNav(p) {
         <svg aria-hidden="true"><use href="#i-user"/></svg>
         <span data-user-name>Account</span>
       </a>
-      <button type="button" class="fd-nav-upload-btn" id="headerUploadCta" aria-label="Upload photo or screenshot">
-        <svg aria-hidden="true"><use href="#i-upload-cloud"/></svg>
-        <span>Upload Screenshot</span>
-      </button>
     </div>
   </div>
 </header>
@@ -166,15 +161,12 @@ function desktopNav(p) {
       <div class="search-actions">
         <button type="button" class="search-cam-btn" id="headerSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
           <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
-          <span class="cam-btn-text">Visual Search</span>
         </button>
         <button type="submit" class="search-go-btn" aria-label="Search">
-          <span>Search</span>
-          <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+          <svg aria-hidden="true"><use href="#i-search"/></svg>
         </button>
       </div>
     </form>`;
-  const cta = `<a href="#upload" class="d-cta" id="headerUploadCta" aria-label="Upload photo or screenshot"><svg aria-hidden="true"><use href="#i-camera-line"/></svg><span>Upload Screenshot</span></a>`;
   return `<header class="d-nav">
   <div class="d-nav-in">
     ${brand}
@@ -184,7 +176,6 @@ ${links}
       <a href="/login/" data-auth-guest>Sign In</a>
       <a href="/profile/" data-auth-user hidden><span data-user-name>Account</span></a>
     </nav>
-    ${cta}
   </div>
 </header>`;
 }
@@ -206,18 +197,11 @@ function mobileHead(p) {
   <div class="fd-mobile-search-row">
     <form class="shop-search-box fd-mobile-search-form" data-search-form role="search" action="/find/">
       <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
-      <input type="text" id="shopSearchInputMobile" name="q" placeholder="Search for clothes, shoes, brands..." aria-label="Search clothes or paste product link" autocomplete="off">
+      <input type="text" id="shopSearchInputMobile" name="q" placeholder="Search clothes, shoes, brands or paste link..." aria-label="Search clothes or paste product link" autocomplete="off">
       <button type="button" class="fd-mobile-cam-btn" id="mobileSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
         <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
       </button>
     </form>
-  </div>
-  <div class="fd-mobile-action-pill-banner">
-    <button type="button" class="fd-mobile-upload-cta" id="bannerSnapBtn">
-      <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
-      <span>Upload Screenshot</span>
-    </button>
-    <a href="/find/?mode=photo" class="fd-mobile-vs-link">Visual Search <svg aria-hidden="true"><use href="#i-chev"/></svg></a>
   </div>
 </header>`;
   }
