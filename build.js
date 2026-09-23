@@ -188,8 +188,9 @@ function mobileHead(p) {
     <form class="shop-search-box fd-mobile-search-form" data-search-form role="search" action="/find/">
       <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
       <input type="text" id="shopSearchInputMobile" name="q" placeholder="Search clothes, shoes, brands or paste link..." aria-label="Search clothes or paste product link" autocomplete="off">
-      <button type="button" class="fd-mobile-cam-btn" id="mobileSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
+      <button type="button" class="fd-mobile-cam-btn" id="mobileSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload image to search">
         <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
+        <span>Upload</span>
       </button>
     </form>
   </div>
