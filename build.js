@@ -59,6 +59,10 @@ const PAGES = [
     title: "Deals — real prices from recent Fit Deal searches", desc: "The biggest real discounts people found on Fit Deal in the last two days, across Amazon, Flipkart, Myntra and AJIO." },
   { out: "profile/index.html", src: "profile", page: "profile", nav: "profile", tab: "profile", head: "brand", path: "/profile/", script: "profile",
     title: "Your Fit Deal — Profile", desc: "Your saved items, searches, votes and size notes, kept on this device." },
+  { out: "login/index.html", src: "login", page: "auth", head: "back", heading: "Sign In", path: "/login/", script: "auth",
+    title: "Sign In — Fit Deal", desc: "Log in to your Fit Deal account to sync your saved items and track price drops across stores." },
+  { out: "signup/index.html", src: "signup", page: "auth", head: "back", heading: "Create Account", path: "/signup/", script: "auth",
+    title: "Create an Account — Fit Deal", desc: "Create a free Fit Deal account to compare fashion prices across Indian stores." },
   { out: "try-on/index.html", src: "try-on", page: "tryon", head: "back", heading: "Virtual Try-On", path: "/try-on/",
     title: "AI Virtual Try-On (Coming Soon) — Fit Deal", desc: "Genuine AI outfit fitting is coming soon to Fit Deal. Find and compare prices across Indian stores now." },
   { out: "how-it-works/index.html", src: "how-it-works", page: "info", nav: "how", head: "back", heading: "How it works", path: "/how-it-works/", index: true,
@@ -121,10 +125,15 @@ function desktopNav(p) {
       <a href="/saved/" class="fd-nav-item" aria-label="Saved items">
         <svg aria-hidden="true"><use href="#i-heart"/></svg>
         <span>Saved</span>
+        <span class="fd-saved-count" id="navSavedBadge">0</span>
       </a>
-      <a href="/profile/" class="fd-nav-item" aria-label="Account profile">
+      <a href="/login/" class="fd-nav-item" aria-label="Sign in" data-auth-guest>
         <svg aria-hidden="true"><use href="#i-user"/></svg>
-        <span>Account</span>
+        <span>Sign In</span>
+      </a>
+      <a href="/profile/" class="fd-nav-item" aria-label="Account profile" data-auth-user hidden>
+        <svg aria-hidden="true"><use href="#i-user"/></svg>
+        <span data-user-name>Account</span>
       </a>
       <button type="button" class="fd-nav-upload-btn" id="headerUploadCta" aria-label="Upload photo or screenshot">
         <svg aria-hidden="true"><use href="#i-upload-cloud"/></svg>
@@ -172,6 +181,8 @@ function desktopNav(p) {
 ${searchBox}
     <nav class="d-links" aria-label="Main">
 ${links}
+      <a href="/login/" data-auth-guest>Sign In</a>
+      <a href="/profile/" data-auth-user hidden><span data-user-name>Account</span></a>
     </nav>
     ${cta}
   </div>
@@ -188,7 +199,8 @@ function mobileHead(p) {
     </div>
     <div class="m-icons">
       <a href="/deals/" class="m-icon" aria-label="Notifications / Deals"><svg aria-hidden="true"><use href="#i-bell"/></svg></a>
-      <a href="/profile/" class="m-icon" aria-label="Your profile"><svg aria-hidden="true"><use href="#i-user"/></svg></a>
+      <a href="/login/" class="m-icon" aria-label="Sign in" data-auth-guest><svg aria-hidden="true"><use href="#i-user"/></svg></a>
+      <a href="/profile/" class="m-icon" aria-label="Your profile" data-auth-user hidden><svg aria-hidden="true"><use href="#i-user"/></svg></a>
     </div>
   </div>
   <div class="fd-mobile-search-row">

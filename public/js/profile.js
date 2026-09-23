@@ -14,6 +14,32 @@
   }
   counts();
 
+  // Auth Profile UI
+  function renderAuthProfile() {
+    var user = FD.auth && FD.auth.getUser ? FD.auth.getUser() : null;
+    var userEl = document.querySelector("[data-auth-user]");
+    var guestEl = document.querySelector("[data-auth-guest]");
+    if (user) {
+      if (userEl) userEl.hidden = false;
+      if (guestEl) guestEl.hidden = true;
+      var nameEl = $("userFullName");
+      var emailEl = $("userEmail");
+      if (nameEl) nameEl.textContent = user.fullName || "Your Account";
+      if (emailEl) emailEl.textContent = user.email || "";
+    } else {
+      if (userEl) userEl.hidden = true;
+      if (guestEl) guestEl.hidden = false;
+    }
+  }
+  renderAuthProfile();
+
+  var logoutBtn = $("profileLogoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", function () {
+      if (FD.auth && FD.auth.logout) FD.auth.logout();
+    });
+  }
+
   function renderRecent() {
     var items = FD.recent.all().slice(0, 5);
     var box = $("profileRecentBox");

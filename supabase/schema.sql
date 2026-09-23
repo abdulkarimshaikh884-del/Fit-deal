@@ -101,6 +101,35 @@ create table if not exists commissions (
   ref text
 );
 
+create table if not exists profiles (
+  id text primary key,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  email text unique,
+  full_name text,
+  avatar_url text,
+  preferences jsonb default '{}'::jsonb
+);
+
+create table if not exists user_saves (
+  id text primary key,
+  created_at timestamptz not null default now(),
+  user_id text not null,
+  search_id text,
+  product_key text,
+  item jsonb not null
+);
+create index if not exists user_saves_user_idx on user_saves (user_id);
+
+create table if not exists user_searches (
+  id text primary key,
+  created_at timestamptz not null default now(),
+  user_id text not null,
+  query text not null,
+  search_id text
+);
+create index if not exists user_searches_user_idx on user_searches (user_id);
+
 alter table searches enable row level security;
 alter table votes enable row level security;
 alter table ballots enable row level security;
@@ -109,3 +138,6 @@ alter table events enable row level security;
 alter table reports enable row level security;
 alter table messages enable row level security;
 alter table commissions enable row level security;
+alter table profiles enable row level security;
+alter table user_saves enable row level security;
+alter table user_searches enable row level security;

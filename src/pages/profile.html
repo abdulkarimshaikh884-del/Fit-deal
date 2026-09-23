@@ -1,9 +1,29 @@
 <main class="page page-profile">
-  <section class="me-card">
+  <!-- Authenticated User Card -->
+  <section class="me-card" data-auth-user hidden>
+    <div class="me-avatar" aria-hidden="true" id="userAvatar">
+      <svg><use href="#i-user"/></svg>
+    </div>
+    <div class="me-card-info">
+      <h1 id="userFullName">Your Account</h1>
+      <p id="userEmail" class="me-email"></p>
+      <span class="me-sync-pill"><svg aria-hidden="true"><use href="#i-check-plain"/></svg> Cloud Synced across devices</span>
+    </div>
+    <div class="me-card-actions">
+      <button type="button" class="btn btn-ghost btn-sm" id="profileLogoutBtn">Sign Out</button>
+    </div>
+  </section>
+
+  <!-- Guest User Card -->
+  <section class="me-card me-guest-card" data-auth-guest>
     <span class="me-avatar" aria-hidden="true"><svg><use href="#i-sparkle"/></svg></span>
-    <div>
-      <h1>Your Fit Deal</h1>
-      <p>Your saved items, size preferences and search history stay privately on this device.</p>
+    <div class="me-card-info">
+      <h1>Welcome to Fit Deal</h1>
+      <p>Sign in to sync your saved outfits, search history and price alerts across all your devices.</p>
+    </div>
+    <div class="me-card-ctas">
+      <a href="/login/" class="btn btn-primary btn-sm">Sign In</a>
+      <a href="/signup/" class="btn btn-ghost btn-sm">Create Account</a>
     </div>
   </section>
 

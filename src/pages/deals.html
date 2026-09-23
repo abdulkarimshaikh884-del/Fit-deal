@@ -1,33 +1,145 @@
-<main class="page page-deals">
-  <section class="deals-hero">
-    <p class="hx-kicker">Updated as people search</p>
-    <h1>Best deals <span>today</span> <span aria-hidden="true">🔥</span></h1>
-    <p>Real prices people found on Fit Deal in the last 48 hours. Each one shows when its price was checked.</p>
+<main class="page page-deals fd-deals-page">
+  <!-- 1. DEALS HERO HEADER -->
+  <section class="fd-deals-hero" aria-label="Fashion deals and price drops">
+    <div class="fd-deals-hero-content">
+      <div class="fd-deals-pill">
+        <span class="fd-pulse-dot"></span>
+        <span>LIVE PRICE COMPARISON &bull; AMAZON &bull; FLIPKART &bull; MYNTRA &bull; AJIO</span>
+      </div>
+      <h1 class="fd-deals-headline">Today's Best Fashion Deals <span class="fd-deals-fire" aria-hidden="true">&#x1F525;</span></h1>
+      <p class="fd-deals-subhead">Every outfit compared across top stores. We track price drops in real-time so you always buy at the lowest price.</p>
+      
+      <div class="fd-deals-stats-row">
+        <div class="fd-stat-item">
+          <span class="fd-stat-val">500+</span>
+          <span class="fd-stat-lbl">Deals Monitored</span>
+        </div>
+        <div class="fd-stat-sep"></div>
+        <div class="fd-stat-item">
+          <span class="fd-stat-val">Up to 75%</span>
+          <span class="fd-stat-lbl">Price Drops</span>
+        </div>
+        <div class="fd-stat-sep"></div>
+        <div class="fd-stat-item">
+          <span class="fd-stat-val">4 Stores</span>
+          <span class="fd-stat-lbl">Instant Compare</span>
+        </div>
+        <div class="fd-stat-sep"></div>
+        <div class="fd-stat-item">
+          <span class="fd-stat-val">100%</span>
+          <span class="fd-stat-lbl">Genuine Retailers</span>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <div class="filter-row deals-filter" role="group" aria-label="Show deals for" id="dealFilter">
-    <button type="button" data-f="all" aria-pressed="true">All</button>
-    <button type="button" data-f="women" aria-pressed="false">Women</button>
-    <button type="button" data-f="men" aria-pressed="false">Men</button>
-    <button type="button" data-f="ethnic" aria-pressed="false">Ethnic</button>
-    <button type="button" data-f="dresses" aria-pressed="false">Dresses</button>
-    <button type="button" data-f="tops" aria-pressed="false">Tops</button>
-    <button type="button" data-f="jeans" aria-pressed="false">Jeans</button>
-  </div>
+  <!-- 2. FILTER & SORT CONTROLS BAR -->
+  <section class="fd-deals-controls" aria-label="Filter fashion deals">
+    <div class="fd-controls-inner">
+      <!-- Store Filter Pills -->
+      <div class="fd-store-filter-row" role="group" aria-label="Filter by retailer" id="storeFilterGroup">
+        <span class="fd-filter-label">Store:</span>
+        <button type="button" class="fd-store-btn is-active" data-store="all">All Stores</button>
+        <button type="button" class="fd-store-btn" data-store="flipkart">
+          <svg class="store-icon" aria-hidden="true"><use href="#i-store-flipkart"/></svg>
+          <span>Flipkart</span>
+        </button>
+        <button type="button" class="fd-store-btn" data-store="amazon">
+          <svg class="store-icon" aria-hidden="true"><use href="#i-store-amazon"/></svg>
+          <span>Amazon</span>
+        </button>
+        <button type="button" class="fd-store-btn" data-store="myntra">
+          <svg class="store-icon" aria-hidden="true"><use href="#i-store-myntra"/></svg>
+          <span>Myntra</span>
+        </button>
+        <button type="button" class="fd-store-btn" data-store="ajio">
+          <svg class="store-icon" aria-hidden="true"><use href="#i-store-ajio"/></svg>
+          <span>AJIO</span>
+        </button>
+      </div>
 
-  <div class="deal-grid" id="dealGrid" aria-live="polite">
-    <div class="dcard sk"><span class="dcard-img sk-img"></span><span class="sk-lines"><i></i><i></i></span></div>
-    <div class="dcard sk"><span class="dcard-img sk-img"></span><span class="sk-lines"><i></i><i></i></span></div>
-    <div class="dcard sk"><span class="dcard-img sk-img"></span><span class="sk-lines"><i></i><i></i></span></div>
-    <div class="dcard sk"><span class="dcard-img sk-img"></span><span class="sk-lines"><i></i><i></i></span></div>
-  </div>
+      <!-- Category Filter Tabs -->
+      <div class="fd-cat-filter-row" role="group" aria-label="Filter by category" id="catFilterGroup">
+        <button type="button" class="fd-cat-pill is-active" data-cat="all">All Fashion</button>
+        <button type="button" class="fd-cat-pill" data-cat="ethnic">Ethnic Wear</button>
+        <button type="button" class="fd-cat-pill" data-cat="dresses">Dresses</button>
+        <button type="button" class="fd-cat-pill" data-cat="men">Men's Casual</button>
+        <button type="button" class="fd-cat-pill" data-cat="shoes">Shoes &amp; Sneakers</button>
+        <button type="button" class="fd-cat-pill" data-cat="accessories">Bags &amp; Watches</button>
+      </div>
 
-  <section class="empty-state empty-inline" id="dealsEmpty" hidden>
-    <span class="empty-ico"><svg aria-hidden="true"><use href="#i-tag"/></svg></span>
-    <h2 id="dealsEmptyTitle">No deals to show yet</h2>
-    <p id="dealsEmptyText">Deals appear here when searches on Fit Deal find real discounts. Search for a look and you'll see its prices across stores.</p>
-    <a href="/find/?mode=photo" class="btn btn-primary btn-sm"><svg aria-hidden="true"><use href="#i-camera-line"/></svg>Find a look</a>
+      <!-- Quick Price & Sort Bar -->
+      <div class="fd-secondary-filter-bar">
+        <div class="fd-price-pills" id="priceFilterGroup">
+          <span class="fd-filter-label">Budget:</span>
+          <button type="button" class="fd-budget-pill is-active" data-price="all">Any Price</button>
+          <button type="button" class="fd-budget-pill" data-price="under500">Under &#x20B9;500</button>
+          <button type="button" class="fd-budget-pill" data-price="under1000">Under &#x20B9;1,000</button>
+          <button type="button" class="fd-budget-pill" data-price="under2000">Under &#x20B9;2,000</button>
+        </div>
+        <div class="fd-sort-wrap">
+          <label for="dealsSortSelect" class="fd-sort-label">Sort by:</label>
+          <select id="dealsSortSelect" class="fd-sort-select" aria-label="Sort deals">
+            <option value="discount">Biggest Discount (%)</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="savings">Maximum Savings (&#x20B9;)</option>
+          </select>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <p class="disclose"><svg aria-hidden="true"><use href="#i-info"/></svg><span>Discounts are worked out from each store's own MRP. Prices change often; the store's page has the final price. We may earn a commission when you buy through our links. <a href="/affiliate-disclosure/">Learn more</a></span></p>
+  <!-- 3. DEALS OF THE DAY GRID -->
+  <section class="fd-deals-grid-section" aria-label="Deal results">
+    <div class="fd-deals-grid-header">
+      <h2 class="fd-grid-title" id="dealsCountTitle">Showing verified fashion deals</h2>
+      <span class="fd-grid-refresh-badge">
+        <svg aria-hidden="true"><use href="#i-clock"/></svg>
+        <span>Updated in real-time</span>
+      </span>
+    </div>
+
+    <!-- Active Grid -->
+    <div class="fd-deals-grid" id="dealGrid" aria-live="polite">
+      <!-- Loading Skeleton Cards -->
+      <div class="fd-deal-card sk"><span class="fd-dc-img sk-img"></span><span class="sk-lines"><i></i><i></i><i></i></span></div>
+      <div class="fd-deal-card sk"><span class="fd-dc-img sk-img"></span><span class="sk-lines"><i></i><i></i><i></i></span></div>
+      <div class="fd-deal-card sk"><span class="fd-dc-img sk-img"></span><span class="sk-lines"><i></i><i></i><i></i></span></div>
+      <div class="fd-deal-card sk"><span class="fd-dc-img sk-img"></span><span class="sk-lines"><i></i><i></i><i></i></span></div>
+    </div>
+
+    <!-- Empty State -->
+    <section class="empty-state empty-inline" id="dealsEmpty" hidden>
+      <span class="empty-ico"><svg aria-hidden="true"><use href="#i-tag"/></svg></span>
+      <h2 id="dealsEmptyTitle">No deals found for these filters</h2>
+      <p id="dealsEmptyText">Try resetting your filters or search for any look from your camera or screenshot.</p>
+      <button type="button" class="btn btn-primary btn-sm" id="resetDealsFilterBtn">Reset Filters</button>
+    </section>
+  </section>
+
+  <!-- 4. TRUST & TRANSPARENCY BANNER -->
+  <section class="fd-deals-trust-banner" aria-label="Fit Deal Shopping Promise">
+    <div class="fd-trust-card">
+      <div class="fd-trust-col">
+        <div class="fd-trust-ico"><svg aria-hidden="true"><use href="#i-shield"/></svg></div>
+        <h3>100% Unbiased Ranking</h3>
+        <p>The lowest price always ranks first. Store commissions never alter price comparisons or deal order.</p>
+      </div>
+      <div class="fd-trust-col">
+        <div class="fd-trust-ico"><svg aria-hidden="true"><use href="#i-step-compare"/></svg></div>
+        <h3>Multi-Store Verification</h3>
+        <p>We verify prices across Amazon, Flipkart, Myntra &amp; AJIO so you can clearly see the exact price difference.</p>
+      </div>
+      <div class="fd-trust-col">
+        <div class="fd-trust-ico"><svg aria-hidden="true"><use href="#i-bolt"/></svg></div>
+        <h3>Direct Store Purchase</h3>
+        <p>You buy directly on the retailer's official website or app with full return policy &amp; warranty intact.</p>
+      </div>
+    </div>
+    <p class="fd-deals-disclosure">
+      <svg aria-hidden="true"><use href="#i-info"/></svg>
+      <span>Prices change frequently on merchant sites. We may earn an affiliate commission when you buy through our links at no additional cost to you. <a href="/affiliate-disclosure/">Affiliate Disclosure</a></span>
+    </p>
+  </section>
 </main>

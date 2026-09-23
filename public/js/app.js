@@ -40,6 +40,10 @@
   function api(path, opts) {
     opts = opts || {};
     var init = { method: opts.method || "GET", headers: opts.headers || {}, credentials: "same-origin" };
+    try {
+      var tok = localStorage.getItem("fd_token");
+      if (tok && !init.headers["Authorization"]) init.headers["Authorization"] = "Bearer " + tok;
+    } catch (e) {}
     if (opts.json !== undefined) {
       init.method = opts.method || "POST";
       init.headers["Content-Type"] = "application/json";
@@ -220,15 +224,96 @@
     if (s) s.hidden = saved.all().length === 0;
     var d = document.getElementById("dealsDot");
     if (d) d.hidden = !store.get("fd_deals_new", false);
+    Array.prototype.forEach.call(document.querySelectorAll(".fd-saved-count"), function (el) {
+      el.textContent = String(saved.all().length);
+    });
   }
+
+  // ── Authentication & Cloud Progress Sync ─────────────────────────────────
+  function updateAuthUI(user) {
+    Array.prototype.forEach.call(document.querySelectorAll("[data-auth-user]"), function (el) {
+      el.hidden = !user;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-auth-guest]"), function (el) {
+      el.hidden = !!user;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-user-name]"), function (el) {
+      if (user) el.textContent = user.fullName || user.email.split("@")[0];
+    });
+  }
+
+  var auth = {
+    getUser: function () {
+      return store.get("fd_user", null);
+    },
+    getToken: function () {
+      try { return localStorage.getItem("fd_token") || null; } catch (e) { return null; }
+    },
+    isLoggedIn: function () {
+      return Boolean(auth.getToken());
+    },
+    logout: function () {
+      return api("/api/auth/logout", { method: "POST" }).finally(function () {
+        try {
+          localStorage.removeItem("fd_token");
+          localStorage.removeItem("fd_user");
+        } catch (e) {}
+        window.location.href = "/";
+      });
+    },
+    syncLocalToCloud: function () {
+      if (!auth.isLoggedIn()) return Promise.resolve();
+      var saves = saved.all();
+      var searches = recent.all();
+      var size = store.get("fd_size_prefs", {});
+      return api("/api/user/sync", { json: { saves: saves, searches: searches, preferences: size } })
+        .then(function (res) {
+          if (res && res.saves && Array.isArray(res.saves)) {
+            var existingKeys = new Set(saved.all().map(function (s) { return s.key; }));
+            var merged = saved.all().slice();
+            res.saves.forEach(function (cs) {
+              if (cs && cs.key && !existingKeys.has(cs.key)) {
+                merged.push(cs);
+                existingKeys.add(cs.key);
+              }
+            });
+            store.set(SAVED, merged.slice(0, 200));
+            refreshDots();
+          }
+          return res;
+        }).catch(function () {});
+    },
+    init: function () {
+      if (auth.isLoggedIn()) {
+        updateAuthUI(auth.getUser());
+        api("/api/auth/me").then(function (res) {
+          if (res && res.authenticated && res.user) {
+            store.set("fd_user", res.user);
+            updateAuthUI(res.user);
+          } else {
+            try { localStorage.removeItem("fd_token"); localStorage.removeItem("fd_user"); } catch (e) {}
+            updateAuthUI(null);
+          }
+        }).catch(function () {
+          updateAuthUI(auth.getUser());
+        });
+      } else {
+        updateAuthUI(null);
+      }
+    }
+  };
 
   window.FD = {
     store: store, toast: toast, api: api, track: track, saved: saved, recent: recent,
     price: price, time: time, ago: ago, el: el, icon: icon, copy: copy, wireShare: wireShare,
-    refreshDots: refreshDots
+    refreshDots: refreshDots, auth: auth
   };
   refreshDots();
-  window.addEventListener("storage", refreshDots);
+  auth.init();
+  window.addEventListener("storage", function () {
+    refreshDots();
+    auth.init();
+  });
 
   // ── Page chrome ──────────────────────────────────────────────────────────
   // Back button: go back if we came from our own site, else follow the link.
