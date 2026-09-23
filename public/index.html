@@ -30,8 +30,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/site.css?v=e06f00b0f5">
-<link rel="stylesheet" href="/css/home.css?v=e06f00b0f5">
+<link rel="stylesheet" href="/css/site.css?v=08e75b1205">
+<link rel="stylesheet" href="/css/home.css?v=08e75b1205">
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Fit Deal","url":"https://fitdeal.shop/","description":"See an outfit you love? Fit Deal finds it — and finds it for less."}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Fit Deal","url":"https://fitdeal.shop/","logo":"https://fitdeal.shop/img/brand/icon-512.png","email":"support@fitdeal.shop"}</script>
@@ -236,64 +236,277 @@
       </div>
 
       <div class="fd-hero-right">
-        <div class="fd-showcase-card">
-          <div class="fd-showcase-img-wrap">
-            <img src="/img/products/hero-dress.jpg" alt="SASSAFRAS Floral Print Maxi Dress" fetchpriority="high">
+        <div class="fd-showcase-slider-wrap" id="heroSliderWrap">
+          <div class="fd-showcase-slider" id="heroShowcaseSlider">
+
+            <!-- Slide 1: Women's Dress -->
+            <div class="fd-showcase-card is-active" data-slide-index="0">
+              <div class="fd-showcase-img-wrap">
+                <img src="/img/products/hero-dress.jpg" alt="SASSAFRAS Floral Print Maxi Dress" fetchpriority="high">
+                <span class="fd-showcase-tag">Women's Pick</span>
+              </div>
+              <div class="fd-showcase-content">
+                <div class="fd-showcase-header">
+                  <div>
+                    <p class="fd-showcase-brand">SASSAFRAS</p>
+                    <h3 class="fd-showcase-title">Floral Print Maxi Dress</h3>
+                  </div>
+                  <span class="fd-save-pill">Save ₹700</span>
+                </div>
+                <p class="fd-showcase-main-price">₹1,299</p>
+
+                <div class="fd-retailer-rows">
+                  <div class="fd-retailer-row fd-best-row">
+                    <span class="fd-store-col">
+                      <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-myntra"/></svg>
+                      <span class="fd-store-name">Myntra</span>
+                    </span>
+                    <span class="fd-price-col">₹1,299</span>
+                    <span class="fd-badge-col"><span class="fd-best-badge">Best Price</span></span>
+                  </div>
+                  <div class="fd-retailer-row">
+                    <span class="fd-store-col">
+                      <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-flipkart"/></svg>
+                      <span class="fd-store-name">Flipkart</span>
+                    </span>
+                    <span class="fd-price-col">₹1,499</span>
+                    <span class="fd-badge-col"></span>
+                  </div>
+                  <div class="fd-retailer-row">
+                    <span class="fd-store-col">
+                      <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-amazon"/></svg>
+                      <span class="fd-store-name">Amazon</span>
+                    </span>
+                    <span class="fd-price-col">₹1,799</span>
+                    <span class="fd-badge-col"></span>
+                  </div>
+                  <div class="fd-retailer-row">
+                    <span class="fd-store-col">
+                      <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-ajio"/></svg>
+                      <span class="fd-store-name">AJIO</span>
+                    </span>
+                    <span class="fd-price-col">₹1,999</span>
+                    <span class="fd-badge-col"></span>
+                  </div>
+                </div>
+
+                <div class="fd-showcase-actions">
+                  <a href="/find/?q=SASSAFRAS%20Floral%20Print%20Maxi%20Dress" class="fd-showcase-btn">
+                    <span>View Product</span>
+                    <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+                  </a>
+                  <button type="button" class="fd-showcase-heart" data-save-id="hero-dress" aria-label="Save to favorites">
+                    <svg aria-hidden="true"><use href="#i-heart"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 2: Men's Shirt -->
+            <div class="fd-showcase-card" data-slide-index="1">
+              <div class="fd-showcase-img-wrap">
+                <img src="/img/products/deal-linen-shirt.jpg" alt="HIGHLANDER Men Linen Blend Casual Shirt" loading="lazy">
+                <span class="fd-showcase-tag">Men's Choice</span>
+              </div>
+              <div class="fd-showcase-content">
+                <div class="fd-showcase-header">
+                  <div>
+                    <p class="fd-showcase-brand">HIGHLANDER</p>
+                    <h3 class="fd-showcase-title">Linen Blend Casual Shirt</h3>
+                  </div>
+                  <span class="fd-save-pill">Save ₹500</span>
+                </div>
+                <p class="fd-showcase-main-price">₹699</p>
+
+                <div class="fd-retailer-rows">
+                  <div class="fd-retailer-row fd-best-row">
+                    <span class="fd-store-col">
+                      <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-flipkart"/></svg>
+                      <span class="fd-store-name">Flipkart</span>
+                    </span>
+                    <span class="fd-price-col">₹699</span>
+                    <span class="fd-badge-col"><span class="fd-best-badge">Best Price</span></span>
+                  </div>
+                  <div class="fd-retailer-row">
+                    <span class="fd-store-col">
+                      <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-myntra"/></svg>
+                      <span class="fd-store-name">Myntra</span>
+                    </span>
+                    <span class="fd-price-col">₹849</span>
+                    <span class="fd-badge-col"></span>
+                  </div>
+                  <div class="fd-retailer-row">
+                    <span class="fd-store-col">
+                      <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-amazon"/></svg>
+                      <span class="fd-store-name">Amazon</span>
+                    </span>
+                    <span class="fd-price-col">₹999</span>
+                    <span class="fd-badge-col"></span>
+                  </div>
+                  <div class="fd-retailer-row">
+                    <span class="fd-store-col">
+                      <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-ajio"/></svg>
+                      <span class="fd-store-name">AJIO</span>
+                    </span>
+                    <span class="fd-price-col">₹1,199</span>
+                    <span class="fd-badge-col"></span>
+                  </div>
+                </div>
+
+                <div class="fd-showcase-actions">
+                  <a href="/find/?q=HIGHLANDER%20Linen%20Blend%20Casual%20Shirt" class="fd-showcase-btn">
+                    <span>View Product</span>
+                    <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+                  </a>
+                  <button type="button" class="fd-showcase-heart" data-save-id="hero-shirt" aria-label="Save to favorites">
+                    <svg aria-hidden="true"><use href="#i-heart"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 3: Footwear / Sneakers -->
+            <div class="fd-showcase-card" data-slide-index="2">
+              <div class="fd-showcase-img-wrap">
+                <img src="/img/products/deal-sneakers.jpg" alt="RED TAPE Chunky Lifestyle Sneakers" loading="lazy">
+                <span class="fd-showcase-tag">Footwear Deal</span>
+              </div>
+              <div class="fd-showcase-content">
+                <div class="fd-showcase-header">
+                  <div>
+                    <p class="fd-showcase-brand">RED TAPE</p>
+                    <h3 class="fd-showcase-title">Chunky Lifestyle Sneakers</h3>
+                  </div>
+                  <span class="fd-save-pill">Save ₹1,200</span>
+                </div>
+                <p class="fd-showcase-main-price">₹1,149</p>
+
+                <div class="fd-retailer-rows">
+                  <div class="fd-retailer-row fd-best-row">
+                    <span class="fd-store-col">
+                      <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-amazon"/></svg>
+                      <span class="fd-store-name">Amazon</span>
+                    </span>
+                    <span class="fd-price-col">₹1,149</span>
+                    <span class="fd-badge-col"><span class="fd-best-badge">Best Price</span></span>
+                  </div>
+                  <div class="fd-retailer-row">
+                    <span class="fd-store-col">
+                      <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-flipkart"/></svg>
+                      <span class="fd-store-name">Flipkart</span>
+                    </span>
+                    <span class="fd-price-col">₹1,399</span>
+                    <span class="fd-badge-col"></span>
+                  </div>
+                  <div class="fd-retailer-row">
+                    <span class="fd-store-col">
+                      <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-myntra"/></svg>
+                      <span class="fd-store-name">Myntra</span>
+                    </span>
+                    <span class="fd-price-col">₹1,699</span>
+                    <span class="fd-badge-col"></span>
+                  </div>
+                  <div class="fd-retailer-row">
+                    <span class="fd-store-col">
+                      <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-ajio"/></svg>
+                      <span class="fd-store-name">AJIO</span>
+                    </span>
+                    <span class="fd-price-col">₹1,899</span>
+                    <span class="fd-badge-col"></span>
+                  </div>
+                </div>
+
+                <div class="fd-showcase-actions">
+                  <a href="/find/?q=RED%20TAPE%20Chunky%20Lifestyle%20Sneakers" class="fd-showcase-btn">
+                    <span>View Product</span>
+                    <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+                  </a>
+                  <button type="button" class="fd-showcase-heart" data-save-id="hero-sneakers" aria-label="Save to favorites">
+                    <svg aria-hidden="true"><use href="#i-heart"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 4: Handbag -->
+            <div class="fd-showcase-card" data-slide-index="3">
+              <div class="fd-showcase-img-wrap">
+                <img src="/img/products/compare-bag.jpg" alt="LAVIE Structured Satchel Handbag" loading="lazy">
+                <span class="fd-showcase-tag">Trending Bag</span>
+              </div>
+              <div class="fd-showcase-content">
+                <div class="fd-showcase-header">
+                  <div>
+                    <p class="fd-showcase-brand">LAVIE</p>
+                    <h3 class="fd-showcase-title">Structured Satchel Handbag</h3>
+                  </div>
+                  <span class="fd-save-pill">Save ₹850</span>
+                </div>
+                <p class="fd-showcase-main-price">₹1,099</p>
+
+                <div class="fd-retailer-rows">
+                  <div class="fd-retailer-row fd-best-row">
+                    <span class="fd-store-col">
+                      <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-flipkart"/></svg>
+                      <span class="fd-store-name">Flipkart</span>
+                    </span>
+                    <span class="fd-price-col">₹1,099</span>
+                    <span class="fd-badge-col"><span class="fd-best-badge">Best Price</span></span>
+                  </div>
+                  <div class="fd-retailer-row">
+                    <span class="fd-store-col">
+                      <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-myntra"/></svg>
+                      <span class="fd-store-name">Myntra</span>
+                    </span>
+                    <span class="fd-price-col">₹1,349</span>
+                    <span class="fd-badge-col"></span>
+                  </div>
+                  <div class="fd-retailer-row">
+                    <span class="fd-store-col">
+                      <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-amazon"/></svg>
+                      <span class="fd-store-name">Amazon</span>
+                    </span>
+                    <span class="fd-price-col">₹1,499</span>
+                    <span class="fd-badge-col"></span>
+                  </div>
+                  <div class="fd-retailer-row">
+                    <span class="fd-store-col">
+                      <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-ajio"/></svg>
+                      <span class="fd-store-name">AJIO</span>
+                    </span>
+                    <span class="fd-price-col">₹1,799</span>
+                    <span class="fd-badge-col"></span>
+                  </div>
+                </div>
+
+                <div class="fd-showcase-actions">
+                  <a href="/find/?q=LAVIE%20Structured%20Satchel%20Handbag" class="fd-showcase-btn">
+                    <span>View Product</span>
+                    <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+                  </a>
+                  <button type="button" class="fd-showcase-heart" data-save-id="hero-bag" aria-label="Save to favorites">
+                    <svg aria-hidden="true"><use href="#i-heart"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
           </div>
-          <div class="fd-showcase-content">
-            <div class="fd-showcase-header">
-              <div>
-                <p class="fd-showcase-brand">SASSAFRAS</p>
-                <h3 class="fd-showcase-title">Floral Print Maxi Dress</h3>
-              </div>
-              <span class="fd-save-pill">Save ₹700</span>
-            </div>
-            <p class="fd-showcase-main-price">₹1,299</p>
 
-            <div class="fd-retailer-rows">
-              <div class="fd-retailer-row fd-best-row">
-                <span class="fd-store-col">
-                  <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-myntra"/></svg>
-                  <span class="fd-store-name">Myntra</span>
-                </span>
-                <span class="fd-price-col">₹1,299</span>
-                <span class="fd-badge-col"><span class="fd-best-badge">Best Price</span></span>
-              </div>
-              <div class="fd-retailer-row">
-                <span class="fd-store-col">
-                  <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-flipkart"/></svg>
-                  <span class="fd-store-name">Flipkart</span>
-                </span>
-                <span class="fd-price-col">₹1,499</span>
-                <span class="fd-badge-col"></span>
-              </div>
-              <div class="fd-retailer-row">
-                <span class="fd-store-col">
-                  <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-amazon"/></svg>
-                  <span class="fd-store-name">Amazon</span>
-                </span>
-                <span class="fd-price-col">₹1,799</span>
-                <span class="fd-badge-col"></span>
-              </div>
-              <div class="fd-retailer-row">
-                <span class="fd-store-col">
-                  <svg class="fd-store-icon" aria-hidden="true"><use href="#i-store-ajio"/></svg>
-                  <span class="fd-store-name">AJIO</span>
-                </span>
-                <span class="fd-price-col">₹1,999</span>
-                <span class="fd-badge-col"></span>
-              </div>
+          <!-- Slider Pagination Dots & Arrows -->
+          <div class="fd-slider-controls">
+            <button type="button" class="fd-slider-nav-btn fd-slider-prev" id="heroSlidePrev" aria-label="Previous deal">
+              <svg aria-hidden="true"><use href="#i-back"/></svg>
+            </button>
+            <div class="fd-slider-dots" id="heroSliderDots" role="tablist" aria-label="Deal suggestions">
+              <button type="button" class="fd-slider-dot is-active" data-dot="0" aria-label="Deal 1: Women's Dress" role="tab" aria-selected="true"></button>
+              <button type="button" class="fd-slider-dot" data-dot="1" aria-label="Deal 2: Men's Shirt" role="tab" aria-selected="false"></button>
+              <button type="button" class="fd-slider-dot" data-dot="2" aria-label="Deal 3: Sneakers" role="tab" aria-selected="false"></button>
+              <button type="button" class="fd-slider-dot" data-dot="3" aria-label="Deal 4: Handbag" role="tab" aria-selected="false"></button>
             </div>
-
-            <div class="fd-showcase-actions">
-              <a href="/find/?q=SASSAFRAS%20Floral%20Print%20Maxi%20Dress" class="fd-showcase-btn">
-                <span>View Product</span>
-                <svg aria-hidden="true"><use href="#i-arrow"/></svg>
-              </a>
-              <button type="button" class="fd-showcase-heart" data-save-id="hero-dress" aria-label="Save to favorites">
-                <svg aria-hidden="true"><use href="#i-heart"/></svg>
-              </button>
-            </div>
+            <button type="button" class="fd-slider-nav-btn fd-slider-next" id="heroSlideNext" aria-label="Next deal">
+              <svg aria-hidden="true"><use href="#i-chev"/></svg>
+            </button>
           </div>
         </div>
 
@@ -1133,7 +1346,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="/js/app.js?v=e06f00b0f5" defer></script>
-<script src="/js/home.js?v=e06f00b0f5" defer></script>
+<script src="/js/app.js?v=08e75b1205" defer></script>
+<script src="/js/home.js?v=08e75b1205" defer></script>
 </body>
 </html>
