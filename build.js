@@ -93,27 +93,16 @@ const brand = `<a href="/" class="brand" aria-label="Fit Deal home">
 
 function desktopNav(p) {
   if (p.page === "home") {
-    return `<div class="fd-utility-bar">
-  <div class="fd-utility-inner">
-    <div class="fd-utility-left">Smart Shopping. Better Fashion. Same You.</div>
-    <div class="fd-utility-right">
-      <span><svg aria-hidden="true"><use href="#i-step-compare"/></svg> Compare Across Top Stores</span>
-      <span class="fd-utility-sep">|</span>
-      <span><svg aria-hidden="true"><use href="#i-shield"/></svg> 100% Genuine Products</span>
-      <span class="fd-utility-sep">|</span>
-      <span><svg aria-hidden="true"><use href="#i-tag"/></svg> No Extra Cost to You</span>
-    </div>
-  </div>
-</div>
-<header class="d-nav fd-home-header">
+    return `<header class="d-nav fd-home-header">
   <div class="d-nav-in fd-home-nav-in">
     ${brand}
     <form class="shop-search-box header-search-box fd-main-search" data-search-form role="search" action="/find/">
       <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
       <input type="text" id="shopSearchInput" name="q" placeholder="Search fashion (e.g. kurti, floral dress, shoes) or paste product link..." aria-label="Search clothes or paste product link" autocomplete="off">
       <div class="search-actions">
-        <button type="button" class="search-cam-btn" id="headerSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
+        <button type="button" class="search-cam-btn fd-search-cam-pill" id="headerSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload image to search">
           <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
+          <span class="fd-cam-text">Upload Image</span>
         </button>
         <button type="submit" class="search-go-btn fd-search-submit-btn" aria-label="Search">
           <svg aria-hidden="true"><use href="#i-search"/></svg>
@@ -159,8 +148,9 @@ function desktopNav(p) {
       <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
       <input type="text" id="shopSearchInput" name="q" placeholder="Search fashion (e.g. kurti, floral dress, olive shirt) or paste store link..." aria-label="Search clothes or paste product link" autocomplete="off">
       <div class="search-actions">
-        <button type="button" class="search-cam-btn" id="headerSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload photo or screenshot">
+        <button type="button" class="search-cam-btn fd-search-cam-pill" id="headerSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload image to search">
           <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
+          <span class="fd-cam-text">Upload Image</span>
         </button>
         <button type="submit" class="search-go-btn" aria-label="Search">
           <svg aria-hidden="true"><use href="#i-search"/></svg>

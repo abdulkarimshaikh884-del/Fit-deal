@@ -1228,6 +1228,12 @@ button.v-opt:hover { border-color: var(--lav-line); }
   height: 1.1rem;
   color: var(--purple);
 }
+.search-cam-btn .fd-cam-text {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--purple-ink);
+  white-space: nowrap;
+}
 .search-cam-btn:hover {
   background: #ede8ff;
   border-color: var(--purple);
