@@ -224,10 +224,69 @@
     if (s) s.hidden = saved.all().length === 0;
     var d = document.getElementById("dealsDot");
     if (d) d.hidden = !store.get("fd_deals_new", false);
-    Array.prototype.forEach.call(document.querySelectorAll(".fd-saved-count"), function (el) {
-      el.textContent = String(saved.all().length);
+    var count = String(saved.all().length);
+    Array.prototype.forEach.call(document.querySelectorAll(".fd-saved-count, #sbSavedBadge"), function (el) {
+      el.textContent = count;
     });
   }
+
+  // ── Sidebar Navigation Interaction ───────────────────────────────────────
+  function initSidebar() {
+    var desktopToggle = document.getElementById("sidebarToggleBtn");
+    var mobileToggle = document.getElementById("mobileSidebarToggleBtn");
+    var closeBtn = document.getElementById("sidebarCloseBtn");
+    var backdrop = document.getElementById("sidebarBackdrop");
+    var photoBtn = document.getElementById("sbPhotoSearchBtn");
+
+    try {
+      if (localStorage.getItem("fd_sb_collapsed") === "1" && window.innerWidth >= 1100) {
+        document.body.classList.add("sidebar-collapsed");
+      }
+    } catch (e) {}
+
+    if (desktopToggle) {
+      desktopToggle.addEventListener("click", function () {
+        if (window.innerWidth >= 1100) {
+          var isCollapsed = document.body.classList.toggle("sidebar-collapsed");
+          try { localStorage.setItem("fd_sb_collapsed", isCollapsed ? "1" : "0"); } catch (e) {}
+        } else {
+          document.body.classList.add("sidebar-open");
+        }
+      });
+    }
+
+    if (mobileToggle) {
+      mobileToggle.addEventListener("click", function () {
+        document.body.classList.add("sidebar-open");
+      });
+    }
+
+    function closeSidebar() {
+      document.body.classList.remove("sidebar-open");
+    }
+
+    if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
+    if (backdrop) backdrop.addEventListener("click", closeSidebar);
+
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && document.body.classList.contains("sidebar-open")) {
+        closeSidebar();
+      }
+    });
+
+    if (photoBtn) {
+      photoBtn.addEventListener("click", function () {
+        closeSidebar();
+        var photoInput = document.getElementById("photo");
+        if (photoInput) {
+          photoInput.click();
+        } else {
+          window.location.href = "/find/";
+        }
+      });
+    }
+  }
+  initSidebar();
 
   // ── Authentication & Cloud Progress Sync ─────────────────────────────────
   function updateAuthUI(user) {

@@ -23,6 +23,22 @@
   }
 
   if (!id) {
+    var searchParams = new URLSearchParams(location.search);
+    var queryText = (searchParams.get("q") || "").trim();
+    if (queryText) {
+      showState("findLoading");
+      FD.api("/api/search", { json: { query: queryText } }).then(function (res) {
+        if (res && res.id) {
+          location.replace("/find/" + encodeURIComponent(res.id));
+        } else {
+          showState("findMissing");
+        }
+      }).catch(function (e) {
+        $("findMissingText").textContent = e.message || "Couldn't search for that. Please try another query.";
+        showState("findMissing");
+      });
+      return;
+    }
     showState("findMissing");
     return;
   }

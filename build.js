@@ -91,10 +91,178 @@ const brand = `<a href="/" class="brand" aria-label="Fit Deal home">
       <span class="brand-name">Fit Deal</span><svg class="brand-spark" aria-hidden="true"><use href="#i-sparkle"/></svg>
     </a>`;
 
+function sidebar(p) {
+  const isHome = p.page === "home";
+  const isDeals = p.page === "deals";
+  const isFind = p.page === "find" || p.page === "find-start";
+  const isSaved = p.page === "saved";
+  const isTryon = p.page === "tryon";
+  const isHow = p.page === "info" && p.nav === "how";
+
+  return `<aside class="fd-sidebar" id="fdSidebar" aria-label="Navigation Sidebar">
+  <div class="fd-sb-header">
+    <a href="/" class="brand fd-sb-brand" aria-label="Fit Deal home">
+      <span class="brand-name">Fit Deal</span><svg class="brand-spark" aria-hidden="true"><use href="#i-sparkle"/></svg>
+    </a>
+    <button type="button" class="fd-sb-close-btn" id="sidebarCloseBtn" aria-label="Close navigation panel">
+      <svg aria-hidden="true"><use href="#i-cross"/></svg>
+    </button>
+  </div>
+
+  <div class="fd-sb-scroll">
+    <div class="fd-sb-section">
+      <div class="fd-sb-section-title">QUICK ACCESS</div>
+      <nav class="fd-sb-nav" aria-label="Quick Access">
+        <a href="/" class="fd-sb-link${isHome ? ' is-active' : ''}">
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-home"/></svg>
+          <span class="fd-sb-txt">Home</span>
+        </a>
+        <a href="/deals/" class="fd-sb-link${isDeals ? ' is-active' : ''}">
+          <svg class="fd-sb-ico fd-sb-ico-flame" aria-hidden="true"><use href="#i-flame"/></svg>
+          <span class="fd-sb-txt">Best Deals</span>
+          <span class="fd-sb-badge fd-sb-badge-hot">HOT</span>
+        </a>
+        <a href="/find/" class="fd-sb-link${isFind ? ' is-active' : ''}">
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-search"/></svg>
+          <span class="fd-sb-txt">Find &amp; Search</span>
+        </a>
+        <button type="button" class="fd-sb-link fd-sb-btn" id="sbPhotoSearchBtn">
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-camera-line"/></svg>
+          <span class="fd-sb-txt">Search by Photo</span>
+        </button>
+        <a href="/saved/" class="fd-sb-link${isSaved ? ' is-active' : ''}">
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-heart"/></svg>
+          <span class="fd-sb-txt">Saved Looks</span>
+          <span class="fd-sb-pill-count" id="sbSavedBadge">0</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="fd-sb-section">
+      <div class="fd-sb-section-title">CATEGORIES</div>
+      <nav class="fd-sb-nav fd-sb-cats" aria-label="Categories">
+        <a href="/deals/?cat=women" class="fd-sb-link">
+          <span class="fd-sb-emoji">👗</span>
+          <span class="fd-sb-txt">Women's Fashion</span>
+        </a>
+        <a href="/deals/?cat=men" class="fd-sb-link">
+          <span class="fd-sb-emoji">👔</span>
+          <span class="fd-sb-txt">Men's Fashion</span>
+        </a>
+        <a href="/deals/?cat=ethnic" class="fd-sb-link">
+          <span class="fd-sb-emoji">🥻</span>
+          <span class="fd-sb-txt">Ethnic Wear</span>
+        </a>
+        <a href="/deals/?cat=western" class="fd-sb-link">
+          <span class="fd-sb-emoji">🧥</span>
+          <span class="fd-sb-txt">Western Wear</span>
+        </a>
+        <a href="/deals/?cat=footwear" class="fd-sb-link">
+          <span class="fd-sb-emoji">👟</span>
+          <span class="fd-sb-txt">Footwear</span>
+        </a>
+        <a href="/deals/?cat=bags" class="fd-sb-link">
+          <span class="fd-sb-emoji">👜</span>
+          <span class="fd-sb-txt">Bags &amp; Luggage</span>
+        </a>
+        <a href="/deals/?cat=watches" class="fd-sb-link">
+          <span class="fd-sb-emoji">⌚</span>
+          <span class="fd-sb-txt">Watches</span>
+        </a>
+        <a href="/deals/?cat=sunglasses" class="fd-sb-link">
+          <span class="fd-sb-emoji">🕶️</span>
+          <span class="fd-sb-txt">Sunglasses</span>
+        </a>
+        <a href="/deals/?cat=accessories" class="fd-sb-link">
+          <span class="fd-sb-emoji">✨</span>
+          <span class="fd-sb-txt">Accessories</span>
+        </a>
+        <a href="/deals/?cat=beauty" class="fd-sb-link">
+          <span class="fd-sb-emoji">💄</span>
+          <span class="fd-sb-txt">Beauty &amp; Care</span>
+        </a>
+        <a href="/deals/?cat=sportswear" class="fd-sb-link">
+          <span class="fd-sb-emoji">🏃</span>
+          <span class="fd-sb-txt">Sportswear</span>
+        </a>
+        <a href="/deals/?cat=brands" class="fd-sb-link">
+          <span class="fd-sb-emoji">🏷️</span>
+          <span class="fd-sb-txt">Top Brands</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="fd-sb-section">
+      <div class="fd-sb-section-title">TOP STORES</div>
+      <div class="fd-sb-stores">
+        <a href="/deals/?store=amazon" class="fd-sb-store-chip" title="Amazon India Deals">
+          <span class="fd-sb-store-dot amazon"></span> Amazon
+        </a>
+        <a href="/deals/?store=flipkart" class="fd-sb-store-chip" title="Flipkart Deals">
+          <span class="fd-sb-store-dot flipkart"></span> Flipkart
+        </a>
+        <a href="/deals/?store=myntra" class="fd-sb-store-chip" title="Myntra Deals">
+          <span class="fd-sb-store-dot myntra"></span> Myntra
+        </a>
+        <a href="/deals/?store=ajio" class="fd-sb-store-chip" title="AJIO Deals">
+          <span class="fd-sb-store-dot ajio"></span> AJIO
+        </a>
+      </div>
+    </div>
+
+    <div class="fd-sb-section">
+      <div class="fd-sb-section-title">HELP &amp; TOOLS</div>
+      <nav class="fd-sb-nav" aria-label="Tools and Help">
+        <a href="/how-it-works/" class="fd-sb-link${isHow ? ' is-active' : ''}">
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-info"/></svg>
+          <span class="fd-sb-txt">How It Works</span>
+        </a>
+        <a href="/about/" class="fd-sb-link">
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-sparkle"/></svg>
+          <span class="fd-sb-txt">About Fit Deal</span>
+        </a>
+        <a href="/faq/" class="fd-sb-link">
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-chat"/></svg>
+          <span class="fd-sb-txt">FAQ</span>
+        </a>
+        <a href="/contact/" class="fd-sb-link">
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-mail"/></svg>
+          <span class="fd-sb-txt">Contact Support</span>
+        </a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="fd-sb-footer">
+    <div class="fd-sb-user-guest" data-auth-guest>
+      <a href="/login/" class="fd-sb-auth-btn">
+        <svg aria-hidden="true"><use href="#i-user"/></svg>
+        <span>Sign In / Register</span>
+      </a>
+    </div>
+    <div class="fd-sb-user-profile" data-auth-user hidden>
+      <a href="/profile/" class="fd-sb-user-card" aria-label="View Profile">
+        <div class="fd-sb-avatar">
+          <svg aria-hidden="true"><use href="#i-user"/></svg>
+        </div>
+        <div class="fd-sb-meta">
+          <b class="fd-sb-name" data-user-name>Account</b>
+          <span class="fd-sb-sub">View Profile &amp; Sizes</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</aside>`;
+}
+
 function desktopNav(p) {
+  const toggleBtn = `<button type="button" class="fd-sidebar-toggle-btn" id="sidebarToggleBtn" aria-label="Toggle navigation menu" title="Toggle Menu">
+      <svg aria-hidden="true"><use href="#i-menu"/></svg>
+    </button>`;
   if (p.page === "home") {
     return `<header class="d-nav fd-home-header">
   <div class="d-nav-in fd-home-nav-in">
+    ${toggleBtn}
     ${brand}
     <form class="shop-search-box header-search-box fd-main-search" data-search-form role="search" action="/find/">
       <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
@@ -128,17 +296,17 @@ function desktopNav(p) {
 </header>
 <nav class="fd-category-navbar" aria-label="Product Categories">
   <div class="fd-category-navbar-in">
-    <a href="/find/" class="fd-cat-nav-link fd-cat-all"><span>All Categories</span> <svg aria-hidden="true"><use href="#i-chev-down"/></svg></a>
-    <a href="/find/?q=women%20fashion" class="fd-cat-nav-link">Women</a>
-    <a href="/find/?q=men%20fashion" class="fd-cat-nav-link">Men</a>
-    <a href="/find/?q=ethnic%20wear" class="fd-cat-nav-link">Ethnic Wear</a>
-    <a href="/find/?q=western%20wear" class="fd-cat-nav-link">Western Wear</a>
-    <a href="/find/?q=footwear%20shoes" class="fd-cat-nav-link">Footwear</a>
-    <a href="/find/?q=fashion%20accessories" class="fd-cat-nav-link">Accessories</a>
-    <a href="/find/?q=bags%20luggage" class="fd-cat-nav-link">Bags &amp; Luggage</a>
-    <a href="/find/?q=beauty%20makeup" class="fd-cat-nav-link">Beauty</a>
-    <a href="/find/?q=sportswear" class="fd-cat-nav-link">Sportswear</a>
-    <a href="/find/?q=top%20brands" class="fd-cat-nav-link">Brands</a>
+    <a href="/deals/" class="fd-cat-nav-link fd-cat-all"><span>All Categories</span> <svg aria-hidden="true"><use href="#i-chev-down"/></svg></a>
+    <a href="/deals/?cat=women" class="fd-cat-nav-link">Women</a>
+    <a href="/deals/?cat=men" class="fd-cat-nav-link">Men</a>
+    <a href="/deals/?cat=ethnic" class="fd-cat-nav-link">Ethnic Wear</a>
+    <a href="/deals/?cat=western" class="fd-cat-nav-link">Western Wear</a>
+    <a href="/deals/?cat=footwear" class="fd-cat-nav-link">Footwear</a>
+    <a href="/deals/?cat=accessories" class="fd-cat-nav-link">Accessories</a>
+    <a href="/deals/?cat=bags" class="fd-cat-nav-link">Bags &amp; Luggage</a>
+    <a href="/deals/?cat=beauty" class="fd-cat-nav-link">Beauty</a>
+    <a href="/deals/?cat=sportswear" class="fd-cat-nav-link">Sportswear</a>
+    <a href="/deals/?cat=brands" class="fd-cat-nav-link">Brands</a>
     <a href="/deals/" class="fd-cat-nav-link fd-cat-deals">Deals</a>
   </div>
 </nav>`;
@@ -159,6 +327,7 @@ function desktopNav(p) {
     </form>`;
   return `<header class="d-nav">
   <div class="d-nav-in">
+    ${toggleBtn}
     ${brand}
 ${searchBox}
     <nav class="d-links" aria-label="Main">
@@ -171,9 +340,13 @@ ${links}
 }
 
 function mobileHead(p) {
+  const mToggleBtn = `<button type="button" class="fd-sidebar-toggle-btn m-sidebar-toggle" id="mobileSidebarToggleBtn" aria-label="Open navigation menu">
+    <svg aria-hidden="true"><use href="#i-menu"/></svg>
+  </button>`;
   if (p.page === "home") {
     return `<header class="m-head fd-home-mobile-head">
   <div class="fd-mobile-top-row">
+    ${mToggleBtn}
     <div class="m-brand">
       ${brand}
       <p class="m-tag">Same Style. Lower Price.</p>
@@ -204,12 +377,18 @@ function mobileHead(p) {
   <a href="/" class="m-back-btn" data-back aria-label="Back"><svg aria-hidden="true"><use href="#i-back"/></svg></a>
   <p class="m-title">${p.heading}</p>
   <div class="m-icons">
+    <button type="button" class="fd-sidebar-toggle-btn m-sidebar-toggle" id="mobileSidebarToggleBtn" aria-label="Open menu">
+      <svg aria-hidden="true"><use href="#i-menu"/></svg>
+    </button>
     ${find}
     ${heart}
   </div>
 </header>`;
   }
   return `<header class="m-head${p.head === "brand" ? " m-brandonly" : ""}">
+  <button type="button" class="fd-sidebar-toggle-btn m-sidebar-toggle" id="mobileSidebarToggleBtn" aria-label="Open navigation menu">
+    <svg aria-hidden="true"><use href="#i-menu"/></svg>
+  </button>
   <div class="m-brand">
     ${brand}
 ${p.head === "home" ? `    <p class="m-tag">Same look. Smarter prices.</p>` : ""}
@@ -393,13 +572,16 @@ ${SPRITE}
 
 <a class="skip" href="#main">Skip to content</a>
 
-${desktopNav(p)}
-
-${mobileHead(p)}
-
-${body.replace(/^<main\b/, '<main id="main"')}
-
-${footer(p)}
+<div class="fd-sidebar-backdrop" id="sidebarBackdrop"></div>
+<div class="fd-app-layout">
+  ${sidebar(p)}
+  <div class="fd-page-area">
+    ${desktopNav(p)}
+    ${mobileHead(p)}
+    ${body.replace(/^<main\b/, '<main id="main"')}
+    ${footer(p)}
+  </div>
+</div>
 
 ${tabs(p)}
 

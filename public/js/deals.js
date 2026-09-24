@@ -168,14 +168,24 @@
     // 2. Category Filter
     if (state.category !== "all") {
       list = list.filter(function (d) {
-        if (!d.category) return false;
-        var cat = d.category.toLowerCase();
-        if (state.category === "ethnic") return cat.includes("ethnic") || cat.includes("kurta") || cat.includes("kurti") || cat.includes("saree");
-        if (state.category === "dresses") return cat.includes("dress") || cat.includes("gown");
-        if (state.category === "men") return d.audience === "men" || cat.includes("shirt") || cat.includes("jeans") || cat.includes("men");
-        if (state.category === "shoes") return cat.includes("shoe") || cat.includes("sneaker") || cat.includes("footwear");
-        if (state.category === "accessories") return cat.includes("bag") || cat.includes("watch") || cat.includes("accessory");
-        return cat.includes(state.category);
+        var cat = (d.category || "").toLowerCase();
+        var aud = (d.audience || "").toLowerCase();
+        var tit = (d.title || "").toLowerCase();
+        var sc = state.category.toLowerCase();
+
+        if (sc === "women") return aud === "women" || cat.includes("women") || cat.includes("dress") || cat.includes("ethnic") || cat.includes("saree") || cat.includes("kurti") || tit.includes("women") || tit.includes("dress");
+        if (sc === "men") return aud === "men" || cat.includes("men") || tit.includes("men") || tit.includes("shirt");
+        if (sc === "ethnic") return cat.includes("ethnic") || cat.includes("kurta") || cat.includes("kurti") || cat.includes("saree") || tit.includes("kurta") || tit.includes("saree") || tit.includes("anarkali");
+        if (sc === "western" || sc === "dresses") return cat.includes("western") || cat.includes("dress") || cat.includes("jean") || cat.includes("top") || tit.includes("dress") || tit.includes("jeans") || tit.includes("top") || tit.includes("jacket");
+        if (sc === "shoes" || sc === "footwear") return cat.includes("shoe") || cat.includes("sneaker") || cat.includes("footwear") || tit.includes("sneaker") || tit.includes("shoe");
+        if (sc === "bags" || sc === "luggage") return cat.includes("bag") || cat.includes("luggage") || cat.includes("tote") || cat.includes("satchel") || cat.includes("trolley") || tit.includes("bag") || tit.includes("trolley") || tit.includes("handbag");
+        if (sc === "watches") return cat.includes("watch") || tit.includes("watch");
+        if (sc === "sunglasses") return cat.includes("sunglass") || tit.includes("sunglass") || tit.includes("aviator");
+        if (sc === "accessories") return cat.includes("access") || cat.includes("watch") || cat.includes("sunglass") || cat.includes("bag") || tit.includes("pendant") || tit.includes("jewellery") || tit.includes("wallet");
+        if (sc === "beauty") return cat.includes("beauty") || cat.includes("makeup") || cat.includes("lipstick") || cat.includes("serum") || tit.includes("lipstick") || tit.includes("serum") || tit.includes("beard");
+        if (sc === "sportswear") return cat.includes("sport") || cat.includes("track") || cat.includes("gym") || tit.includes("track") || tit.includes("training") || tit.includes("running");
+        if (sc === "brands") return !!d.brand;
+        return cat.includes(sc) || tit.includes(sc);
       });
     }
 
@@ -210,6 +220,45 @@
     return list;
   }
 
+  var CAT_LABELS = {
+    all: "All Fashion",
+    women: "Women's Fashion",
+    men: "Men's Fashion",
+    ethnic: "Ethnic Wear",
+    western: "Western Wear",
+    dresses: "Western Dresses",
+    footwear: "Footwear & Shoes",
+    shoes: "Footwear & Shoes",
+    bags: "Bags & Luggage",
+    watches: "Watches",
+    sunglasses: "Sunglasses",
+    accessories: "Fashion Accessories",
+    beauty: "Beauty & Grooming",
+    sportswear: "Sportswear",
+    brands: "Top Brands"
+  };
+
+  function updateUrlParams() {
+    try {
+      var p = new URLSearchParams();
+      if (state.category && state.category !== "all") p.set("cat", state.category);
+      if (state.store && state.store !== "all") p.set("store", state.store);
+      if (state.priceRange && state.priceRange !== "all") p.set("price", state.priceRange);
+      var qs = p.toString();
+      var newUrl = location.pathname + (qs ? ("?" + qs) : "");
+      window.history.replaceState(null, "", newUrl);
+    } catch (e) {}
+  }
+
+  function syncFilterPillStates() {
+    Array.prototype.forEach.call(document.querySelectorAll("#storeFilterGroup button"), function (b) {
+      b.classList.toggle("is-active", b.getAttribute("data-store") === state.store);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("#catFilterGroup button"), function (b) {
+      b.classList.toggle("is-active", b.getAttribute("data-cat") === state.category);
+    });
+  }
+
   function render() {
     var filtered = filterDeals();
     var grid = $("dealGrid");
@@ -219,7 +268,11 @@
     grid.textContent = "";
 
     if (countTitle) {
-      countTitle.textContent = "Showing " + filtered.length + " verified fashion deals";
+      if (state.category !== "all") {
+        countTitle.textContent = "Showing " + filtered.length + " verified deals in " + (CAT_LABELS[state.category] || state.category);
+      } else {
+        countTitle.textContent = "Showing " + filtered.length + " verified fashion deals";
+      }
     }
 
     if (filtered.length === 0) {
@@ -232,13 +285,21 @@
     }
   }
 
+  // Read URL query params on initial page load
+  try {
+    var urlParams = new URLSearchParams(location.search);
+    var initCat = urlParams.get("cat") || urlParams.get("category");
+    var initStore = urlParams.get("store");
+    if (initCat) state.category = initCat.toLowerCase();
+    if (initStore) state.store = initStore.toLowerCase();
+  } catch (e) {}
+
   // ── Store Buttons ───────────────────────────────────────────────────────
   Array.prototype.forEach.call(document.querySelectorAll("#storeFilterGroup button"), function (btn) {
     btn.addEventListener("click", function () {
       state.store = btn.getAttribute("data-store");
-      Array.prototype.forEach.call(document.querySelectorAll("#storeFilterGroup button"), function (b) {
-        b.classList.toggle("is-active", b === btn);
-      });
+      syncFilterPillStates();
+      updateUrlParams();
       render();
     });
   });
@@ -247,9 +308,8 @@
   Array.prototype.forEach.call(document.querySelectorAll("#catFilterGroup button"), function (btn) {
     btn.addEventListener("click", function () {
       state.category = btn.getAttribute("data-cat");
-      Array.prototype.forEach.call(document.querySelectorAll("#catFilterGroup button"), function (b) {
-        b.classList.toggle("is-active", b === btn);
-      });
+      syncFilterPillStates();
+      updateUrlParams();
       render();
     });
   });
@@ -322,6 +382,7 @@
     });
 
     state.deals = allDeals;
+    syncFilterPillStates();
     render();
 
     FD.store.set("fd_deals_seen", new Date().toISOString());
