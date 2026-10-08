@@ -7,6 +7,7 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 const shopping = require("./src/home-shopping");
+const catalog = require("./src/catalog-pages");
 
 const ROOT = __dirname;
 const OUT = path.join(ROOT, "public");
@@ -17,7 +18,7 @@ const SPRITE = fs.readFileSync(path.join(ROOT, "src", "sprite.svg"), "utf8").tri
 // Asset version from the CSS and JS contents, so browsers refetch exactly
 // when something changed.
 const V = crypto.createHash("sha1")
-  .update(["css/site.css", "css/home.css"].concat(fs.readdirSync(path.join(OUT, "js")).filter((f) => f.endsWith(".js")).sort().map((f) => "js/" + f))
+  .update(["css/site.css", "css/home.css", "css/catalog.css"].concat(fs.readdirSync(path.join(OUT, "js")).filter((f) => f.endsWith(".js")).sort().map((f) => "js/" + f))
     .map((f) => fs.readFileSync(path.join(OUT, f))).join("|"))
   .digest("hex").slice(0, 10);
 
@@ -85,6 +86,8 @@ const PAGES = [
     title: "Something went wrong — Fit Deal", desc: "Please try again in a moment." }
 ];
 
+PAGES.push(...catalog.pages);
+
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 const brand = `<a href="/" class="brand" aria-label="Fit Deal home">
@@ -113,6 +116,10 @@ function sidebar(p) {
     <div class="fd-sb-section">
       <div class="fd-sb-section-title">QUICK ACCESS</div>
       <nav class="fd-sb-nav" aria-label="Quick Access">
+<a href="/shop/" class="fd-sb-link"><svg class="fd-sb-ico" aria-hidden="true"><use href="#i-tag"/></svg><span class="fd-sb-txt">Shop all styles</span></a>
+<a href="/categories/" class="fd-sb-link"><svg class="fd-sb-ico" aria-hidden="true"><use href="#i-tag"/></svg><span class="fd-sb-txt">All categories</span></a>
+<a href="/collections/" class="fd-sb-link"><svg class="fd-sb-ico" aria-hidden="true"><use href="#i-tag"/></svg><span class="fd-sb-txt">Outfit collections</span></a>
+<a href="/stores/" class="fd-sb-link"><svg class="fd-sb-ico" aria-hidden="true"><use href="#i-tag"/></svg><span class="fd-sb-txt">Explore stores</span></a>
         <a href="/" class="fd-sb-link${isHome ? ' is-active' : ''}">
           <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-home"/></svg>
           <span class="fd-sb-txt">Home</span>
@@ -296,7 +303,7 @@ function desktopNav(p) {
 </header>
 <nav class="fd-category-navbar" aria-label="Product Categories">
   <div class="fd-category-navbar-in">
-    <a href="/deals/" class="fd-cat-nav-link fd-cat-all"><span>All Categories</span> <svg aria-hidden="true"><use href="#i-chev-down"/></svg></a>
+    <a href="/categories/" class="fd-cat-nav-link fd-cat-all"><span>All Categories</span> <svg aria-hidden="true"><use href="#i-chev-down"/></svg></a>
     <a href="/deals/?cat=women" class="fd-cat-nav-link">Women</a>
     <a href="/deals/?cat=men" class="fd-cat-nav-link">Men</a>
     <a href="/deals/?cat=ethnic" class="fd-cat-nav-link">Ethnic Wear</a>
@@ -343,60 +350,54 @@ function mobileHead(p) {
   const mToggleBtn = `<button type="button" class="fd-sidebar-toggle-btn m-sidebar-toggle" id="mobileSidebarToggleBtn" aria-label="Open navigation menu">
     <svg aria-hidden="true"><use href="#i-menu"/></svg>
   </button>`;
-  if (p.page === "home") {
-    return `<header class="m-head fd-home-mobile-head">
-  <div class="fd-mobile-top-row">
-    ${mToggleBtn}
-    <div class="m-brand">
-      ${brand}
-      <p class="m-tag">Same Style. Lower Price.</p>
-    </div>
-    <div class="m-icons">
-      <a href="/deals/" class="m-icon" aria-label="Notifications / Deals"><svg aria-hidden="true"><use href="#i-bell"/></svg></a>
-      <a href="/login/" class="m-icon" aria-label="Sign in" data-auth-guest><svg aria-hidden="true"><use href="#i-user"/></svg></a>
-      <a href="/profile/" class="m-icon" aria-label="Your profile" data-auth-user hidden><svg aria-hidden="true"><use href="#i-user"/></svg></a>
-    </div>
-  </div>
-  <div class="fd-mobile-search-row">
+
+  const searchRow = `<div class="fd-mobile-search-row">
     <form class="shop-search-box fd-mobile-search-form" data-search-form role="search" action="/find/">
       <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
-      <input type="text" id="shopSearchInputMobile" name="q" placeholder="Search clothes, shoes, brands or paste link..." aria-label="Search clothes or paste product link" autocomplete="off">
+      <input type="text" id="shopSearchInputMobile" name="q" placeholder="Search clothes, shoes, brands or paste link..." aria-label="Search clothes or paste product link" autocomplete="off" inputmode="search" enterkeyhint="search">
       <button type="button" class="fd-mobile-cam-btn" id="mobileSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload image to search">
         <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
         <span>Upload</span>
       </button>
     </form>
-  </div>
-</header>`;
-  }
-  const find = `<a href="/find/" class="m-icon" aria-label="Find a look"><svg aria-hidden="true"><use href="#i-search"/></svg></a>`;
+  </div>`;
+
   const heart = `<a href="/saved/" class="m-icon m-heart" aria-label="Saved items"><svg aria-hidden="true"><use href="#i-heart"/></svg><i class="dot" id="savedDot" hidden></i></a>`;
-  const profile = `<a href="/profile/" class="m-icon" aria-label="Your profile"><svg aria-hidden="true"><use href="#i-user"/></svg></a>`;
+  const bell = `<a href="/deals/" class="m-icon" aria-label="Best deals"><svg aria-hidden="true"><use href="#i-bell"/></svg></a>`;
+  const profileGuest = `<a href="/login/" class="m-icon" aria-label="Sign in" data-auth-guest><svg aria-hidden="true"><use href="#i-user"/></svg></a>`;
+  const profileUser = `<a href="/profile/" class="m-icon" aria-label="Your profile" data-auth-user hidden><svg aria-hidden="true"><use href="#i-user"/></svg></a>`;
+
   if (p.head === "back") {
     return `<header class="m-head m-back">
   <a href="/" class="m-back-btn" data-back aria-label="Back"><svg aria-hidden="true"><use href="#i-back"/></svg></a>
-  <p class="m-title">${p.heading}</p>
+  <p class="m-title">${p.heading || "Fit Deal"}</p>
   <div class="m-icons">
-    <button type="button" class="fd-sidebar-toggle-btn m-sidebar-toggle" id="mobileSidebarToggleBtn" aria-label="Open menu">
+    <button type="button" class="fd-sidebar-toggle-btn m-sidebar-toggle" aria-label="Open menu">
       <svg aria-hidden="true"><use href="#i-menu"/></svg>
     </button>
-    ${find}
+    <a href="/deals/" class="m-icon" aria-label="Deals"><svg aria-hidden="true"><use href="#i-flame"/></svg></a>
     ${heart}
   </div>
 </header>`;
   }
-  return `<header class="m-head${p.head === "brand" ? " m-brandonly" : ""}">
-  <button type="button" class="fd-sidebar-toggle-btn m-sidebar-toggle" id="mobileSidebarToggleBtn" aria-label="Open navigation menu">
-    <svg aria-hidden="true"><use href="#i-menu"/></svg>
-  </button>
-  <div class="m-brand">
-    ${brand}
-${p.head === "home" ? `    <p class="m-tag">Same look. Smarter prices.</p>` : ""}
+
+  const tagline = p.page === "deals" ? "Verified fashion deals &amp; lowest prices" : (p.page === "saved" ? "Your saved fashion &amp; looks" : "Same Style. Lower Price.");
+
+  return `<header class="m-head fd-home-mobile-head">
+  <div class="fd-mobile-top-row">
+    ${mToggleBtn}
+    <div class="m-brand">
+      ${brand}
+      <p class="m-tag">${tagline}</p>
+    </div>
+    <div class="m-icons">
+      ${bell}
+      ${heart}
+      ${profileGuest}
+      ${profileUser}
+    </div>
   </div>
-  <div class="m-icons">
-    ${heart}
-    ${profile}
-  </div>
+  ${searchRow}
 </header>`;
 }
 
@@ -529,6 +530,7 @@ function render(p) {
   let body = fs.readFileSync(path.join(ROOT, "src", "pages", p.src + ".html"), "utf8").trim();
   if (p.page === "home") body = body.replace('<!-- SHOP_NAV -->', shopping.navigation())
     .replace('<!-- SHOP_CAMPAIGNS -->', shopping.campaigns()).replace('<!-- SHOP_EXPANSION -->', shopping.expansion());
+  body = catalog.render(body, p);
   const home = p.page === "home";
   const url = SITE + (p.path === "/404" || p.path === "/500" ? "/" : p.path);
   const ld = jsonLd(p).map((o) => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join("\n");
@@ -564,6 +566,7 @@ ${p.index ? `<link rel="canonical" href="${url}">` : '<meta name="robots" conten
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 ${home ? '<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">\n' : ""}<link rel="stylesheet" href="/css/site.css?v=${V}">
+<link rel="stylesheet" href="/css/catalog.css?v=${V}">
 ${home ? `<link rel="stylesheet" href="/css/home.css?v=${V}">\n` : ""}
 ${ld ? ld + "\n" : ""}</head>
 <body data-page="${p.page}">

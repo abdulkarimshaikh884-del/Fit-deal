@@ -29,7 +29,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/site.css?v=f8370772fe">
+<link rel="stylesheet" href="/css/site.css?v=25229fc899">
+<link rel="stylesheet" href="/css/catalog.css?v=25229fc899">
 
 </head>
 <body data-page="find-start">
@@ -141,6 +142,10 @@
     <div class="fd-sb-section">
       <div class="fd-sb-section-title">QUICK ACCESS</div>
       <nav class="fd-sb-nav" aria-label="Quick Access">
+<a href="/shop/" class="fd-sb-link"><svg class="fd-sb-ico" aria-hidden="true"><use href="#i-tag"/></svg><span class="fd-sb-txt">Shop all styles</span></a>
+<a href="/categories/" class="fd-sb-link"><svg class="fd-sb-ico" aria-hidden="true"><use href="#i-tag"/></svg><span class="fd-sb-txt">All categories</span></a>
+<a href="/collections/" class="fd-sb-link"><svg class="fd-sb-ico" aria-hidden="true"><use href="#i-tag"/></svg><span class="fd-sb-txt">Outfit collections</span></a>
+<a href="/stores/" class="fd-sb-link"><svg class="fd-sb-ico" aria-hidden="true"><use href="#i-tag"/></svg><span class="fd-sb-txt">Explore stores</span></a>
         <a href="/" class="fd-sb-link">
           <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-home"/></svg>
           <span class="fd-sb-txt">Home</span>
@@ -314,26 +319,40 @@
     </nav>
   </div>
 </header>
-    <header class="m-head m-brandonly">
-  <button type="button" class="fd-sidebar-toggle-btn m-sidebar-toggle" id="mobileSidebarToggleBtn" aria-label="Open navigation menu">
+    <header class="m-head fd-home-mobile-head">
+  <div class="fd-mobile-top-row">
+    <button type="button" class="fd-sidebar-toggle-btn m-sidebar-toggle" id="mobileSidebarToggleBtn" aria-label="Open navigation menu">
     <svg aria-hidden="true"><use href="#i-menu"/></svg>
   </button>
-  <div class="m-brand">
-    <a href="/" class="brand" aria-label="Fit Deal home">
+    <div class="m-brand">
+      <a href="/" class="brand" aria-label="Fit Deal home">
       <span class="brand-name">Fit Deal</span><svg class="brand-spark" aria-hidden="true"><use href="#i-sparkle"/></svg>
     </a>
-
+      <p class="m-tag">Same Style. Lower Price.</p>
+    </div>
+    <div class="m-icons">
+      <a href="/deals/" class="m-icon" aria-label="Best deals"><svg aria-hidden="true"><use href="#i-bell"/></svg></a>
+      <a href="/saved/" class="m-icon m-heart" aria-label="Saved items"><svg aria-hidden="true"><use href="#i-heart"/></svg><i class="dot" id="savedDot" hidden></i></a>
+      <a href="/login/" class="m-icon" aria-label="Sign in" data-auth-guest><svg aria-hidden="true"><use href="#i-user"/></svg></a>
+      <a href="/profile/" class="m-icon" aria-label="Your profile" data-auth-user hidden><svg aria-hidden="true"><use href="#i-user"/></svg></a>
+    </div>
   </div>
-  <div class="m-icons">
-    <a href="/saved/" class="m-icon m-heart" aria-label="Saved items"><svg aria-hidden="true"><use href="#i-heart"/></svg><i class="dot" id="savedDot" hidden></i></a>
-    <a href="/profile/" class="m-icon" aria-label="Your profile"><svg aria-hidden="true"><use href="#i-user"/></svg></a>
+  <div class="fd-mobile-search-row">
+    <form class="shop-search-box fd-mobile-search-form" data-search-form role="search" action="/find/">
+      <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
+      <input type="text" id="shopSearchInputMobile" name="q" placeholder="Search clothes, shoes, brands or paste link..." aria-label="Search clothes or paste product link" autocomplete="off" inputmode="search" enterkeyhint="search">
+      <button type="button" class="fd-mobile-cam-btn" id="mobileSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload image to search">
+        <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
+        <span>Upload</span>
+      </button>
+    </form>
   </div>
 </header>
     <main id="main" class="page search-page">
   <div class="page-head"><p class="search-eyebrow">YOUR NEXT GREAT FIND</p><h1>What are you looking for?</h1><p>A look you spotted. A piece you love. Let's find your options.</p></div>
   <form class="search-entry" id="textSearch" role="search">
     <label class="sr-only" for="queryInput">Describe your look</label>
-    <input type="search" id="queryInput" name="query" maxlength="90" minlength="2" placeholder="Try “black oversized shirt”" required>
+    <input type="search" id="queryInput" name="query" maxlength="90" minlength="2" placeholder="Try “black oversized shirt”" required inputmode="search" enterkeyhint="search">
     <button class="btn btn-primary" type="submit">Search <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
   </form>
   <p class="fine search-status" id="searchStatus" role="status"></p>
@@ -348,7 +367,7 @@
         <div class="snap-link-divider"><span>or start with a product link</span></div>
         <form class="snap-link-form" data-link-form>
           <label class="sr-only" for="linkInput">Product link</label>
-          <input type="text" inputmode="url" placeholder="Paste an Amazon, Flipkart, Myntra or AJIO link" id="linkInput" maxlength="2000" required>
+          <input type="url" inputmode="url" enterkeyhint="go" placeholder="Paste an Amazon, Flipkart, Myntra or AJIO link" id="linkInput" maxlength="2000" required>
           <button type="submit" class="snap-link-go">Find matches</button>
         </form>
       </div>
@@ -395,7 +414,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="/js/app.js?v=f8370772fe" defer></script>
-<script src="/js/search-input.js?v=f8370772fe" defer></script>
+<script src="/js/app.js?v=25229fc899" defer></script>
+<script src="/js/search-input.js?v=25229fc899" defer></script>
 </body>
 </html>

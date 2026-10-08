@@ -2,7 +2,7 @@
   <div class="page-head"><p class="search-eyebrow">YOUR NEXT GREAT FIND</p><h1>What are you looking for?</h1><p>A look you spotted. A piece you love. Let's find your options.</p></div>
   <form class="search-entry" id="textSearch" role="search">
     <label class="sr-only" for="queryInput">Describe your look</label>
-    <input type="search" id="queryInput" name="query" maxlength="90" minlength="2" placeholder="Try “black oversized shirt”" required>
+    <input type="search" id="queryInput" name="query" maxlength="90" minlength="2" placeholder="Try “black oversized shirt”" required inputmode="search" enterkeyhint="search">
     <button class="btn btn-primary" type="submit">Search <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
   </form>
   <p class="fine search-status" id="searchStatus" role="status"></p>
@@ -17,7 +17,7 @@
         <div class="snap-link-divider"><span>or start with a product link</span></div>
         <form class="snap-link-form" data-link-form>
           <label class="sr-only" for="linkInput">Product link</label>
-          <input type="text" inputmode="url" placeholder="Paste an Amazon, Flipkart, Myntra or AJIO link" id="linkInput" maxlength="2000" required>
+          <input type="url" inputmode="url" enterkeyhint="go" placeholder="Paste an Amazon, Flipkart, Myntra or AJIO link" id="linkInput" maxlength="2000" required>
           <button type="submit" class="snap-link-go">Find matches</button>
         </form>
       </div>

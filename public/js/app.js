@@ -244,35 +244,82 @@
       }
     } catch (e) {}
 
+    function openSidebar() {
+      document.body.classList.add("sidebar-open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeSidebar() {
+      document.body.classList.remove("sidebar-open");
+      document.body.style.overflow = "";
+    }
+
     if (desktopToggle) {
       desktopToggle.addEventListener("click", function () {
         if (window.innerWidth >= 1100) {
           var isCollapsed = document.body.classList.toggle("sidebar-collapsed");
           try { localStorage.setItem("fd_sb_collapsed", isCollapsed ? "1" : "0"); } catch (e) {}
         } else {
-          document.body.classList.add("sidebar-open");
+          openSidebar();
         }
       });
     }
 
-    if (mobileToggle) {
-      mobileToggle.addEventListener("click", function () {
-        document.body.classList.add("sidebar-open");
-      });
-    }
+    // Bind ALL mobile & secondary sidebar toggle buttons across all pages
+    Array.prototype.forEach.call(document.querySelectorAll(".fd-sidebar-toggle-btn, .m-sidebar-toggle"), function (btn) {
+      if (btn !== desktopToggle) {
+        btn.addEventListener("click", function (e) {
+          e.preventDefault();
+          openSidebar();
+        });
+      }
+    });
 
-    function closeSidebar() {
-      document.body.classList.remove("sidebar-open");
+    if (photoBtn) {
+      photoBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        closeSidebar();
+        var fileInput = document.querySelector('input[type="file"]#fileInput, input[type="file"]#heroFileInput, input[type="file"]');
+        if (fileInput && (window.location.pathname === "/" || window.location.pathname === "/find/")) {
+          fileInput.click();
+        } else {
+          window.location.href = "/find/?mode=photo";
+        }
+      });
     }
 
     if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
     if (backdrop) backdrop.addEventListener("click", closeSidebar);
+
+    // Auto-close drawer on mobile when user taps any nav link
+    Array.prototype.forEach.call(document.querySelectorAll(".fd-sidebar a"), function (a) {
+      a.addEventListener("click", function () {
+        if (window.innerWidth < 1100) {
+          closeSidebar();
+        }
+      });
+    });
 
     document.addEventListener("keydown", function (ev) {
       if (ev.key === "Escape" && document.body.classList.contains("sidebar-open")) {
         closeSidebar();
       }
     });
+
+    // Touch gesture: swipe left on sidebar to close on mobile
+    var sidebarEl = document.getElementById("fdSidebar");
+    if (sidebarEl) {
+      var touchStartX = 0;
+      sidebarEl.addEventListener("touchstart", function (e) {
+        touchStartX = e.touches[0].clientX;
+      }, { passive: true });
+      sidebarEl.addEventListener("touchend", function (e) {
+        var touchEndX = e.changedTouches[0].clientX;
+        if (touchStartX - touchEndX > 50) {
+          closeSidebar();
+        }
+      }, { passive: true });
+    }
 
     if (photoBtn) {
       photoBtn.addEventListener("click", function () {
@@ -364,11 +411,43 @@
 
   window.FD = {
     store: store, toast: toast, api: api, track: track, saved: saved, recent: recent,
+    esc: function(s) { return String(s == null ? "" : s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];}); },
     price: price, time: time, ago: ago, el: el, icon: icon, copy: copy, wireShare: wireShare,
     refreshDots: refreshDots, auth: auth
   };
   refreshDots();
   auth.init();
+  // Shared search and image entry points must work on every page.
+  if (document.body.dataset.page !== 'home') {
+    document.querySelectorAll('[data-search-form]').forEach(function(form) {
+      form.addEventListener('submit', function(ev) {
+        ev.preventDefault();
+        var input=form.querySelector('input[name="q"], input[type="text"]');
+        if(input && input.value.trim()) {
+          var value=input.value.trim();
+          location.href='/find/?q='+encodeURIComponent(value);
+        }
+      });
+    });
+    ['headerSnapBtn','mobileSnapBtn','sbPhotoSearchBtn','headerUploadCta'].forEach(function(id){
+      var button=document.getElementById(id);
+      if(button) {
+        button.addEventListener('click',function(ev){
+          ev.preventDefault();
+          location.href='/find/?mode=photo';
+        });
+      }
+    });
+  }
+  document.querySelectorAll('[data-style-save]').forEach(function(button){
+    var id=button.dataset.styleSave;
+    function refresh(){var has=saved.has('style',id);button.setAttribute('aria-pressed',String(has));button.classList.toggle('is-active',has);var use=button.querySelector('use');if(use)use.setAttribute('href',has?'#i-heart-fill':'#i-heart');}
+    button.addEventListener('click',function(){
+      if(saved.has('style',id)) saved.remove('style',id);
+      else {var card=button.closest('article, .fd-showcase-card'),img=card&&card.querySelector('img');saved.add({searchId:'style',key:id,title:img?img.alt:'Saved style',image:img?img.getAttribute('src'):'',price:null,storeName:'Style inspiration',match:'editorial'});}
+      refresh();refreshDots();
+    });refresh();
+  });
   window.addEventListener("storage", function () {
     refreshDots();
     auth.init();

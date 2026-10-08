@@ -1,0 +1,14 @@
+<main class="page catalog-page" id="main">
+  <nav class="catalog-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> / <span>Shop</span></nav>
+  <header class="catalog-heading"><p class="catalog-kicker">THE FIT DEAL EDIT</p><h1 id="catalogTitle">Find your next favourite.</h1><p>Explore outfit inspiration, save your picks, and find available options at official stores.</p></header>
+  <form class="catalog-controls" id="catalogFilters" role="search">
+    <label>Search styles<input name="q" id="catalogQuery" type="search" placeholder="Try linen, dress, sneakers…"></label>
+    <label>Category<select name="cat" id="catalogCategory"><option value="">All categories</option><!-- CATALOG_OPTIONS --></select></label>
+    <label>Sort<select name="sort" id="catalogSort"><option value="featured">Featured</option><option value="az">Name: A–Z</option><option value="za">Name: Z–A</option></select></label>
+    <button class="btn btn-primary" type="submit">Apply</button><a class="btn btn-ghost" href="/shop/">Reset</a>
+  </form>
+  <p class="catalog-notice">Style inspiration, not live inventory. Prices, sizes and availability are confirmed by the retailer.</p>
+  <p id="catalogCount" role="status"></p>
+  <div class="catalog-grid" id="catalogGrid"><!-- CATALOG_CARDS --></div>
+  <section id="catalogEmpty" class="empty-state" hidden><h2>No styles found</h2><p>Try a broader term, change category, or search the stores.</p><a id="catalogLiveSearch" class="btn btn-primary" href="/find/">Search stores</a></section>
+</main>

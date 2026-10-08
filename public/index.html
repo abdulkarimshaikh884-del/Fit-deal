@@ -30,8 +30,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/css/site.css?v=f8370772fe">
-<link rel="stylesheet" href="/css/home.css?v=f8370772fe">
+<link rel="stylesheet" href="/css/site.css?v=25229fc899">
+<link rel="stylesheet" href="/css/catalog.css?v=25229fc899">
+<link rel="stylesheet" href="/css/home.css?v=25229fc899">
 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Fit Deal","url":"https://fitdeal.shop/","description":"See an outfit you love? Fit Deal finds it — and finds it for less."}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Fit Deal","url":"https://fitdeal.shop/","logo":"https://fitdeal.shop/img/brand/icon-512.png","email":"support@fitdeal.shop"}</script>
@@ -145,6 +146,10 @@
     <div class="fd-sb-section">
       <div class="fd-sb-section-title">QUICK ACCESS</div>
       <nav class="fd-sb-nav" aria-label="Quick Access">
+<a href="/shop/" class="fd-sb-link"><svg class="fd-sb-ico" aria-hidden="true"><use href="#i-tag"/></svg><span class="fd-sb-txt">Shop all styles</span></a>
+<a href="/categories/" class="fd-sb-link"><svg class="fd-sb-ico" aria-hidden="true"><use href="#i-tag"/></svg><span class="fd-sb-txt">All categories</span></a>
+<a href="/collections/" class="fd-sb-link"><svg class="fd-sb-ico" aria-hidden="true"><use href="#i-tag"/></svg><span class="fd-sb-txt">Outfit collections</span></a>
+<a href="/stores/" class="fd-sb-link"><svg class="fd-sb-ico" aria-hidden="true"><use href="#i-tag"/></svg><span class="fd-sb-txt">Explore stores</span></a>
         <a href="/" class="fd-sb-link is-active">
           <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-home"/></svg>
           <span class="fd-sb-txt">Home</span>
@@ -326,7 +331,7 @@
 </header>
 <nav class="fd-category-navbar" aria-label="Product Categories">
   <div class="fd-category-navbar-in">
-    <a href="/deals/" class="fd-cat-nav-link fd-cat-all"><span>All Categories</span> <svg aria-hidden="true"><use href="#i-chev-down"/></svg></a>
+    <a href="/categories/" class="fd-cat-nav-link fd-cat-all"><span>All Categories</span> <svg aria-hidden="true"><use href="#i-chev-down"/></svg></a>
     <a href="/deals/?cat=women" class="fd-cat-nav-link">Women</a>
     <a href="/deals/?cat=men" class="fd-cat-nav-link">Men</a>
     <a href="/deals/?cat=ethnic" class="fd-cat-nav-link">Ethnic Wear</a>
@@ -352,7 +357,8 @@
       <p class="m-tag">Same Style. Lower Price.</p>
     </div>
     <div class="m-icons">
-      <a href="/deals/" class="m-icon" aria-label="Notifications / Deals"><svg aria-hidden="true"><use href="#i-bell"/></svg></a>
+      <a href="/deals/" class="m-icon" aria-label="Best deals"><svg aria-hidden="true"><use href="#i-bell"/></svg></a>
+      <a href="/saved/" class="m-icon m-heart" aria-label="Saved items"><svg aria-hidden="true"><use href="#i-heart"/></svg><i class="dot" id="savedDot" hidden></i></a>
       <a href="/login/" class="m-icon" aria-label="Sign in" data-auth-guest><svg aria-hidden="true"><use href="#i-user"/></svg></a>
       <a href="/profile/" class="m-icon" aria-label="Your profile" data-auth-user hidden><svg aria-hidden="true"><use href="#i-user"/></svg></a>
     </div>
@@ -360,7 +366,7 @@
   <div class="fd-mobile-search-row">
     <form class="shop-search-box fd-mobile-search-form" data-search-form role="search" action="/find/">
       <span class="search-lens-ico" aria-hidden="true"><svg><use href="#i-search"/></svg></span>
-      <input type="text" id="shopSearchInputMobile" name="q" placeholder="Search clothes, shoes, brands or paste link..." aria-label="Search clothes or paste product link" autocomplete="off">
+      <input type="text" id="shopSearchInputMobile" name="q" placeholder="Search clothes, shoes, brands or paste link..." aria-label="Search clothes or paste product link" autocomplete="off" inputmode="search" enterkeyhint="search">
       <button type="button" class="fd-mobile-cam-btn" id="mobileSnapBtn" title="Search by Photo or Screenshot" aria-label="Upload image to search">
         <svg aria-hidden="true"><use href="#i-camera-line"/></svg>
         <span>Upload</span>
@@ -1512,7 +1518,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-<script src="/js/app.js?v=f8370772fe" defer></script>
-<script src="/js/home.js?v=f8370772fe" defer></script>
+<script src="/js/app.js?v=25229fc899" defer></script>
+<script src="/js/home.js?v=25229fc899" defer></script>
 </body>
 </html>

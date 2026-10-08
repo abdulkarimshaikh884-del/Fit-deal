@@ -315,8 +315,7 @@
       var file = ev.dataTransfer && ev.dataTransfer.files && ev.dataTransfer.files[0];
       if (file) {
         if (busy) reset();
-        openUploadDrawer(false);
-        startPhoto(file);
+            startPhoto(file);
       }
     });
   }
@@ -326,8 +325,7 @@
       secInput.value = "";
       if (file) {
         if (busy) reset();
-        openUploadDrawer(false);
-        startPhoto(file);
+            startPhoto(file);
       }
     });
   }
@@ -357,8 +355,7 @@
         return;
       }
       if (busy) reset();
-      openUploadDrawer(false);
-      startLink(form, value);
+        startLink(form, value);
     });
   });
 
@@ -376,7 +373,6 @@
     var file = ev.dataTransfer.files && ev.dataTransfer.files[0];
     if (!file) return;
     if (busy) reset();
-    openUploadDrawer(false);
     startPhoto(file);
   });
   document.addEventListener("paste", function (ev) {
@@ -387,8 +383,7 @@
       if (items[i].kind === "file" && /^image\//.test(items[i].type)) {
         ev.preventDefault();
         if (busy) reset();
-        openUploadDrawer(false);
-        startPhoto(items[i].getAsFile());
+            startPhoto(items[i].getAsFile());
         return;
       }
     }
@@ -399,7 +394,6 @@
     if (busy) return;
     if (btn) btn.setAttribute("aria-busy", "true");
     FD.track("sample_click", { sample: name.slice(0, 40) });
-    openUploadDrawer(false);
     fetch(url).then(function (r) {
       if (!r.ok) throw new Error("look");
       return r.blob();
@@ -523,15 +517,11 @@
       }
       // If store link was pasted
       if (/^https?:\/\//i.test(q) || /flipkart\.com|amazon\.in|myntra\.com|ajio\.com/i.test(q)) {
-        openUploadDrawer(false);
-        var linkForm = document.querySelector("[data-link-form]");
-        var linkIn = document.getElementById("linkInput");
-        if (linkIn) linkIn.value = query.trim();
-        if (linkForm) startLink(linkForm, query.trim());
+            location.href = "/find/?q=" + encodeURIComponent(query.trim());
         return;
       }
       // Use the real search flow for text; editorial cards are not inventory.
-      location.href = "/find/?q=" + encodeURIComponent(query.trim());
+      location.href = "/shop/?q=" + encodeURIComponent(query.trim());
       return;
 
     }
@@ -611,7 +601,7 @@
       el("div.p-card-details", null, [el("small", { text: p.storeName }), el("h3.p-card-name", { text: p.title }),
         el("div.p-card-price-row", null, [el("b.p-card-price", { text: FD.price(p.price) }), p.mrp ? el("s.p-card-mrp", { text: FD.price(p.mrp) }) : null]),
         el("p.editorial-card-note", { text: "Checked " + FD.ago(p.checkedAt) }),
-        el("a.btn btn-primary p-card-buy-btn", { href: "/find/" + encodeURIComponent(p.searchId) + "#p-" + encodeURIComponent(p.key), text: "View offer" })
+        el("a.btn btn-primary p-card-buy-btn", { href: "/product/" + encodeURIComponent(p.searchId) + "/" + encodeURIComponent(p.key), text: "View offer" })
       ])
     ]);
   }

@@ -31,6 +31,8 @@
     var lowestStoreName = d.storeName || STORE_NAMES[lowestStore] || "Store";
     var buyUrl = d.searchId ? ("/go/" + encodeURIComponent(d.searchId) + "/" + encodeURIComponent(d.key) + "?from=deals") : ("/go/deal/" + encodeURIComponent(d.key));
 
+    var detailUrl = d.searchId ? "/product/" + encodeURIComponent(d.searchId) + "/" + encodeURIComponent(d.key) : buyUrl;
+
     // Store comparison chips
     var storeChips = [];
     if (d.stores && Array.isArray(d.stores) && d.stores.length > 0) {
@@ -47,7 +49,7 @@
     var cardEl = el("div.fd-deal-card", { "data-key": d.key }, [
       // Top image container
       el("div.fd-dc-media", null, [
-        el("a.fd-dc-img-link", { href: buyUrl, target: "_blank", rel: "noopener sponsored" }, [
+        el("a.fd-dc-img-link", { href: detailUrl }, [
           el("img.fd-dc-img", {
             src: d.image,
             alt: d.title,
@@ -111,7 +113,7 @@
       el("div.fd-dc-body", null, [
         d.brand ? el("span.fd-dc-brand", { text: d.brand }) : null,
         el("h3.fd-dc-title", null, [
-          el("a", { href: buyUrl, target: "_blank", rel: "noopener sponsored", text: d.title })
+          el("a", { href: detailUrl, text: d.title })
         ]),
 
         // Price block

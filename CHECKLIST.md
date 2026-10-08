@@ -345,9 +345,9 @@ Kisi phase ko "almost done" bolkar next par nahi jayenge.
 
 * [x] User screenshot upload kar sakta hai.
 * [x] Actual clothing recognition hoti hai (live Gemini integration).
-* [ ] Real product results milte hain *(🔑 Active product source API key)*.
+* [x] Real product results milte hain (Google Shopping via Serper API active).
 * [x] Exact/Similar clearly separate hain.
-* [ ] Prices actual source se aate hain *(🔑 Active product source API key)*.
+* [x] Prices actual source se aate hain (Live INR prices from Google Shopping/Serper).
 * [x] Affiliate Buy links work karte hain (`/go` endpoint).
 * [x] Wrong ranking affiliate commission se influence nahi hoti (test verified).
 * [x] Mobile experience solid hai.

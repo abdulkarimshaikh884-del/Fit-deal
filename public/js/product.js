@@ -219,7 +219,11 @@
 
         if (bestMatch) {
           var diffHtml = "–";
-          if (currentProduct.price != null && bestMatch.price != null) {
+          // Search-level "exact" means exact to the original query item, not
+          // necessarily the currently selected product. Do not imply savings
+          // across different styles or variants.
+          var sameIdentity = !!(currentProduct.gtin && bestMatch.gtin && currentProduct.gtin === bestMatch.gtin);
+          if (sameIdentity && currentProduct.price != null && bestMatch.price != null) {
             var diff = bestMatch.price - currentProduct.price;
             if (diff < 0) {
               diffHtml = '<span class="diff-badge diff-cheaper">₹' + Math.abs(diff).toLocaleString("en-IN") + ' cheaper</span>';
@@ -230,7 +234,7 @@
             }
           }
 
-          var matchLabel = bestMatch.match === "exact" ? "Exact match" : "Similar look";
+          var matchLabel = sameIdentity ? "Same barcode" : "Other search result · verify variant";
           tr.innerHTML = [
             '<td><span class="store-badge-cell">' + FD.esc(bestMatch.storeName) + '</span></td>',
             '<td><strong class="compare-price">' + (bestMatch.price != null ? FD.price(bestMatch.price) : "See store") + '</strong></td>',

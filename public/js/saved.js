@@ -13,16 +13,18 @@
     $("savedEmpty").hidden = items.length > 0;
     $("savedClear").hidden = items.length < 2;
     items.forEach(function (s) {
+      var editorial = s.searchId === "style" || s.searchId === "deal";
+      var detailUrl = s.searchId === "style" ? "/style/" + encodeURIComponent(s.key) + "/" : editorial ? "/shop/?q=" + encodeURIComponent(s.title) : "/product/" + encodeURIComponent(s.searchId) + "/" + encodeURIComponent(s.key);
       list.appendChild(el("article.card s-item", null, [
         el("div.s-img", null, [s.image ? el("img", { src: s.image, alt: "", loading: "lazy", referrerpolicy: "no-referrer" }) : null]),
         el("div.s-body", null, [
           el("p.p-brand", { text: [s.storeName, s.brand].filter(Boolean).join(" · ") }),
           el("p.p-title", { text: s.title }),
-          s.price != null ? el("p.p-price", null, [el("b", { text: FD.price(s.price) })]) : el("p.p-noprice", { text: "See price at " + s.storeName }),
+          !editorial && s.price != null ? el("p.p-price", null, [el("b", { text: FD.price(s.price) })]) : el("p.p-noprice", { text: editorial ? "Style inspiration · check store prices" : "See price at " + s.storeName }),
           el("p.p-meta", null, [el("span", { text: (s.match === "exact" ? "Exact match · " : "") + "Saved " + FD.ago(s.savedAt) + (s.checkedAt ? " · price from " + FD.time(s.checkedAt) : "") })]),
           el("div.s-actions", null, [
-            el("a.btn btn-primary", { href: "/go/" + encodeURIComponent(s.searchId) + "/" + encodeURIComponent(s.key) + "?from=saved", target: "_blank", rel: "sponsored noopener" }, ["Buy at " + s.storeName, FD.icon("i-external")]),
-            el("a.btn btn-ghost", { href: "/find/" + encodeURIComponent(s.searchId) + "#p-" + s.key }, ["Results"]),
+            el("a.btn btn-primary", { href: detailUrl }, ["View details", FD.icon("i-arrow")]),
+            el("a.btn btn-ghost", { href: editorial ? "/shop/" : "/find/" + encodeURIComponent(s.searchId) + "#p-" + s.key }, ["Results"]),
             el("button.btn btn-ghost", { type: "button", "aria-label": "Remove " + s.title, on: { click: function () {
               FD.saved.remove(s.searchId, s.key);
               FD.track("unsave", {});
