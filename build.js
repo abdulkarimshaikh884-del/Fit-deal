@@ -60,11 +60,11 @@ const PAGES = [
     title: "Deals — real prices from recent Fit Deal searches", desc: "The biggest real discounts people found on Fit Deal in the last two days, across Amazon, Flipkart, Myntra and AJIO." },
   { out: "profile/index.html", src: "profile", page: "profile", nav: "profile", tab: "profile", head: "brand", path: "/profile/", script: "profile",
     title: "Your Fit Deal — Profile", desc: "Your saved items, searches, votes and size notes, kept on this device." },
-  { out: "login/index.html", src: "login", page: "auth", head: "back", heading: "Sign In", path: "/login/", script: "auth",
+  { out: "login/index.html", src: "login", page: "auth", head: "back", heading: "Sign In", path: "/login/", script: "auth", tab: "profile",
     title: "Sign In — Fit Deal", desc: "Log in to your Fit Deal account to sync your saved items and track price drops across stores." },
-  { out: "signup/index.html", src: "signup", page: "auth", head: "back", heading: "Create Account", path: "/signup/", script: "auth",
+  { out: "signup/index.html", src: "signup", page: "auth", head: "back", heading: "Create Account", path: "/signup/", script: "auth", tab: "profile",
     title: "Create an Account — Fit Deal", desc: "Create a free Fit Deal account to compare fashion prices across Indian stores." },
-  { out: "try-on/index.html", src: "try-on", page: "tryon", head: "back", heading: "Virtual Try-On", path: "/try-on/",
+  { out: "try-on/index.html", src: "try-on", page: "tryon", head: "back", heading: "Virtual Try-On", path: "/try-on/", tab: "find",
     title: "AI Virtual Try-On (Coming Soon) — Fit Deal", desc: "Genuine AI outfit fitting is coming soon to Fit Deal. Find and compare prices across Indian stores now." },
   { out: "how-it-works/index.html", src: "how-it-works", page: "info", nav: "how", head: "back", heading: "How it works", path: "/how-it-works/", index: true,
     title: "How Fit Deal works — screenshot to best price", desc: "Upload a screenshot, we find the same or similar clothes, compare prices across Indian stores, and you buy from the store directly." },
@@ -381,7 +381,8 @@ function mobileHead(p) {
 </header>`;
   }
 
-  const tagline = p.page === "deals" ? "Verified fashion deals &amp; lowest prices" : (p.page === "saved" ? "Your saved fashion &amp; looks" : "Same Style. Lower Price.");
+  const isSearchPage = p.page === "find-start" || p.page === "find";
+  const tagline = p.page === "deals" ? "Verified fashion deals &amp; lowest prices" : (p.page === "saved" ? "Your saved fashion &amp; looks" : (p.page === "profile" ? "Your Fit Deal Account" : "Same Style. Lower Price."));
 
   return `<header class="m-head fd-home-mobile-head">
   <div class="fd-mobile-top-row">
@@ -397,7 +398,7 @@ function mobileHead(p) {
       ${profileUser}
     </div>
   </div>
-  ${searchRow}
+  ${!isSearchPage ? searchRow : ""}
 </header>`;
 }
 
