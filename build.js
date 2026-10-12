@@ -362,22 +362,13 @@ function mobileHead(p) {
     </form>
   </div>`;
 
-  const heart = `<a href="/saved/" class="m-icon m-heart" aria-label="Saved items"><svg aria-hidden="true"><use href="#i-heart"/></svg><i class="dot" id="savedDot" hidden></i></a>`;
-  const bell = `<a href="/deals/" class="m-icon" aria-label="Best deals"><svg aria-hidden="true"><use href="#i-bell"/></svg></a>`;
-  const profileGuest = `<a href="/login/" class="m-icon" aria-label="Sign in" data-auth-guest><svg aria-hidden="true"><use href="#i-user"/></svg></a>`;
-  const profileUser = `<a href="/profile/" class="m-icon" aria-label="Your profile" data-auth-user hidden><svg aria-hidden="true"><use href="#i-user"/></svg></a>`;
-
   if (p.head === "back") {
     return `<header class="m-head m-back">
   <a href="/" class="m-back-btn" data-back aria-label="Back"><svg aria-hidden="true"><use href="#i-back"/></svg></a>
   <p class="m-title">${p.heading || "Fit Deal"}</p>
-  <div class="m-icons">
-    <button type="button" class="fd-sidebar-toggle-btn m-sidebar-toggle" aria-label="Open menu">
-      <svg aria-hidden="true"><use href="#i-menu"/></svg>
-    </button>
-    <a href="/deals/" class="m-icon" aria-label="Deals"><svg aria-hidden="true"><use href="#i-flame"/></svg></a>
-    ${heart}
-  </div>
+  <button type="button" class="fd-sidebar-toggle-btn m-sidebar-toggle" aria-label="Open menu">
+    <svg aria-hidden="true"><use href="#i-menu"/></svg>
+  </button>
 </header>`;
   }
 
@@ -386,17 +377,11 @@ function mobileHead(p) {
 
   return `<header class="m-head fd-home-mobile-head">
   <div class="fd-mobile-top-row">
-    ${mToggleBtn}
     <div class="m-brand">
       ${brand}
       <p class="m-tag">${tagline}</p>
     </div>
-    <div class="m-icons">
-      ${bell}
-      ${heart}
-      ${profileGuest}
-      ${profileUser}
-    </div>
+    ${mToggleBtn}
   </div>
   ${!isSearchPage ? searchRow : ""}
 </header>`;
