@@ -647,6 +647,29 @@
     }
   }
 
+  // ── Recently Viewed (this device only) ────────────────────────────────────
+  // Product pages record into FD.viewed; render the rail here. The static
+  // empty state in the HTML stays as the honest fallback when nothing was
+  // viewed yet.
+  (function renderRecentlyViewed() {
+    var rail = document.getElementById("recentlyViewedRail");
+    if (!rail || !FD.viewed) return;
+    var items = FD.viewed.all().slice(0, 8);
+    if (!items.length) return;
+    rail.textContent = "";
+    items.forEach(function (v) {
+      var href = v.url || ("/product/" + encodeURIComponent(v.searchId) + "/" + encodeURIComponent(v.key));
+      var card = el("a.fd-recent-item", { href: href });
+      var wrap = el("div.fd-recent-img-wrap", null, [
+        v.image ? el("img", { src: v.image, alt: v.title, loading: "lazy", referrerpolicy: "no-referrer" }) : null
+      ]);
+      card.appendChild(wrap);
+      card.appendChild(el("p.fd-recent-name", { text: v.title || "Viewed product" }));
+      if (v.price != null && isFinite(v.price)) card.appendChild(el("p.fd-recent-price", { text: FD.price(v.price) }));
+      rail.appendChild(card);
+    });
+  })();
+
   // ── Hero Showcase Carousel Slider ──────────────────────────────────────────
   (function initHeroShowcaseSlider() {
     var wrap = document.getElementById("heroSliderWrap");
@@ -745,6 +768,27 @@
       }
       startAutoPlay();
     }, { passive: true });
+
+    // Trustworthy CTA: never advance the slide while the user is interacting
+    // with it (keyboard focus, pointer press, hidden tab), so the visible
+    // "View Product" button can never go stale mid-click.
+    wrap.addEventListener("focusin", stopAutoPlay);
+    wrap.addEventListener("focusout", startAutoPlay);
+    wrap.addEventListener("pointerdown", stopAutoPlay);
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) stopAutoPlay(); else startAutoPlay();
+    });
+    // Structural guarantee: a "View Product" click only ever follows the
+    // link of the currently visible slide — a stale slide's button can never
+    // navigate, even if a race ever left it clickable.
+    wrap.addEventListener("click", function (e) {
+      var t = e.target;
+      var btn = t && t.closest ? t.closest(".fd-showcase-btn") : null;
+      if (btn && !btn.closest(".fd-showcase-card.is-active")) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
 
     startAutoPlay();
   })();

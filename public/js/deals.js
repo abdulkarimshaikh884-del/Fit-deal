@@ -181,8 +181,8 @@
         var tit = (d.title || "").toLowerCase();
         var sc = state.category.toLowerCase();
 
-        if (sc === "women") return aud === "women" || aud === "unisex";
-        if (sc === "men") return aud === "men" || aud === "unisex";
+        if (sc === "women") return (aud === "women" || aud === "unisex") && !d.nonFashion && cat !== "beauty";
+        if (sc === "men") return (aud === "men" || aud === "unisex") && !d.nonFashion && cat !== "beauty";
         if (sc === "ethnic") return cat === "ethnic" || tit.includes("kurta") || tit.includes("kurti") || tit.includes("saree") || tit.includes("anarkali");
         if (sc === "western" || sc === "dresses") return cat === "western" || cat === "dresses" || tit.includes("dress") || tit.includes("jeans") || tit.includes("jacket");
         if (sc === "shoes" || sc === "footwear") return cat === "shoes" || tit.includes("sneaker") || tit.includes("shoe");

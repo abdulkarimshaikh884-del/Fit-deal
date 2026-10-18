@@ -268,7 +268,10 @@ test("text search works without an image and refinement replaces stale garment f
 test("Home and Find expose honest shopping controls; Try-On cannot simulate a result", async () => {
   const home = await (await fetch(base + "/")).text();
   assert.match(home, /id="homeDeals"/);
-  assert.doesNotMatch(home, /Ends in|70%|40%|data-wish-id|Trusted by thousands/);
+  // Bans fake urgency/scarcity marketing ("Ends in…", "Trusted by thousands").
+  // Legitimate "Save N%" badges are allowed: their math is verified by the
+  // round-2 card-math test (headline = lowest store price, % rounded).
+  assert.doesNotMatch(home, /Ends in|data-wish-id|Trusted by thousands/);
   const start = await (await fetch(base + "/find/")).text();
   assert.match(start, /What are you looking for/);
   assert.match(start, /id="queryInput"/);

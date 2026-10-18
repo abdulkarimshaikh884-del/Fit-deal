@@ -12,7 +12,10 @@
       cards.forEach(function(card){var text=card.dataset.title+' '+card.dataset.tags; card.hidden=!!(category.value&&!card.dataset.tags.split(' ').includes(category.value))||!words.every(function(w){return text.includes(w);});if(!card.hidden)count++;document.getElementById('catalogGrid').appendChild(card);});
       document.getElementById('catalogCount').textContent=count+' styles';document.getElementById('catalogEmpty').hidden=count>0;
       document.getElementById('catalogLiveSearch').href='/find/?q='+encodeURIComponent(query.value||category.value||'fashion');
-      document.getElementById('catalogTitle').textContent=category.value?category.options[category.selectedIndex].text+' styles':'Find your next favourite.';
+      // Proper headings: "Watches styles" is wrong grammar, so map each
+      // category to a correct title instead of blindly appending " styles".
+      var CAT_TITLES={women:"Women's styles",men:"Men's styles",dresses:"Dress styles",tops:"Top styles",shirts:"Shirt styles",jeans:"Jeans",ethnic:"Ethnic wear",western:"Western wear",footwear:"Footwear",accessories:"Accessories",bags:"Bags & handbags",watches:"Watch styles",sunglasses:"Sunglasses",sportswear:"Sportswear",beauty:"Beauty & grooming"};
+      document.getElementById('catalogTitle').textContent=category.value?(CAT_TITLES[category.value]||category.options[category.selectedIndex].text):'Find your next favourite.';
     }
     form.addEventListener('submit',function(ev){ev.preventDefault();var p=new URLSearchParams(new FormData(form));history.replaceState(null,'','?'+p.toString());filter();});filter();
   }

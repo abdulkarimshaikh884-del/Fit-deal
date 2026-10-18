@@ -213,6 +213,18 @@ async function route(req, res) {
   if (await api.handle(req, res, pathname)) return;
   if (pathname === "/admin" || pathname.startsWith("/admin/")) return admin.handle(req, res, pathname, url);
 
+  // Friendly aliases: common alternate spellings redirect to the real page
+  // instead of 404ing (with or without trailing slash).
+  const ALIASES = {
+    "/search": "/find/", "/grievance": "/grievance-redressal/", "/favourites": "/saved/",
+    "/favorites": "/saved/", "/grievances": "/grievance-redressal/"
+  };
+  const aliasTarget = ALIASES[pathname] || ALIASES[pathname.replace(/\/$/, "")];
+  if (aliasTarget) {
+    res.writeHead(301, { Location: aliasTarget + query });
+    return res.end();
+  }
+
   if (req.method !== "GET" && req.method !== "HEAD") {
     res.writeHead(405, { Allow: "GET, HEAD" });
     return res.end();
