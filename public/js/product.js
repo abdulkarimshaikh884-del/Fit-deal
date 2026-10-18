@@ -39,6 +39,21 @@
   function renderProduct(p) {
     document.title = p.title + " — " + (p.price ? "₹" + p.price.toLocaleString("en-IN") : "Best Price") + " on " + p.storeName + " | Fit Deal";
 
+    // Recently Viewed (this device only): record every product detail view so
+    // the home "Recently Viewed" rail actually fills.
+    try {
+      FD.viewed.add({
+        searchId: searchId,
+        key: p.key || productKey,
+        title: p.title,
+        brand: p.brand || "",
+        image: p.image || "",
+        price: typeof p.price === "number" ? p.price : null,
+        storeName: p.storeName || "",
+        url: location.pathname
+      });
+    } catch (e) { /* viewing history must never break the page */ }
+
     // Back link
     $("prodBackLink").href = isDealPage ? "/deals/" : "/find/" + encodeURIComponent(searchId);
 

@@ -4,11 +4,27 @@ const label = s => s.charAt(0).toUpperCase()+s.slice(1);
 const stores = [ ['Amazon','https://www.amazon.in/s?k='], ['Flipkart','https://www.flipkart.com/search?q='], ['Myntra','https://www.myntra.com/'], ['AJIO','https://www.ajio.com/search/?text='] ];
 const storeUrl = (name,q) => name === 'Myntra' ? 'https://www.myntra.com/'+encodeURIComponent(q.toLowerCase().replace(/[^a-z0-9]+/g,'-')) : stores.find(s=>s[0]===name)[1]+encodeURIComponent(q);
 function card(p) { return `<article class="catalog-card" data-title="${esc(p.title.toLowerCase()+' '+p.query.toLowerCase())}" data-tags="${esc(p.tags.join(' '))}"><a href="/style/${p.id}/"><img src="${p.image}" alt="${esc(p.title)}" loading="lazy" width="400" height="480"><div><small>STYLE INSPIRATION</small><h2>${esc(p.title)}</h2><p>View details &amp; store options →</p></div></a></article>`; }
+const GENDER_TAGS = new Set(['men','women']);
+// Category-aware recommendations: rank by shared non-gender tags (dresses,
+// western, footwear…) so a maxi dress suggests dresses — not sneakers —
+// instead of matching on the ultra-generic "women"/"men" tag alone.
+function related(p) {
+  const scored = products.filter(x => x.id !== p.id).map(x => ({
+    x, score: x.tags.filter(t => p.tags.includes(t) && !GENDER_TAGS.has(t)).length
+  }));
+  let list = scored.filter(o => o.score > 0).sort((a,b) => b.score - a.score).map(o => o.x);
+  if (!list.length) {
+    // Fallback so the section never renders empty: same audience.
+    const genders = p.tags.filter(t => GENDER_TAGS.has(t));
+    list = products.filter(x => x.id !== p.id && x.tags.some(t => genders.includes(t)));
+  }
+  return list.slice(0,4);
+}
 function detail(p) {
  return `<nav class="catalog-breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/shop/?cat=${p.tags[0]}">${label(p.tags[0])}</a> / <span>${esc(p.title)}</span></nav>
  <article class="style-layout" data-style-id="${p.id}"><div class="style-photo"><img src="${p.image}" alt="${esc(p.title)}" width="600" height="720"></div><div class="style-copy"><p class="catalog-kicker">THE FIT DEAL STYLE EDIT</p><h1>${esc(p.title)}</h1><p class="catalog-notice">Editorial inspiration</p><p>An idea for your next outfit. Explore similar pieces across stores, or save it to come back later.</p><h2>Price &amp; availability</h2><p>Live offers are not available for this style yet. Check the retailer for current prices, sizes, colours and delivery.</p><div class="btn-row"><button class="btn btn-primary" id="styleSave" type="button" aria-pressed="false">Save this style</button><button class="btn btn-ghost" id="styleShare" type="button">Copy link</button></div><p id="styleStatus" role="status"></p><a class="btn btn-ghost" href="/find/?q=${encodeURIComponent(p.query)}">Find live matches →</a><details><summary>Before you buy</summary><p>Images illustrate the style; they are not verified retailer listings. Confirm material, size chart, seller, return policy and final price at the store.</p></details></div></article>
  <section class="style-stores" aria-labelledby="styleStoresTitle"><h2 id="styleStoresTitle">Explore this style at stores</h2><p>These links open store searches, not confirmed matches.</p><div class="category-directory">${stores.map(([name])=>`<a href="${esc(storeUrl(name,p.query))}" target="_blank" rel="noopener noreferrer"><strong>${name}</strong><span>Search similar styles ↗</span><small>Price and stock: check store</small></a>`).join('')}</div></section>
- <section><h2>You might also like</h2><div class="catalog-grid">${products.filter(x=>x.id!==p.id&&x.tags.some(t=>p.tags.includes(t))).slice(0,4).map(card).join('')}</div></section>`;
+ <section><h2>You might also like</h2><div class="catalog-grid">${related(p).map(card).join('')}</div></section>`;
 }
 const pages = ['shop','categories','collections','stores','brands'].map(name=>({out:name+'/index.html',src:name,page:name,head:'brand',path:'/'+name+'/',nav:'find',tab:'find',script:'catalog',index:true,title:label(name)+' — Fit Deal',desc:'Explore fashion styles, categories and official stores with Fit Deal.'})).concat(products.map(p=>({out:'style/'+p.id+'/index.html',src:'style',page:'style',head:'back',heading:'Style details',path:'/style/'+p.id+'/',script:'catalog',title:p.title+' — Fit Deal',desc:'Explore this style and find similar pieces at official stores.',product:p})));
 function render(body,p) {

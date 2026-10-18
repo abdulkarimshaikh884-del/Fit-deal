@@ -108,12 +108,33 @@
     clear: function () { store.set(SAVED, []); }
   };
 
+  // ── Recently viewed products (this device only) ──────────────────────────
+  var VIEWED = "fd_viewed_v1";
+  var viewed = {
+    all: function () { return store.get(VIEWED, []); },
+    add: function (item) {
+      var list = viewed.all().filter(function (v) { return !(v.searchId === item.searchId && v.key === item.key); });
+      item.viewedAt = new Date().toISOString();
+      list.unshift(item);
+      return store.set(VIEWED, list.slice(0, 12));
+    },
+    clear: function () { store.set(VIEWED, []); }
+  };
+
   // ── Recent searches (this device only) ───────────────────────────────────
   var RECENT = "fd_recent_v1";
   var recent = {
     all: function () { return store.get(RECENT, []); },
     add: function (entry) {
-      var list = recent.all().filter(function (r) { return r.id !== entry.id; });
+      var key = String(entry.label || "").trim().toLowerCase();
+      var list = recent.all().filter(function (r) {
+        if (r.id === entry.id) return false;
+        // Same text search run again: refresh the entry instead of stacking
+        // duplicates ("kurti", "kurti 3 min ago", "kurti 13 h ago"…).
+        if (entry.kind === "text" && r.kind === "text" &&
+            String(r.label || "").trim().toLowerCase() === key) return false;
+        return true;
+      });
       entry.at = new Date().toISOString();
       list.unshift(entry);
       store.set(RECENT, list.slice(0, 12));
@@ -410,7 +431,7 @@
   };
 
   window.FD = {
-    store: store, toast: toast, api: api, track: track, saved: saved, recent: recent,
+    store: store, toast: toast, api: api, track: track, saved: saved, recent: recent, viewed: viewed,
     esc: function(s) { return String(s == null ? "" : s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];}); },
     price: price, time: time, ago: ago, el: el, icon: icon, copy: copy, wireShare: wireShare,
     refreshDots: refreshDots, auth: auth

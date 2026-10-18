@@ -57,7 +57,7 @@ const PAGES = [
   { out: "saved/index.html", src: "saved", page: "saved", nav: "saved", tab: "saved", head: "brand", path: "/saved/", script: "saved",
     title: "Saved — Fit Deal", desc: "Products you saved on Fit Deal, kept on this device." },
   { out: "deals/index.html", src: "deals", page: "deals", nav: "deals", tab: "deals", head: "brand", path: "/deals/", script: "deals", index: true,
-    title: "Deals — real prices from recent Fit Deal searches", desc: "The biggest real discounts people found on Fit Deal in the last two days, across Amazon, Flipkart, Myntra and AJIO." },
+    title: "Deals — Handpicked fashion deals, compared across stores", desc: "Handpicked fashion deals with prices compared across Amazon, Flipkart, Myntra and AJIO. Prices change often — always confirm the final price at the retailer." },
   { out: "profile/index.html", src: "profile", page: "profile", nav: "profile", tab: "profile", head: "brand", path: "/profile/", script: "profile",
     title: "Your Fit Deal — Profile", desc: "Your saved items, searches, votes and size notes, kept on this device." },
   { out: "login/index.html", src: "login", page: "auth", head: "back", heading: "Sign In", path: "/login/", script: "auth", tab: "profile",
@@ -412,9 +412,13 @@ const defaultFooter = `<footer class="foot">
       <a href="/how-it-works/">How it works</a>
       <a href="/faq/">FAQ</a>
       <a href="/about/">About</a>
+      <a href="/careers/">Careers</a>
+      <a href="/press/">Press</a>
       <a href="/contact/">Contact</a>
       <a href="/privacy/">Privacy</a>
+      <a href="/cookie-policy/">Cookie Policy</a>
       <a href="/terms/">Terms</a>
+      <a href="/grievance-redressal/">Grievance Redressal</a>
       <a href="/affiliate-disclosure/">Affiliate disclosure</a>
     </nav>
   </div>
@@ -586,9 +590,16 @@ ${p.script ? `<script src="/js/${p.script}.js?v=${V}" defer></script>\n` : ""}</
 
 function sitemap() {
   const today = new Date().toISOString().slice(0, 10);
+  const staticUrls = PAGES.filter((p) => p.index).map((p) => `  <url><loc>${SITE}${p.path}</loc><lastmod>${today}</lastmod></url>`);
+  // Curated-deal product detail pages are real addresses (/product/deals/<key>).
+  let dealUrls = [];
+  try {
+    const deals = require("./lib/curated-deals").getAll();
+    dealUrls = deals.map((d) => `  <url><loc>${SITE}/product/deals/${d.key}</loc><lastmod>${today}</lastmod></url>`);
+  } catch (e) { /* sitemap stays valid without them */ }
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${PAGES.filter((p) => p.index).map((p) => `  <url><loc>${SITE}${p.path}</loc><lastmod>${today}</lastmod></url>`).join("\n")}
+${staticUrls.concat(dealUrls).join("\n")}
 </urlset>
 `;
 }

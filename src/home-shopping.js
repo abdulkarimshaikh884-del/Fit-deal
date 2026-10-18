@@ -101,7 +101,7 @@ function expansion() {
       </section>
       <section class="shop-section home-questions" aria-labelledby="questions-title"><h2 id="questions-title">A little clarity before you shop.</h2><div>
         <details><summary>Can I buy directly from Fit Deal?</summary><p>Fit Deal helps you discover and compare fashion. Your purchase, payment, delivery and returns are handled by the retailer you choose.</p></details>
-        <details><summary>Are the pictures actual products for sale?</summary><p>Our style collections use editorial inspiration images. Cards with verified prices use the available retailer listing data. Always check the final product, price and stock on the retailer’s page.</p></details>
+        <details><summary>Are the pictures actual products for sale?</summary><p>Our style collections use editorial inspiration images. Cards with listed prices use the available retailer listing data. Always check the final product, price and stock on the retailer’s page.</p></details>
         <details><summary>How does screenshot search work?</summary><p>Upload a clothing screenshot, choose the item and explore similar options. A visual resemblance alone is never labelled an exact match.</p></details>
         <details><summary>Does Fit Deal earn from store links?</summary><p>Some retailer links may earn us a commission at no extra cost to you. Commission does not decide the order of results. <a href="/affiliate-disclosure/">Read our affiliate disclosure.</a></p></details>
       </div></section>
