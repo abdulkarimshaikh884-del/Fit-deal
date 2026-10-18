@@ -31,18 +31,22 @@
     var lowestStoreName = d.storeName || STORE_NAMES[lowestStore] || "Store";
     var buyUrl = d.searchId ? ("/go/" + encodeURIComponent(d.searchId) + "/" + encodeURIComponent(d.key) + "?from=deals") : ("/go/deal/" + encodeURIComponent(d.key));
 
-    var detailUrl = d.searchId ? "/product/" + encodeURIComponent(d.searchId) + "/" + encodeURIComponent(d.key) : buyUrl;
+    var detailUrl = d.searchId ? "/product/" + encodeURIComponent(d.searchId) + "/" + encodeURIComponent(d.key) : "/product/deals/" + encodeURIComponent(d.key);
 
     // Store comparison chips
     var storeChips = [];
     if (d.stores && Array.isArray(d.stores) && d.stores.length > 0) {
       storeChips = d.stores.map(function (s) {
         var storeClass = "fd-store-chip " + (s.isLowest ? "is-lowest" : "is-other");
-        return el("div", { className: storeClass }, [
+        var chipHref = d.searchId ? null : "/go/deal/" + encodeURIComponent(d.key) + "/" + encodeURIComponent(s.store);
+        var chipBody = [
           el("span.chip-name", { text: s.storeName || STORE_NAMES[s.store] || s.store }),
           el("span.chip-price", { text: formatPrice(s.price) }),
           s.isLowest ? el("span.chip-tag", { text: "Lowest" }) : null
-        ]);
+        ];
+        return chipHref
+          ? el("a", { className: storeClass, href: chipHref, target: "_blank", rel: "noopener sponsored", "aria-label": "Buy on " + (s.storeName || s.store) }, chipBody)
+          : el("div", { className: storeClass }, chipBody);
       });
     }
 
@@ -142,7 +146,7 @@
           el("div.fd-dc-meta-strip", null, [
             el("span.fd-dc-check", null, [
               el("svg", { "aria-hidden": "true" }, [el("use", { href: "#i-check-plain" })]),
-              el("span", { text: "Verified price" })
+              el("span", { text: "Curated deal" })
             ]),
             el("span.fd-dc-store-tag", { text: lowestStoreName })
           ])
@@ -167,7 +171,9 @@
       });
     }
 
-    // 2. Category Filter
+    // 2. Category Filter — exact matching only. (A substring test like
+    // "women".includes("men") is true, which used to list women's products
+    // under the Men's filter. Audience now matches exactly, like /shop/.)
     if (state.category !== "all") {
       list = list.filter(function (d) {
         var cat = (d.category || "").toLowerCase();
@@ -175,19 +181,19 @@
         var tit = (d.title || "").toLowerCase();
         var sc = state.category.toLowerCase();
 
-        if (sc === "women") return aud === "women" || cat.includes("women") || cat.includes("dress") || cat.includes("ethnic") || cat.includes("saree") || cat.includes("kurti") || tit.includes("women") || tit.includes("dress");
-        if (sc === "men") return aud === "men" || cat.includes("men") || tit.includes("men") || tit.includes("shirt");
-        if (sc === "ethnic") return cat.includes("ethnic") || cat.includes("kurta") || cat.includes("kurti") || cat.includes("saree") || tit.includes("kurta") || tit.includes("saree") || tit.includes("anarkali");
-        if (sc === "western" || sc === "dresses") return cat.includes("western") || cat.includes("dress") || cat.includes("jean") || cat.includes("top") || tit.includes("dress") || tit.includes("jeans") || tit.includes("top") || tit.includes("jacket");
-        if (sc === "shoes" || sc === "footwear") return cat.includes("shoe") || cat.includes("sneaker") || cat.includes("footwear") || tit.includes("sneaker") || tit.includes("shoe");
-        if (sc === "bags" || sc === "luggage") return cat.includes("bag") || cat.includes("luggage") || cat.includes("tote") || cat.includes("satchel") || cat.includes("trolley") || tit.includes("bag") || tit.includes("trolley") || tit.includes("handbag");
-        if (sc === "watches") return cat.includes("watch") || tit.includes("watch");
-        if (sc === "sunglasses") return cat.includes("sunglass") || tit.includes("sunglass") || tit.includes("aviator");
-        if (sc === "accessories") return cat.includes("access") || cat.includes("watch") || cat.includes("sunglass") || cat.includes("bag") || tit.includes("pendant") || tit.includes("jewellery") || tit.includes("wallet");
-        if (sc === "beauty") return cat.includes("beauty") || cat.includes("makeup") || cat.includes("lipstick") || cat.includes("serum") || tit.includes("lipstick") || tit.includes("serum") || tit.includes("beard");
-        if (sc === "sportswear") return cat.includes("sport") || cat.includes("track") || cat.includes("gym") || tit.includes("track") || tit.includes("training") || tit.includes("running");
+        if (sc === "women") return aud === "women" || aud === "unisex";
+        if (sc === "men") return aud === "men" || aud === "unisex";
+        if (sc === "ethnic") return cat === "ethnic" || tit.includes("kurta") || tit.includes("kurti") || tit.includes("saree") || tit.includes("anarkali");
+        if (sc === "western" || sc === "dresses") return cat === "western" || cat === "dresses" || tit.includes("dress") || tit.includes("jeans") || tit.includes("jacket");
+        if (sc === "shoes" || sc === "footwear") return cat === "shoes" || tit.includes("sneaker") || tit.includes("shoe");
+        if (sc === "bags" || sc === "luggage") return cat === "bags" || tit.includes("tote") || tit.includes("satchel") || tit.includes("trolley") || tit.includes("handbag") || tit.includes("backpack");
+        if (sc === "watches") return cat === "watches" || tit.includes("watch");
+        if (sc === "sunglasses") return cat === "sunglasses" || tit.includes("sunglass") || tit.includes("aviator") || tit.includes("wayfarer");
+        if (sc === "accessories") return cat === "accessories" || cat === "watches" || cat === "sunglasses" || cat === "bags" || tit.includes("pendant") || tit.includes("jewellery") || tit.includes("wallet");
+        if (sc === "beauty") return cat === "beauty" || tit.includes("lipstick") || tit.includes("serum") || tit.includes("toner") || tit.includes("face wash");
+        if (sc === "sportswear") return cat === "sportswear" || tit.includes("track") || tit.includes("training") || tit.includes("running") || tit.includes("gym");
         if (sc === "brands") return !!d.brand;
-        return cat.includes(sc) || tit.includes(sc);
+        return cat === sc || tit.includes(sc);
       });
     }
 
@@ -271,9 +277,9 @@
 
     if (countTitle) {
       if (state.category !== "all") {
-        countTitle.textContent = "Showing " + filtered.length + " verified deals in " + (CAT_LABELS[state.category] || state.category);
+        countTitle.textContent = "Showing " + filtered.length + " curated deals in " + (CAT_LABELS[state.category] || state.category);
       } else {
-        countTitle.textContent = "Showing " + filtered.length + " verified fashion deals";
+        countTitle.textContent = "Showing " + filtered.length + " curated fashion deals";
       }
     }
 

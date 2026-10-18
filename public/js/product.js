@@ -40,7 +40,7 @@
     document.title = p.title + " — " + (p.price ? "₹" + p.price.toLocaleString("en-IN") : "Best Price") + " on " + p.storeName + " | Fit Deal";
 
     // Back link
-    $("prodBackLink").href = "/find/" + encodeURIComponent(searchId);
+    $("prodBackLink").href = isDealPage ? "/deals/" : "/find/" + encodeURIComponent(searchId);
 
     // Image
     var img = $("prodImg");
@@ -58,7 +58,11 @@
 
     // Match status
     var badge = $("prodMatchBadge");
-    if (p.match === "exact") {
+    if (isDealPage) {
+      badge.className = "badge badge-exact";
+      badge.textContent = "Curated deal";
+      $("prodMatchReason").textContent = " — Hand-picked price comparison";
+    } else if (p.match === "exact") {
       badge.className = "badge badge-exact";
       badge.textContent = "Exact Match";
       $("prodMatchReason").textContent = p.reason ? " — " + p.reason : " — Confirmed same product";
@@ -102,7 +106,7 @@
       $("prodShipping").hidden = false;
     }
 
-    if (p.checkedAt) {
+    if (p.checkedAt && !isDealPage) {
       $("prodCheckedAt").textContent = "Verified " + FD.time(p.checkedAt);
     } else {
       $("prodFreshness").hidden = true;
@@ -110,7 +114,9 @@
 
     // Primary CTA
     var buyBtn = $("prodBuyBtn");
-    buyBtn.href = "/go/" + encodeURIComponent(searchId) + "/" + encodeURIComponent(p.key) + "?from=product_detail";
+    buyBtn.href = isDealPage
+      ? "/go/deal/" + encodeURIComponent(p.key) + "?from=product_detail"
+      : "/go/" + encodeURIComponent(searchId) + "/" + encodeURIComponent(p.key) + "?from=product_detail";
     $("prodBuyStoreName").textContent = p.storeName;
 
     // Save button
@@ -201,7 +207,7 @@
           '<td><strong class="compare-price">' + (currentProduct.price != null ? FD.price(currentProduct.price) : "See store") + '</strong></td>',
           '<td><span class="diff-badge diff-selected">Selected</span></td>',
           '<td><span class="compare-status">' + (currentProduct.match === "exact" ? "Exact match" : "Similar") + (currentProduct.checkedAt ? " · " + FD.time(currentProduct.checkedAt) : "") + '</span></td>',
-          '<td><a href="/go/' + encodeURIComponent(searchId) + '/' + encodeURIComponent(currentProduct.key) + '?from=product_compare" target="_blank" rel="sponsored noopener" class="btn btn-primary btn-sm">Buy Deal <svg class="btn-sm-ico" aria-hidden="true"><use href="#i-external"/></svg></a></td>'
+          '<td><a href="' + buyHref(currentProduct.key, sk) + '" target="_blank" rel="sponsored noopener" class="btn btn-primary btn-sm">Buy Deal <svg class="btn-sm-ico" aria-hidden="true"><use href="#i-external"/></svg></a></td>'
         ].join("");
       } else {
         // Find best match in that store
@@ -240,7 +246,7 @@
             '<td><strong class="compare-price">' + (bestMatch.price != null ? FD.price(bestMatch.price) : "See store") + '</strong></td>',
             '<td>' + diffHtml + '</td>',
             '<td><span class="compare-status">' + matchLabel + (bestMatch.checkedAt ? " · " + FD.time(bestMatch.checkedAt) : "") + '</span></td>',
-            '<td><a href="/go/' + encodeURIComponent(searchId) + '/' + encodeURIComponent(bestMatch.key) + '?from=product_compare" target="_blank" rel="sponsored noopener" class="btn btn-ghost btn-sm">View <svg class="btn-sm-ico" aria-hidden="true"><use href="#i-external"/></svg></a></td>'
+            '<td><a href="' + buyHref(bestMatch.key, sk) + '" target="_blank" rel="sponsored noopener" class="btn btn-ghost btn-sm">View <svg class="btn-sm-ico" aria-hidden="true"><use href="#i-external"/></svg></a></td>'
           ].join("");
         } else {
           // Store not found in this search
@@ -250,7 +256,7 @@
             '<td><span class="muted">No direct match</span></td>',
             '<td><span class="muted">–</span></td>',
             '<td><span class="muted">Not found in this search</span></td>',
-            '<td><a href="/go/' + encodeURIComponent(searchId) + '/store/' + encodeURIComponent(sk) + '" target="_blank" rel="sponsored noopener" class="btn btn-ghost btn-sm">Search on ' + FD.esc(storeName) + '</a></td>'
+            '<td><a href="' + storeSearchHref(sk) + '" target="_blank" rel="sponsored noopener" class="btn btn-ghost btn-sm">Search on ' + FD.esc(storeName) + '</a></td>'
           ].join("");
         }
       }
@@ -292,7 +298,46 @@
     });
   };
 
+  var isDealPage = searchId === "deals";
+
+  function buyHref(key, storeKey) {
+    var q = "?from=product_compare";
+    if (isDealPage) return "/go/deal/" + encodeURIComponent(key) + "/" + encodeURIComponent(storeKey) + q;
+    return "/go/" + encodeURIComponent(searchId) + "/" + encodeURIComponent(key) + q;
+  }
+
+  function storeSearchHref(storeKey) {
+    if (isDealPage) return "/deals/?store=" + encodeURIComponent(storeKey);
+    return "/go/" + encodeURIComponent(searchId) + "/store/" + encodeURIComponent(storeKey);
+  }
+
+  // Deals-hub products live at /product/deals/<key> and come from /api/deals.
+  function dealToSearch(deal) {
+    var prods = (deal.stores || []).map(function (s) {
+      return {
+        key: deal.key, title: deal.title, brand: deal.brand, image: deal.image,
+        store: s.store, storeName: s.storeName, price: s.price, mrp: deal.mrp,
+        url: s.url, match: "exact", inStock: s.inStock !== false
+      };
+    });
+    var lowest = prods.filter(function (x) { return x.store === deal.store; })[0] || prods[0];
+    return { search: { id: "deals", exact: prods, similar: [] }, product: lowest };
+  }
+
   // ── Load Search Session ───────────────────────────────────────────────────
+  if (isDealPage) {
+    FD.api("/api/deals/" + encodeURIComponent(productKey)).then(function (data) {
+      var conv = dealToSearch(data.deal);
+      state.search = conv.search;
+      state.product = conv.product;
+      // Reporting needs a search session; hide it for curated deals.
+      var rb = $("prodReportBtn");
+      if (rb) rb.hidden = true;
+      renderProduct(conv.product);
+    }).catch(function () {
+      showMissing("We couldn't find that deal.");
+    });
+  } else {
   FD.api("/api/search/" + encodeURIComponent(searchId)).then(function (data) {
     state.search = data;
     var all = (data.exact || []).concat(data.similar || []);
@@ -306,5 +351,6 @@
   }).catch(function (err) {
     showMissing(err.code === "not_found" ? "This search session has expired." : "Could not load product details.");
   });
+  }
 
 })();

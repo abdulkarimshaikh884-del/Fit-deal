@@ -21,6 +21,11 @@ const PAGES = [
   '/collections/',
   '/stores/',
   '/brands/',
+  '/cookie-policy/',
+  '/grievance-redressal/',
+  '/careers/',
+  '/press/',
+  '/product/deals/deal-libas-anarkali/',
   '/404'
 ];
 
