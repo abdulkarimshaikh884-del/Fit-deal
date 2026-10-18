@@ -1,7 +1,7 @@
 // Editorial discovery is separate from retailer inventory: no fabricated offers.
 const rows = [
  ['floral-maxi-dress','Floral Print Maxi Dress','hero-dress','women dresses western','SASSAFRAS Floral Print Maxi Dress'],
- ['linen-blend-shirt','Linen Blend Casual Shirt','deal-linen-shirt','men shirts','HIGHLANDER Men Linen Blend Casual Shirt'],
+ ['linen-blend-shirt','Linen Blend Casual Shirt','deal-linen-shirt','men shirts','H&M Men Linen Blend Casual Shirt'],
  ['white-sneakers','White Casual Sneakers','deal-sneakers','men women footwear sportswear','PUMA Unisex White Sneakers'],
  ['structured-handbag','Structured Satchel Handbag','compare-bag','women bags accessories','LAVIE Structured Satchel Handbag'],
  ['puff-sleeve-top','Puff Sleeve Crop Top','deal-crop-top','women tops western','SASSAFRAS Women Puff Sleeve Crop Top'],

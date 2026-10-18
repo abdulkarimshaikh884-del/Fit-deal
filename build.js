@@ -80,6 +80,14 @@ const PAGES = [
     title: "Terms of Use — Fit Deal", desc: "The terms for using Fit Deal." },
   { out: "affiliate-disclosure/index.html", src: "affiliate-disclosure", page: "info", head: "back", heading: "Affiliate disclosure", path: "/affiliate-disclosure/", index: true,
     title: "Affiliate Disclosure — Fit Deal", desc: "How Fit Deal earns from store links, and why it never changes the order of results." },
+  { out: "cookie-policy/index.html", src: "cookie-policy", page: "info", head: "back", heading: "Cookie Policy", path: "/cookie-policy/", index: true,
+    title: "Cookie Policy — Fit Deal", desc: "What Fit Deal stores on your device: sign-in cookie and local storage only, no advertising trackers." },
+  { out: "grievance-redressal/index.html", src: "grievance-redressal", page: "info", head: "back", heading: "Grievance Redressal", path: "/grievance-redressal/", index: true,
+    title: "Grievance Redressal — Fit Deal", desc: "How to raise a complaint with Fit Deal, response timelines, and the grievance officer's contact." },
+  { out: "careers/index.html", src: "careers", page: "info", head: "back", heading: "Careers", path: "/careers/", index: true,
+    title: "Careers — Fit Deal", desc: "Work with Fit Deal: help India shop smarter with independent price comparison." },
+  { out: "press/index.html", src: "press", page: "info", head: "back", heading: "Press", path: "/press/", index: true,
+    title: "Press — Fit Deal", desc: "About Fit Deal for journalists: what we do, press contact and brand assets." },
   { out: "404.html", src: "404", page: "notfound", head: "back", heading: "Page not found", path: "/404",
     title: "Page not found — Fit Deal", desc: "This page doesn't exist." },
   { out: "500.html", src: "500", page: "notfound", head: "back", heading: "Something went wrong", path: "/500",
@@ -149,51 +157,51 @@ function sidebar(p) {
       <div class="fd-sb-section-title">CATEGORIES</div>
       <nav class="fd-sb-nav fd-sb-cats" aria-label="Categories">
         <a href="/deals/?cat=women" class="fd-sb-link">
-          <span class="fd-sb-emoji">👗</span>
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-person"/></svg>
           <span class="fd-sb-txt">Women's Fashion</span>
         </a>
         <a href="/deals/?cat=men" class="fd-sb-link">
-          <span class="fd-sb-emoji">👔</span>
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-shirt"/></svg>
           <span class="fd-sb-txt">Men's Fashion</span>
         </a>
         <a href="/deals/?cat=ethnic" class="fd-sb-link">
-          <span class="fd-sb-emoji">🥻</span>
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-sparkle"/></svg>
           <span class="fd-sb-txt">Ethnic Wear</span>
         </a>
         <a href="/deals/?cat=western" class="fd-sb-link">
-          <span class="fd-sb-emoji">🧥</span>
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-tag"/></svg>
           <span class="fd-sb-txt">Western Wear</span>
         </a>
         <a href="/deals/?cat=footwear" class="fd-sb-link">
-          <span class="fd-sb-emoji">👟</span>
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-bolt"/></svg>
           <span class="fd-sb-txt">Footwear</span>
         </a>
         <a href="/deals/?cat=bags" class="fd-sb-link">
-          <span class="fd-sb-emoji">👜</span>
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-store"/></svg>
           <span class="fd-sb-txt">Bags &amp; Luggage</span>
         </a>
         <a href="/deals/?cat=watches" class="fd-sb-link">
-          <span class="fd-sb-emoji">⌚</span>
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-clock"/></svg>
           <span class="fd-sb-txt">Watches</span>
         </a>
         <a href="/deals/?cat=sunglasses" class="fd-sb-link">
-          <span class="fd-sb-emoji">🕶️</span>
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-sun"/></svg>
           <span class="fd-sb-txt">Sunglasses</span>
         </a>
         <a href="/deals/?cat=accessories" class="fd-sb-link">
-          <span class="fd-sb-emoji">✨</span>
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-star-fill"/></svg>
           <span class="fd-sb-txt">Accessories</span>
         </a>
         <a href="/deals/?cat=beauty" class="fd-sb-link">
-          <span class="fd-sb-emoji">💄</span>
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-heart"/></svg>
           <span class="fd-sb-txt">Beauty &amp; Care</span>
         </a>
         <a href="/deals/?cat=sportswear" class="fd-sb-link">
-          <span class="fd-sb-emoji">🏃</span>
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-trophy"/></svg>
           <span class="fd-sb-txt">Sportswear</span>
         </a>
         <a href="/deals/?cat=brands" class="fd-sb-link">
-          <span class="fd-sb-emoji">🏷️</span>
+          <svg class="fd-sb-ico" aria-hidden="true"><use href="#i-flame"/></svg>
           <span class="fd-sb-txt">Top Brands</span>
         </a>
       </nav>
@@ -425,21 +433,15 @@ function footer(p) {
         </a>
       </div>
       <p class="fd-footer-slogan">Fashion for every you.<br>Compare. Shop. Save.</p>
-      <div class="fd-footer-socials">
-        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg aria-hidden="true"><use href="#i-social-insta"/></svg></a>
-        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg aria-hidden="true"><use href="#i-social-youtube"/></svg></a>
-        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg aria-hidden="true"><use href="#i-social-fb"/></svg></a>
-        <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X"><svg aria-hidden="true"><use href="#i-social-x"/></svg></a>
-        <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" aria-label="Pinterest"><svg aria-hidden="true"><use href="#i-social-pinterest"/></svg></a>
-      </div>
+
     </div>
     <div class="fd-footer-col">
       <h4>About Fit Deal</h4>
       <nav aria-label="About">
         <a href="/about/">Our Story</a>
         <a href="/how-it-works/">How It Works</a>
-        <a href="/about/">Careers</a>
-        <a href="/about/">Press</a>
+        <a href="/careers/">Careers</a>
+        <a href="/press/">Press</a>
         <a href="/contact/">Contact Us</a>
       </nav>
     </div>
@@ -457,9 +459,9 @@ function footer(p) {
       <h4>Legal</h4>
       <nav aria-label="Legal">
         <a href="/privacy/">Privacy Policy</a>
-        <a href="/privacy/">Cookie Policy</a>
+        <a href="/cookie-policy/">Cookie Policy</a>
         <a href="/terms/">Terms &amp; Conditions</a>
-        <a href="/contact/">Grievance Redressal</a>
+        <a href="/grievance-redressal/">Grievance Redressal</a>
       </nav>
     </div>
     <div class="fd-footer-col">
@@ -482,7 +484,7 @@ function footer(p) {
   </div>
   <div class="fd-footer-bottom">
     <p>© 2026 Fit Deal. All rights reserved.</p>
-    <p class="fd-footer-tagline">A smarter way to shop fashion 💜</p>
+    <p class="fd-footer-tagline">A smarter way to shop fashion.</p>
   </div>
 </footer>`;
   }

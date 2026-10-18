@@ -151,6 +151,18 @@ async function dynamicMeta(kind, id, extra) {
       };
     }
     if (kind === "product") {
+      // Curated deals hub pages live at /product/deals/<deal-key>.
+      if (id === "deals") {
+        const deal = require("./lib/curated-deals").find(extra);
+        if (!deal) return null;
+        const priceStr = deal.price != null ? `₹${deal.price.toLocaleString("en-IN")}` : "Best price";
+        return {
+          title: `${deal.title} — ${priceStr} | Fit Deal`,
+          desc: `Compare prices for ${deal.title} across Amazon, Flipkart, Myntra and AJIO. Save ₹${(deal.savings || 0).toLocaleString("en-IN")} off MRP.`,
+          image: deal.image,
+          path: `/product/deals/${deal.key}`
+        };
+      }
       const s = await store.get("searches", id);
       if (!s) return null;
       const all = (s.exact || []).concat(s.similar || []);
@@ -212,7 +224,12 @@ async function route(req, res) {
   }
 
   const pm = pathname.match(/^\/product\/([A-Za-z0-9_-]{4,40})\/([A-Za-z0-9_-]{4,40})\/?$/);
-  if (pm) return sendDynamic(req, res, "product/index.html", await dynamicMeta("product", pm[1], pm[2]));
+  if (pm) {
+    const meta = await dynamicMeta("product", pm[1], pm[2]);
+    // Curated-deal pages have real addresses: unknown deal keys are 404.
+    if (!meta && pm[1] === "deals") return sendPage(req, res, "404.html", 404);
+    return sendDynamic(req, res, "product/index.html", meta);
+  }
 
   const m = pathname.match(/^\/(find|vote)\/([A-Za-z0-9_-]{4,40})\/?$/);
   if (m) return sendDynamic(req, res, m[1] === "find" ? "find/results.html" : "vote/index.html", await dynamicMeta(m[1], m[2]));

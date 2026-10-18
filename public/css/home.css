@@ -782,6 +782,8 @@ body[data-page="home"] * {
 .fd-showcase-img-wrap {
   position: relative;
   background: #f8f6fc;
+  overflow: hidden;
+  min-height: 100%;
 }
 
 .fd-showcase-img-wrap img {
@@ -810,6 +812,7 @@ body[data-page="home"] * {
   padding: 12px 16px;
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .fd-showcase-header {
@@ -817,6 +820,11 @@ body[data-page="home"] * {
   justify-content: space-between;
   align-items: flex-start;
   gap: 6px;
+  min-width: 0;
+}
+
+.fd-showcase-header > div {
+  min-width: 0;
 }
 
 .fd-showcase-brand {
